@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "44043423885",
+    "firebase_url": "https://bansach-adbd7-default-rtdb.firebaseio.com",
+    "project_id": "bansach-adbd7",
+    "storage_bucket": "bansach-adbd7.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:44043423885:android:13754f8ad8f05cfd0ed2c4",
+        "android_client_info": {
+          "package_name": "com.example.bansach"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDklScqwJSydfNbi2oCAzeRvKRPBcSPnQk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

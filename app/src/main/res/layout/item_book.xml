@@ -6,6 +6,7 @@
     android:orientation="vertical"
     android:background="#FFFFFF"
     android:layout_margin="6dp"
+    android:id="@+id/item_book"
     android:elevation="3dp">
 
     <!-- BADGE -->
