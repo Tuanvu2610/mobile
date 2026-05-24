@@ -41,12 +41,12 @@ public class BookGridAdapter extends RecyclerView.Adapter<BookGridAdapter.BookVi
         Book book = bookList.get(position);
 
         // Đổ chữ vào TextView
-        holder.tvBookTitle.setText(book.getTitle());
-        holder.tvBookPrice.setText(book.getPrice() + " đ");
+        holder.tvBookTitle.setText(book.getTen_Sach());
+        holder.tvBookPrice.setText(book.getDon_gia() + " đ");
 
         // Dùng thư viện Glide để load ảnh bìa sách từ Internet đổ vào ImageView
         Glide.with(context)
-                .load(book.getImageUrl())
+                .load(book.getImg())
                 .into(holder.imgBookCover);
     }
 
@@ -64,8 +64,8 @@ public class BookGridAdapter extends RecyclerView.Adapter<BookGridAdapter.BookVi
             super(itemView);
             // Thay đổi ID ở đây nếu file item_book.xml của bạn đặt ID khác
             imgBookCover = itemView.findViewById(R.id.imgBook);
-            tvBookTitle = itemView.findViewById(R.id.txtBestSeller);
-            tvBookPrice = itemView.findViewById(R.id.txtAuthor);
+            tvBookTitle = itemView.findViewById(R.id.txtTitle);
+            tvBookPrice = itemView.findViewById(R.id.txtPrice);
         }
     }
 }

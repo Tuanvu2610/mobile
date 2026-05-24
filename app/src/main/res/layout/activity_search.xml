@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/layout_search"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#FFFFFF">
+
+    <!-- 1. HEADER: THANH TÌM KIẾM GIỐNG SHOPEE -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="12dp"
+        android:gravity="center_vertical">
+
+        <!-- Nút Back mũi tên -->
+        <ImageView
+            android:id="@+id/btnBack"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:src="@android:drawable/ic_menu_revert"
+            app:tint="#60a5fa" />
+
+        <!-- Ô nhập liệu có viền cam -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:layout_marginStart="12dp"
+            android:background="@drawable/bg_search_outline"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingStart="12dp"
+            android:paddingEnd="4dp">
+
+            <EditText
+                android:id="@+id/edtSearch"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@null"
+                android:hint="Tìm tên sách, tác giả..."
+                android:textSize="14sp"
+                android:imeOptions="actionSearch"
+                android:inputType="text" />
+
+            <!-- Nút tìm kiếm nhỏ bên phải -->
+            <ImageView
+                android:id="@+id/btnSearch"
+                android:layout_width="36dp"
+                android:layout_height="32dp"
+                android:background="#60a5fa"
+                android:padding="6dp"
+                android:src="@android:drawable/ic_menu_search"
+                app:tint="#FFFFFF" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <!-- 2. LỊCH SỬ / TỪ KHÓA HOT (Cuộn ngang) -->
+    <HorizontalScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="none"
+        android:paddingHorizontal="12dp"
+        android:paddingBottom="12dp">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <!-- Các từ khóa (Demo cứng, sau này bạn có thể dùng Java add vào sau) -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_gray_pill"
+                android:text="Đắc Nhân Tâm"
+                android:textColor="#333333"
+                android:paddingHorizontal="16dp"
+                android:paddingVertical="8dp"
+                android:layout_marginEnd="8dp"
+                android:textSize="13sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_gray_pill"
+                android:text="Sách Tiếng Anh"
+                android:textColor="#333333"
+                android:paddingHorizontal="16dp"
+                android:paddingVertical="8dp"
+                android:layout_marginEnd="8dp"
+                android:textSize="13sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_gray_pill"
+                android:text="Masami Sasaki"
+                android:textColor="#333333"
+                android:paddingHorizontal="16dp"
+                android:paddingVertical="8dp"
+                android:layout_marginEnd="8dp"
+                android:textSize="13sp" />
+        </LinearLayout>
+    </HorizontalScrollView>
+
+    <!-- Đường gạch ngang phân cách mờ -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="6dp"
+        android:background="#F0F0F0" />
+
+    <!-- 3. GỢI Ý TÌM KIẾM (Danh sách dạng lưới) -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Gợi ý tìm kiếm"
+        android:textStyle="bold"
+        android:textColor="#000000"
+        android:textSize="16sp"
+        android:padding="12dp" />
+
+    <!-- Nơi này sẽ chứa danh sách sách từ Firebase -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvSuggestProducts"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingHorizontal="8dp"
+        android:clipToPadding="false" />
+
+</LinearLayout>

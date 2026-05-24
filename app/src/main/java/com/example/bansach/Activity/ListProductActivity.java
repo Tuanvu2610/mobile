@@ -57,6 +57,9 @@ public class ListProductActivity extends AppCompatActivity {
         booksRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
+                // Dán 2 dòng này vào đây:
+                Log.d("VUDV", "Có tìm thấy nút book không: " + snapshot.exists());
+                Log.d("VUDV", "Số lượng sách kéo về được: " + snapshot.getChildrenCount());
                 // Tạo một danh sách rỗng để hứng dữ liệu
                 List<Book> dataList = new ArrayList<>();
 

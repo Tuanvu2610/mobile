@@ -25,9 +25,9 @@
     <ImageView
         android:id="@+id/imgBook"
         android:layout_width="match_parent"
-        android:layout_height="220dp"
-        android:scaleType="centerCrop"/>
-<!--        android:src="@drawable/book1"/>-->
+        android:layout_height="200dp"
+        android:scaleType="fitCenter"
+        />
 
     <!-- CONTENT -->
     <LinearLayout
@@ -52,6 +52,8 @@
             android:textStyle="bold"
             android:textSize="18sp"
             android:textColor="#000"
+            android:maxLines="2"
+            android:ellipsize="end"
             android:layout_marginTop="4dp"/>
 
         <TextView
@@ -63,17 +65,37 @@
             android:textSize="14sp"
             android:layout_marginTop="4dp"/>
 
-        <TextView
-            android:id="@+id/txtPrice"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="182,000đ"
-            android:textStyle="bold"
-            android:textSize="20sp"
-            android:textColor="#000"
-            android:layout_marginTop="4dp"/>
 
         <!-- BUTTON -->
+        <RelativeLayout
+            android:layout_width="389dp"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/txtPrice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="182,000đ"
+                android:textColor="#000"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/txtViews"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:gravity="center"
+                android:padding="8dp"
+                android:layout_alignParentEnd="true"
+                android:text="Đã bán 5k+"
+                android:textColor="@color/black"/>
+
+
+        </RelativeLayout>
+
         <Button
             android:id="@+id/btnAddToCart"
             android:layout_width="match_parent"
@@ -85,17 +107,6 @@
             android:textColor="#0A2C88"
             android:layout_marginTop="8dp"/>
 
-        <!-- VIEW -->
-        <TextView
-            android:id="@+id/txtViews"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Có 1673 lượt mua"
-            android:gravity="center"
-            android:textColor="#FFF"
-            android:background="#4D8DF7"
-            android:padding="8dp"
-            android:layout_marginTop="8dp"/>
 
     </LinearLayout>
 

@@ -1,20 +1,30 @@
 package com.example.bansach.model;
 
 public class Book {
-    private String title;
-    private double price;
-    private String imageUrl;
+    private String Ten_Sach;
+    private double Don_gia;
+    private String img;
 
-    public Book(String title, double price, String imageUrl) {
-        this.title = title;
-        this.price = price;
-        this.imageUrl = imageUrl;
-    }
+
 
     public Book() {
     }
 
-    public String getTitle() { return title; }
-    public double getPrice() { return price; }
-    public String getImageUrl() { return imageUrl; }
+    public Book(String ten_Sach, double don_gia, String img) {
+        Ten_Sach = ten_Sach;
+        Don_gia = don_gia;
+        this.img = img;
+    }
+
+    public String getTen_Sach() {
+        return Ten_Sach;
+    }
+
+    public double getDon_gia() {
+        return Don_gia;
+    }
+
+    public String getImg() {
+        return img;
+    }
 }
