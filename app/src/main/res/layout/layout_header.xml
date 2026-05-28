@@ -143,5 +143,6 @@
         app:layout_constraintEnd_toStartOf="@id/imgUser"
         app:layout_constraintTop_toTopOf="parent" />
 
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
-    Lưu ý cuối cùng: Bạn nhớ tải hình ảnh cờ Việt Nam (lưu tên là ic_flag_vn.png), Logo InBook (logo_inbook.png) và tạo các Vector Asset cho các icon (ic_menu, ic_search, ic_user, ic_cart, ic_truck, ic_arrow_down) vào thư mục res/drawable để Android Studio không báo lỗi đỏ ở thuộc tính android:src nhé.
