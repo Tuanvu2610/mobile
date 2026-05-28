@@ -1,7 +1,9 @@
 package com.example.bansach.Activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -37,53 +39,51 @@ public class ListProductActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_product);
 
-        // 1. Ánh xạ RecyclerView và set layout 2 cột
         rvProducts = findViewById(R.id.rvProducts);
         rvProducts.setLayoutManager(new GridLayoutManager(this, 2));
 
-        // 2. Kích hoạt hàm lấy dữ liệu online
-        fetchOnlineData();
+        fetchOnlineDataProduct();
     }
 
-    // Hàm chuyên dụng để gọi mạng
-    private void fetchOnlineData() {
-        // 1. Khởi tạo và kết nối thẳng lên kho Realtime Database của Google
+    private void fetchOnlineDataProduct() {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-
-        // 2. Trỏ bộ định vị vào đúng nút gốc tên là "book" trên web Firebase
         DatabaseReference booksRef = database.getReference("book");
 
-        // 3. Bật bộ lắng nghe sự kiện để hút dữ liệu online về theo thời gian thực
+        List<Book> dataList = new ArrayList<>();
+        adapter = new BookGridAdapter(ListProductActivity.this, dataList);
+        rvProducts.setAdapter(adapter);
+
         booksRef.addValueEventListener(new ValueEventListener() {
-            @Override
+         @Override
             public void onDataChange(DataSnapshot snapshot) {
-                // Dán 2 dòng này vào đây:
-                Log.d("VUDV", "Có tìm thấy nút book không: " + snapshot.exists());
-                Log.d("VUDV", "Số lượng sách kéo về được: " + snapshot.getChildrenCount());
-                // Tạo một danh sách rỗng để hứng dữ liệu
-                List<Book> dataList = new ArrayList<>();
-
-                // Duyệt qua từng nút con (book1, book2...) nằm bên trong nút "book"
+                dataList.clear();
                 for (DataSnapshot bookSnap : snapshot.getChildren()) {
-
-                    // Ép kiểu dữ liệu JSON từ mạng tự động dịch sang Object Book trong Java
                     Book book = bookSnap.getValue(Book.class);
-
                     if (book != null) {
-                        dataList.add(book); // Thêm cuốn sách vào danh sách tổng
+                        dataList.add(book);
                     }
                 }
-
-                // 4. Giao danh sách dữ liệu online cho Adapter để vẽ lên GridView/RecyclerView
-                adapter = new BookGridAdapter(ListProductActivity.this, dataList);
-                rvProducts.setAdapter(adapter);
+                adapter.notifyDataSetChanged();
             }
+
 
             @Override
             public void onCancelled(DatabaseError error) {
-                // Hàm này chạy khi bị lỗi đường truyền mạng hoặc cấu hình sai rules bảo mật
-                Toast.makeText(ListProductActivity.this, "Lỗi kết nối Firebase: " + error.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(ListProductActivity.this, "Lỗi Firebase: " + error.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
+    }
+    public void chuyen(View view){
+        Intent intent = new Intent(ListProductActivity.this, FilterActivity.class);
+        startActivity(intent);
+    }
+    public void checked(View view){
+        boolean isChecked = false;
+        if (isChecked) {
+            // TODO: Chỗ này bạn viết lệnh lưu vào Firebase (đánh dấu sách yêu thích)
+            Toast.makeText(ListProductActivity.this, "Đã thêm vào yêu thích!", Toast.LENGTH_SHORT).show();
+        } else {
+            // TODO: Chỗ này viết lệnh xóa khỏi Firebase
+        }
     }
 }

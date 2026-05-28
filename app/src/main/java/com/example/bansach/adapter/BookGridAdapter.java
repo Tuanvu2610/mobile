@@ -1,6 +1,7 @@
 package com.example.bansach.adapter;
 
 import android.content.Context;
+import android.graphics.Paint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,7 +43,12 @@ public class BookGridAdapter extends RecyclerView.Adapter<BookGridAdapter.BookVi
 
         // Đổ chữ vào TextView
         holder.tvBookTitle.setText(book.getTen_Sach());
-        holder.tvBookPrice.setText(book.getDon_gia() + " đ");
+        String formattedPrice = String.format("%,.0fđ", book.getDon_gia());
+        holder.tvBookPrice.setText(formattedPrice);
+        holder.txtPriceSale.setText(formattedPrice);
+        holder.txtPriceSale.setPaintFlags(holder.txtPriceSale.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+
+//        holder.txtAuthor.setText(book.getTG());
 
         // Dùng thư viện Glide để load ảnh bìa sách từ Internet đổ vào ImageView
         Glide.with(context)
@@ -58,7 +64,7 @@ public class BookGridAdapter extends RecyclerView.Adapter<BookGridAdapter.BookVi
     // Lớp này dùng để ánh xạ các view trong file item_book.xml
     public static class BookViewHolder extends RecyclerView.ViewHolder {
         ImageView imgBookCover;
-        TextView tvBookTitle, tvBookPrice;
+        TextView tvBookTitle, tvBookPrice, txtPriceSale ;
 
         public BookViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -66,6 +72,9 @@ public class BookGridAdapter extends RecyclerView.Adapter<BookGridAdapter.BookVi
             imgBookCover = itemView.findViewById(R.id.imgBook);
             tvBookTitle = itemView.findViewById(R.id.txtTitle);
             tvBookPrice = itemView.findViewById(R.id.txtPrice);
+            txtPriceSale = itemView.findViewById(R.id.txtPriceSale);
+
+//            txtAuthor = itemView.findViewById(R.id.txtAuthor);
         }
     }
 }

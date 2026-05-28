@@ -1,0 +1,369 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layout_product_detail"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F5F5F5"
+    tools:context=".Activity.ProductDetailActivity">
+
+    <!-- SCROLL -->
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/bottomLayout">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!-- IMAGE -->
+
+            <ImageView
+                android:id="@+id/imgBook"
+                android:layout_width="match_parent"
+                android:layout_height="350dp"
+                android:scaleType="centerCrop"
+         />
+
+            <!-- CONTENT -->
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp"
+                android:background="#FFFFFF">
+
+                <!-- TITLE -->
+
+                <TextView
+                    android:id="@+id/txtBookName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Zen in the Art of Writing"
+                    android:textStyle="bold"
+                    android:textSize="28sp"
+                    android:textColor="#212121" />
+
+                <!-- AUTHOR -->
+
+                <TextView
+                    android:id="@+id/txtAuthor"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Ray Bradbury"
+                    android:textSize="18sp"
+                    android:textColor="#FF9800"
+                    android:layout_marginTop="5dp"/>
+
+                <!-- PRICE -->
+
+                <TextView
+                    android:id="@+id/txtPrice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="250.000đ"
+                    android:textStyle="bold"
+                    android:textColor="#E91E63"
+                    android:textSize="30sp"
+                    android:layout_marginTop="10dp"/>
+
+                <!-- STOCK -->
+
+                <TextView
+                    android:id="@+id/txtStock"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Còn hàng"
+                    android:textColor="#4CAF50"
+                    android:textStyle="bold"
+                    android:textSize="16sp"
+                    android:layout_marginTop="5dp"/>
+
+                <!-- RATING -->
+
+                <RatingBar
+                    android:id="@+id/ratingBar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:numStars="5"
+                    android:rating="4"
+                    android:layout_marginTop="10dp"/>
+
+                <!-- DESCRIPTION TITLE -->
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Mô tả sản phẩm"
+                    android:textStyle="bold"
+                    android:textSize="22sp"
+                    android:textColor="#212121"
+                    android:layout_marginTop="25dp"/>
+
+                <!-- DESCRIPTION -->
+
+                <TextView
+                    android:id="@+id/txtDescription"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Được mệnh danh là kinh thánh của Tarot..."
+                    android:maxLines="3"
+                    android:ellipsize="end"
+                    android:textSize="16sp"
+                    android:textColor="#616161"
+                    android:lineSpacingExtra="5dp"
+                    android:layout_marginTop="10dp"/>
+
+                <!-- READ MORE -->
+
+                <TextView
+                    android:id="@+id/txtReadMore"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Xem thêm"
+                    android:textColor="#FFC107"
+                    android:textStyle="bold"
+                    android:textSize="16sp"
+                    android:layout_marginTop="10dp"/>
+
+                <!-- PRODUCT INFO -->
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Thông tin sản phẩm"
+                    android:textStyle="bold"
+                    android:textSize="22sp"
+                    android:textColor="#212121"
+                    android:layout_marginTop="30dp"/>
+
+                <!-- INFO BOX -->
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:background="#FAFAFA"
+                    android:padding="15dp"
+                    android:layout_marginTop="10dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Tác giả: Ray Bradbury"
+                        android:textSize="16sp"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Nhà xuất bản: HarperCollins"
+                        android:textSize="16sp"
+                        android:layout_marginTop="8dp"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Số trang: 368"
+                        android:textSize="16sp"
+                        android:layout_marginTop="8dp"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Ngôn ngữ: Tiếng Anh"
+                        android:textSize="16sp"
+                        android:layout_marginTop="8dp"/>
+
+                </LinearLayout>
+
+                <!-- REVIEW TITLE -->
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Đánh giá khách hàng"
+                    android:textStyle="bold"
+                    android:textSize="22sp"
+                    android:textColor="#212121"
+                    android:layout_marginTop="30dp"/>
+
+                <!-- REVIEW CARD -->
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:background="#FAFAFA"
+                    android:padding="15dp"
+                    android:layout_marginTop="15dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Nguyễn Văn A"
+                        android:textStyle="bold"
+                        android:textSize="16sp"/>
+
+                    <RatingBar
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:numStars="5"
+                        android:rating="5"
+                        android:scaleX="0.7"
+                        android:scaleY="0.7"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Sách rất hay, giao hàng nhanh."
+                        android:textSize="15sp"/>
+                </LinearLayout>
+                <!-- DANH SÁCH REVIEW -->
+
+                <LinearLayout
+                    android:id="@+id/layoutReviewList"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginTop="15dp"/>
+
+                <!-- BUTTON REVIEW -->
+
+                <Button
+                    android:id="@+id/btnWriteReview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Viết đánh giá"
+                    android:layout_marginTop="20dp"/>
+
+                <!-- FORM REVIEW -->
+
+                <LinearLayout
+                    android:id="@+id/layoutReviewForm"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="gone"
+                    android:background="#FAFAFA"
+                    android:padding="15dp"
+                    android:layout_marginTop="15dp">
+
+                    <EditText
+                        android:id="@+id/edtReview"
+                        android:layout_width="match_parent"
+                        android:layout_height="120dp"
+                        android:hint="Nhập đánh giá..."
+                        android:gravity="top"
+                        android:padding="10dp"/>
+
+                    <RatingBar
+                        android:id="@+id/ratingInput"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:numStars="5"
+                        android:layout_marginTop="10dp"/>
+
+                    <Button
+                        android:id="@+id/btnSendReview"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="GỬI ĐÁNH GIÁ"
+                        android:layout_marginTop="15dp"/>
+                </LinearLayout>
+
+                <!-- RELATED -->
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Sách cùng thể loại"
+                    android:textStyle="bold"
+                    android:textSize="22sp"
+                    android:textColor="#212121"
+                    android:layout_marginTop="30dp"/>
+
+                <HorizontalScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="120dp"
+                            android:layout_height="180dp"
+                            android:src="@drawable/book"
+                            android:layout_marginRight="10dp"/>
+
+                        <ImageView
+                            android:layout_width="120dp"
+                            android:layout_height="180dp"
+                            android:src="@drawable/book"
+                            android:layout_marginRight="10dp"/>
+
+                    </LinearLayout>
+
+                </HorizontalScrollView>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+    <!-- BOTTOM -->
+
+    <LinearLayout
+        android:id="@+id/bottomLayout"
+        android:layout_width="match_parent"
+        android:layout_height="75dp"
+        android:layout_alignParentBottom="true"
+        android:background="#FFFFFF"
+        android:orientation="horizontal"
+        android:padding="10dp"
+        android:elevation="8dp">
+
+        <Button
+            android:id="@+id/btnMinus"
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:text="-"/>
+
+        <TextView
+            android:id="@+id/txtQuantity"
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="1"
+            android:textStyle="bold"
+            android:textSize="20sp"/>
+
+        <Button
+            android:id="@+id/btnPlus"
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:text="+"/>
+
+        <Button
+            android:id="@+id/btnAddToCart"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="THÊM VÀO GIỎ"
+            android:textColor="#FFFFFF"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:background="#7E57C2"
+            android:layout_marginLeft="10dp"/>
+
+    </LinearLayout>
+
+</RelativeLayout>

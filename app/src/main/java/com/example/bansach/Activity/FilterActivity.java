@@ -1,25 +1,19 @@
 package com.example.bansach.Activity;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
 
 import com.example.bansach.R;
 
-public class MainActivity extends AppCompatActivity {
-
+public class FilterActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.layout_side_menu);
+        setContentView(R.layout.layout_choose_filter);
     }
 
-    public void chuyen(View view){
-        Intent intent = new Intent(MainActivity.this, ListProductActivity.class);
-        startActivity(intent);
-    }
 }

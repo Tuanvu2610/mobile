@@ -79,6 +79,7 @@
                 android:layout_height="wrap_content" />
 
             <Button
+                android:onClick="chuyen"
                 android:id="@+id/btnApply"
                 android:layout_width="0dp"
                 android:layout_height="50dp"
