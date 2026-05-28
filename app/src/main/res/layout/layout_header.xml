@@ -58,8 +58,7 @@
         <ImageView
             android:layout_width="32dp"
             android:layout_height="22dp"
-            android:scaleType="centerCrop"
-             />
+            android:scaleType="centerCrop"/>
 
         <ImageView
             android:layout_width="16dp"
@@ -141,7 +140,5 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/imgUser"
         app:layout_constraintTop_toTopOf="parent" />
-
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>
