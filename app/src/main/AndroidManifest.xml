@@ -28,6 +28,10 @@
             android:name=".Activity.ListProductActivity"
             android:exported="false">
         </activity>
+        <activity
+            android:name=".Activity.ProductDetailActivity"
+            android:exported="true">
+        </activity>
 
     </application>
 
