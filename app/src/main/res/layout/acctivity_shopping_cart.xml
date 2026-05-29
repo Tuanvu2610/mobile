@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <!-- HEADER -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="65dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:background="@color/white">
+
+        <ImageButton
+            android:id="@+id/btnBack"
+            android:layout_marginLeft="15dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_back"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:padding="8dp" />
+
+        <TextView
+            android:id="@+id/tvCartTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Giỏ hàng"
+            android:layout_marginLeft="10dp"
+            android:textSize="21sp"
+            android:textStyle="bold"
+            />
+
+        <TextView
+            android:id="@+id/tvEdit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Sửa"
+            android:textSize="17sp"
+            android:layout_marginRight="15dp"
+            android:textColor="@color/cardview_dark_background" />
+
+        <ImageButton
+            android:id="@+id/btnChat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/icon_message"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:layout_marginRight="10dp"
+            android:padding="8dp" />
+    </LinearLayout>
+
+    <!-- BODY -->
+    <ListView
+        android:id="@+id/lvCart"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:divider="@null"
+        android:dividerHeight="10dp"/>
+
+    <!-- FOOTER -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@color/white"
+        android:elevation="8dp">
+        <!--Voucher-->
+        <LinearLayout
+            android:id="@+id/layoutVoucher"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:paddingStart="14dp"
+            android:paddingEnd="14dp"
+            android:background="?attr/selectableItemBackground">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/icon_voucher"
+                android:layout_marginEnd="8dp"/>
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Voucher"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="#0047ab"/>
+            <TextView
+                android:id="@+id/tvVoucher"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Chọn hoặc nhập mã >"
+                android:textColor="#AAAAAA"/>
+        </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#F0F0F0"/>
+        <!--Mua hàng-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:paddingStart="14dp"
+            android:paddingEnd="14dp">
+
+            <CheckBox
+                android:id="@+id/cbSelectAll"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tất cả"
+                android:buttonTint="#0047ab"
+                />
+            <TextView
+                android:id="@+id/tvTotal"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="end"
+                android:layout_marginEnd="10dp"
+                android:text="0đ"
+                android:textColor="#ff0000"
+                android:textSize="16sp"
+                android:textStyle="bold"/>
+            <Button
+                android:id="@+id/btnBuy"
+                android:layout_width="wrap_content"
+                android:layout_height="44dp"
+                android:text="Mua hàng"
+                android:backgroundTint="#ff0000"
+                android:textColor="#FFFFFF"
+                android:textSize="14sp"
+                android:stateListAnimator="@null"/>
+        </LinearLayout>
+
+    </LinearLayout>
+</LinearLayout>

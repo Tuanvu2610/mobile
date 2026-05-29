@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:background="@color/white"
+    android:padding="9dp">
+
+    <ImageView
+        android:id="@+id/imgProduct"
+        android:layout_width="90dp"
+        android:layout_height="110dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/ic_launcher_background"/>
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:layout_marginStart="12dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+            <TextView
+                android:id="@+id/tvProductName"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:maxLines="2"
+                android:ellipsize="end"
+                android:text="Tên Sách Oet đâu nè"
+                android:textSize="13sp"
+                android:textStyle="bold"
+                android:textColor="#222222"/>
+            <TextView
+                android:id="@+id/tvnDelete"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="X"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:textColor="#888888"
+                />
+        </LinearLayout>
+        <TextView
+            android:id="@+id/tvProductCode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="12sp"
+            android:text="MÃ sách gfo gì đó"
+            android:textColor="#EE4D2D"
+            android:layout_marginTop="4dp"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginTop="8dp">
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:background="@drawable/bg_quantity"
+
+                >
+                <Button
+
+                    android:id="@+id/btnMinus"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:text="−"
+                    android:textSize="16sp"
+                    android:padding="0dp"
+                    android:textColor="#333333"
+                    android:stateListAnimator="@null"
+                    android:background="@android:color/transparent"
+
+                    />
+                <TextView
+                    android:id="@+id/tvQuantity"
+                    android:layout_width="36dp"
+                    android:layout_height="wrap_content"
+                    android:text="100"
+                    android:gravity="center"
+                    android:textSize="14sp"
+                    android:textColor="#222222"/>
+
+                <Button
+                    android:id="@+id/btnPlus"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:text="+"
+                    android:textSize="16sp"
+                    android:padding="0dp"
+                    android:background="@android:color/transparent"
+                    android:textColor="#333333"
+                    android:stateListAnimator="@null"/>
+
+            </LinearLayout>
+            <TextView
+                android:id="@+id/tvPrice"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="end"
+                android:text="GIá tiền ở đây nè"
+                android:textColor="#222222"
+                android:textSize="14sp"
+                android:textStyle="bold"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>
