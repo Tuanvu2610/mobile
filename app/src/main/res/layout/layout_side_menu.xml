@@ -21,8 +21,11 @@
             app:tint="#333333" />
     </RelativeLayout>
 
+    <ListView
+        android:id="@+id/lvCategory"
         android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:orientation="vertical">
-
+    </ListView>
 
 </LinearLayout>
