@@ -1,6 +1,7 @@
 package com.example.bansach.Activity;
 
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -33,37 +34,18 @@ public class CategoryActivity extends AppCompatActivity {
         listSubCate = new ArrayList<>();
         displayList = new ArrayList<>();
 
-        adapter = new CategoryAdapter(displayList, this);
+        adapter = new CategoryAdapter(displayList, listSubCate, this);
         lvCategory.setAdapter(adapter);
 
         fetchOnlineDataCategory();
+        View viewTransparentClose = findViewById(R.id.view_transparent_close);
 
-        lvCategory.setOnItemClickListener((parent, view, position, id) -> {
-            Category cate = displayList.get(position);
-            if (cate.getLink() != null && !cate.getLink().trim().isEmpty()) {
-
-                if (!cate.isExpanded()) {
-                    // mở submenu
-                    int index = position + 1;
-                    for (Category sub : listSubCate) {
-                        if (sub.getParent_id() == cate.getCategory_id()) {
-                            displayList.add(index, sub);
-                            index++;
-                        }
-                    }
-                    cate.setExpanded(true);
-                } else {
-                    // Thu submenu
-                    for (int i = displayList.size() - 1; i >= 0; i--) {
-                        Category item = displayList.get(i);
-                        if (item.getParent_id() == cate.getCategory_id()) {
-                            displayList.remove(i);
-                        }
-                    }
-                    cate.setExpanded(false);
-                }
-
-                adapter.notifyDataSetChanged();
+        // Xử lý sự kiện bấm vào khoảng trống không phải menu
+        viewTransparentClose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+                overridePendingTransition(R.anim.stay_still, R.anim.slide_out_left);
             }
         });
     }

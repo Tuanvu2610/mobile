@@ -1,11 +1,13 @@
 package com.example.bansach.adapter;
 
+
 import android.content.Context;
 import android.graphics.Paint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -21,8 +23,6 @@ public class BookGridAdapter extends RecyclerView.Adapter<BookGridAdapter.BookVi
 
     private Context context;
     private List<Book> bookList;
-
-    // Hàm khởi tạo để nhận dữ liệu truyền vào
     public BookGridAdapter(Context context, List<Book> bookList) {
         this.context = context;
         this.bookList = bookList;
@@ -31,26 +31,35 @@ public class BookGridAdapter extends RecyclerView.Adapter<BookGridAdapter.BookVi
     @NonNull
     @Override
     public BookViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        // Nạp file giao diện 1 ô sách (item_book.xml) vào
         View view = LayoutInflater.from(context).inflate(R.layout.item_book, parent, false);
         return new BookViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull BookViewHolder holder, int position) {
-        // Lấy thông tin cuốn sách ở vị trí hiện tại
         Book book = bookList.get(position);
+        holder.tvBookTitle.setText(book.getTenSP());
 
-        // Đổ chữ vào TextView
-        holder.tvBookTitle.setText(book.getTen_Sach());
-        String formattedPrice = String.format("%,.0fđ", book.getDon_gia());
-        holder.tvBookPrice.setText(formattedPrice);
-        holder.txtPriceSale.setText(formattedPrice);
+        String formattedGiaBan = String.format("%,.0fđ", book.getGia_Ban());
+        holder.tvBookPrice.setText(formattedGiaBan);
+
+        String formattedDonGia = String.format("%,.0fđ", book.getDon_gia());
+        holder.txtPriceSale.setText(formattedDonGia);
         holder.txtPriceSale.setPaintFlags(holder.txtPriceSale.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
 
-//        holder.txtAuthor.setText(book.getTG());
+        holder.txtAuthor.setText(book.getTG());
+        int soDanhGia = book.getReviewCount();
 
-        // Dùng thư viện Glide để load ảnh bìa sách từ Internet đổ vào ImageView
+//        if(soDanhGia > 0) {
+        holder.txtRating.setText("(" + soDanhGia + " đánh giá)");
+        holder.txtRating.setVisibility(View.VISIBLE);
+//        } else {
+//            // Nếu = 0 (tức là sách cũ chưa ai đánh giá, hoặc dữ liệu JSON đang thiếu)
+//            // Bạn có thể ẩn cái dòng chữ đó đi cho gọn
+//            holder.txtRating.setVisibility(View.GONE);
+//        }
+        float soSao = (float) book.getAverageRating();
+        holder.ratingBar.setRating(soSao);
         Glide.with(context)
                 .load(book.getImg())
                 .into(holder.imgBookCover);
@@ -61,11 +70,10 @@ public class BookGridAdapter extends RecyclerView.Adapter<BookGridAdapter.BookVi
         return bookList == null ? 0 : bookList.size();
     }
 
-    // Lớp này dùng để ánh xạ các view trong file item_book.xml
     public static class BookViewHolder extends RecyclerView.ViewHolder {
         ImageView imgBookCover;
-        TextView tvBookTitle, tvBookPrice, txtPriceSale ;
-
+        TextView tvBookTitle, tvBookPrice, txtPriceSale, txtAuthor, txtRating;
+        RatingBar ratingBar;
         public BookViewHolder(@NonNull View itemView) {
             super(itemView);
             // Thay đổi ID ở đây nếu file item_book.xml của bạn đặt ID khác
@@ -73,8 +81,12 @@ public class BookGridAdapter extends RecyclerView.Adapter<BookGridAdapter.BookVi
             tvBookTitle = itemView.findViewById(R.id.txtTitle);
             tvBookPrice = itemView.findViewById(R.id.txtPrice);
             txtPriceSale = itemView.findViewById(R.id.txtPriceSale);
-
-//            txtAuthor = itemView.findViewById(R.id.txtAuthor);
+            txtAuthor = itemView.findViewById(R.id.txtAuthor);
+            txtRating = itemView.findViewById(R.id.txtRating);
+            ratingBar = itemView.findViewById(R.id.ratingBar);
         }
+    }
+    public void countReview(int position){
+
     }
 }
