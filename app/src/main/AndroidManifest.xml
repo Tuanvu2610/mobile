@@ -18,14 +18,18 @@
         <activity
             android:name=".Activity.MainActivity"
             android:exported="true">
-
         </activity>
 
         <activity
             android:name=".Activity.ListProductActivity"
             android:exported="true">
-
         </activity>
+
+        <activity
+            android:name=".Activity.AccountInfoActivity"
+            android:exported="true">
+        </activity>
+
         <activity
             android:name=".Activity.CategoryActivity"
             android:exported="true">
