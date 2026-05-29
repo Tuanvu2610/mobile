@@ -9,13 +9,14 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.bansach.R;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.layout_side_menu);
+        setContentView(R.layout.activity_main);
+        setupHeader();
     }
 
     public void chuyen(View view){

@@ -8,12 +8,13 @@ import androidx.recyclerview.widget.GridLayoutManager;
 
 import com.example.bansach.R;
 
-public class FilterActivity extends AppCompatActivity {
+public class FilterActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.layout_choose_filter);
+        setupHeader();
     }
 
 }

@@ -1,5 +1,7 @@
 package com.example.bansach.Activity;
 
+import static java.lang.String.*;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -29,7 +31,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class ListProductActivity extends AppCompatActivity {
+public class ListProductActivity extends BaseActivity {
 
     private RecyclerView rvProducts;
     private BookGridAdapter adapter;
@@ -41,8 +43,8 @@ public class ListProductActivity extends AppCompatActivity {
 
         rvProducts = findViewById(R.id.rvProducts);
         rvProducts.setLayoutManager(new GridLayoutManager(this, 2));
-
         fetchOnlineDataProduct();
+        setupHeader();
     }
 
     private void fetchOnlineDataProduct() {
@@ -52,15 +54,19 @@ public class ListProductActivity extends AppCompatActivity {
         List<Book> dataList = new ArrayList<>();
         adapter = new BookGridAdapter(ListProductActivity.this, dataList);
         rvProducts.setAdapter(adapter);
+        Intent intent = getIntent();
+        int category_id = intent.getIntExtra("CATEGORY_ID", -1);
 
         booksRef.addValueEventListener(new ValueEventListener() {
-         @Override
+            @Override
             public void onDataChange(DataSnapshot snapshot) {
                 dataList.clear();
                 for (DataSnapshot bookSnap : snapshot.getChildren()) {
                     Book book = bookSnap.getValue(Book.class);
                     if (book != null) {
-                        dataList.add(book);
+                        if (category_id == book.getCategory_id()){
+                            dataList.add(book);
+                        }
                     }
                 }
                 adapter.notifyDataSetChanged();
