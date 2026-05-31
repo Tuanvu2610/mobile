@@ -36,13 +36,17 @@
 
         <activity
             android:name=".Activity.CategoryActivity"
+            android:theme="@style/Theme.TransparentMenu"
             android:exported="true">
         </activity>
         <activity
             android:name=".Activity.ProductDetailActivity"
             android:exported="true">
         </activity>
-
+        <activity
+            android:name=".Activity.FilterActivity"
+            android:exported="true">
+        </activity>
     </application>
 
 </manifest>

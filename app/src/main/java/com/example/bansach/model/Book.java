@@ -13,7 +13,6 @@ public class Book {
     private int reviewCount;
     private double averageRating;
     public Book() {
-        // Constructor rỗng bắt buộc cho Firebase
     }
 
     public Book(String tenSP, double don_gia, String img, double gia_Ban, int maSP, String NXB, String nam_XB, String TG, int category_id) {
@@ -115,4 +114,9 @@ public class Book {
     public void setAverageRating(double averageRating) {
         this.averageRating = averageRating;
     }
+
+//    public int getParent_id() {
+//        return parent_id;
+//    }
+
 }

@@ -14,6 +14,7 @@ import com.example.bansach.Activity.ListProductActivity;
 import com.example.bansach.R;
 import com.example.bansach.model.Category;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class CategoryAdapter extends BaseAdapter {
@@ -86,17 +87,24 @@ public class CategoryAdapter extends BaseAdapter {
             text.setTextSize(14);
             text.setPadding(120,40,40,40);
         }
+        Intent intent = new Intent(context, ListProductActivity.class);
         convertView.setOnClickListener(v -> {
+            ArrayList<Integer> listChildIds = new ArrayList<>();
             if (cate.getLink() == null) {
-                Intent intent = new Intent(context, ListProductActivity.class);
-                intent.putExtra("CATEGORY_ID", cate.getCategory_id());
+                listChildIds.add(cate.getCategory_id());
+                intent.putIntegerArrayListExtra("LIST_CHILD_IDS", listChildIds);
                 context.startActivity(intent);
             }
-//            else {
-//                Intent intent = new Intent(context, ListProductActivity.class);
-//                intent.putExtra("CATEGORY_ID", cate.getCategory_id());
-//                context.startActivity(intent);
-//            }
+            else {
+                listChildIds.add(cate.getCategory_id());
+                for (Category item : listSubCate) {
+                    if (item.getParent_id() == cate.getCategory_id()) {
+                        listChildIds.add(item.getCategory_id());
+                    }
+                }
+                intent.putIntegerArrayListExtra("LIST_CHILD_IDS", listChildIds);
+                context.startActivity(intent);
+            }
         });
         return convertView;
     }
