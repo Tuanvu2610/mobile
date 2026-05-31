@@ -26,6 +26,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -189,7 +190,7 @@ public class ListProductActivity extends BaseActivity {
             Collections.sort(dataList, new Comparator<Book>() {
                 @Override
                 public int compare(Book b1, Book b2) {
-                    return Double.compare(b2.getGia_Ban(), b1.getGia_Ban());
+                    return Double.compare(b2.getMaSP(), b1.getMaSP());
                 }
             });
         }
@@ -197,7 +198,7 @@ public class ListProductActivity extends BaseActivity {
             Collections.sort(dataList, new Comparator<Book>() {
                 @Override
                 public int compare(Book b1, Book b2) {
-                    return Double.compare(b1.getGia_Ban(), b2.getGia_Ban());
+                    return Double.compare(b1.getMaSP(), b2.getMaSP());
                 }
             });
         }
