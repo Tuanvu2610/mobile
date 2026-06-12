@@ -125,27 +125,31 @@ public class ListProductActivity extends BaseActivity {
 
     private void filterBooks(String tieuChiLoc) {
         dataList.clear();
-        for (Book book : fullBookList) {
-            double giaSach = book.getGia_Ban();
-            if (tieuChiLoc.equals("Dưới 1.000.000₫")) {
-                if (giaSach < 1000000) {
-                    dataList.add(book);
-                }
-            } else if (tieuChiLoc.equals("100.000₫ - 300.000₫")) {
-                if (giaSach >= 100000 && giaSach <= 300000) {
-                    dataList.add(book);
-                }
-            } else if (tieuChiLoc.equals("300.000₫ - 500.000₫")) {
-                if (giaSach >= 300000 && giaSach <= 500000) {
-                    dataList.add(book);
-                }
-            } else if (tieuChiLoc.equals("500.000đ - 1.000.000₫")) {
-                if (giaSach >= 500000 && giaSach <= 1000000) {
-                    dataList.add(book);
-                }
-            } else if (tieuChiLoc.equals("Trên 1.000.000₫")) {
-                if (giaSach > 1000000) {
-                    dataList.add(book);
+        if (tieuChiLoc == null || tieuChiLoc.isEmpty()) {
+            dataList.addAll(fullBookList);
+        }else {
+            for (Book book : fullBookList) {
+                double giaSach = book.getGia_Ban();
+                if (tieuChiLoc.equals("Dưới 1.000.000₫")) {
+                    if (giaSach < 1000000) {
+                        dataList.add(book);
+                    }
+                } else if (tieuChiLoc.equals("100.000₫ - 300.000₫")) {
+                    if (giaSach >= 100000 && giaSach <= 300000) {
+                        dataList.add(book);
+                    }
+                } else if (tieuChiLoc.equals("300.000₫ - 500.000₫")) {
+                    if (giaSach >= 300000 && giaSach <= 500000) {
+                        dataList.add(book);
+                    }
+                } else if (tieuChiLoc.equals("500.000đ - 1.000.000₫")) {
+                    if (giaSach >= 500000 && giaSach <= 1000000) {
+                        dataList.add(book);
+                    }
+                } else if (tieuChiLoc.equals("Trên 1.000.000₫")) {
+                    if (giaSach > 1000000) {
+                        dataList.add(book);
+                    }
                 }
             }
         }
@@ -153,7 +157,9 @@ public class ListProductActivity extends BaseActivity {
     }
 
     public void sortBooks(String tieuChiLoc) {
-        if (tieuChiLoc.equals("Giá: Tăng dần")) {
+        java.text.Collator viCollator = java.text.Collator.getInstance(new java.util.Locale("vi", "VN"));
+
+        if (tieuChiLoc.trim().equals("Giá: Tăng dần")) {
             Collections.sort(dataList, new Comparator<Book>() {
                 @Override
                 public int compare(Book b1, Book b2) {
@@ -161,8 +167,7 @@ public class ListProductActivity extends BaseActivity {
                 }
             });
         }
-        else if (tieuChiLoc.equals("Giá: Giảm dần")) {
-            // Sắp xếp giảm dần theo giá
+        else if (tieuChiLoc.trim().equals("Giá: Giảm dần")) {
             Collections.sort(dataList, new Comparator<Book>() {
                 @Override
                 public int compare(Book b1, Book b2) {
@@ -170,23 +175,28 @@ public class ListProductActivity extends BaseActivity {
                 }
             });
         }
-        else if (tieuChiLoc.equals("Tên: A-Z")) {
+        else if (tieuChiLoc.trim().equals("Tên: A-Z")) {
             Collections.sort(dataList, new Comparator<Book>() {
                 @Override
                 public int compare(Book b1, Book b2) {
-                    return b1.getTenSP().compareToIgnoreCase(b2.getTenSP());
+                    String ten1 = b1.getTenSP() != null ? b1.getTenSP() : "";
+                    String ten2 = b2.getTenSP() != null ? b2.getTenSP() : "";
+
+                    return viCollator.compare(ten1, ten2);
                 }
             });
         }
-        else if (tieuChiLoc.equals("Tên: Z-A")) {
+        else if (tieuChiLoc.trim().equals("Tên: Z-A")) {
             Collections.sort(dataList, new Comparator<Book>() {
                 @Override
                 public int compare(Book b1, Book b2) {
-                    return b2.getTenSP().compareToIgnoreCase(b1.getTenSP());
+                    String ten1 = b1.getTenSP() != null ? b1.getTenSP() : "";
+                    String ten2 = b2.getTenSP() != null ? b2.getTenSP() : "";
+                    return viCollator.compare(ten2, ten1);
                 }
             });
         }
-        else if (tieuChiLoc.equals("Mới nhất")) {
+        else if (tieuChiLoc.trim().equals("Mới nhất")) {
             Collections.sort(dataList, new Comparator<Book>() {
                 @Override
                 public int compare(Book b1, Book b2) {
@@ -194,7 +204,7 @@ public class ListProductActivity extends BaseActivity {
                 }
             });
         }
-        else if (tieuChiLoc.equals("Cũ nhất")) {
+        else if (tieuChiLoc.trim().equals("Cũ nhất")) {
             Collections.sort(dataList, new Comparator<Book>() {
                 @Override
                 public int compare(Book b1, Book b2) {

@@ -46,11 +46,25 @@ public class FilterActivity extends BaseActivity {
         RadioGroup radioGroupPrice = findViewById(R.id.rgSortPrice);
         int selectedIdPrice = radioGroupPrice.getCheckedRadioButtonId();
         int selectedIdSort = radioGroupSort.getCheckedRadioButtonId();
-        if (selectedIdSort != -1 || selectedIdPrice != -1) {
+
+        String tieuChiLocSort = null;
+        String tieuChiLocPrice = null;
+
+        if (selectedIdSort != -1) {
             RadioButton selectedRadioSort = findViewById(selectedIdSort);
+            if (selectedRadioSort != null) {
+                tieuChiLocSort = selectedRadioSort.getText().toString();
+            }
+        }
+
+        if (selectedIdPrice != -1) {
             RadioButton selectedRadioPrice = findViewById(selectedIdPrice);
-            String tieuChiLocSort = selectedRadioSort.getText().toString();
-            String tieuChiLocPrice = selectedRadioPrice.getText().toString();
+            if (selectedRadioPrice != null) {
+                tieuChiLocPrice = selectedRadioPrice.getText().toString();
+            }
+        }
+
+        if (tieuChiLocSort != null || tieuChiLocPrice != null) {
             Intent returnIntent = new Intent();
             returnIntent.putExtra("GIA_TRI_LOC_SORT", tieuChiLocSort);
             returnIntent.putExtra("GIA_TRI_LOC_PRICE", tieuChiLocPrice);
