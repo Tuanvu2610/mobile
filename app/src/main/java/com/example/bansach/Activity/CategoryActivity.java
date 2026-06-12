@@ -27,7 +27,7 @@ public class CategoryActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.layout_side_menu);
+        setContentView(R.layout.layout_menu);
 
         lvCategory = findViewById(R.id.lvCategory);
         listParentCate = new ArrayList<>();
@@ -38,16 +38,6 @@ public class CategoryActivity extends AppCompatActivity {
         lvCategory.setAdapter(adapter);
 
         fetchOnlineDataCategory();
-        View viewTransparentClose = findViewById(R.id.view_transparent_close);
-
-        // Xử lý sự kiện bấm vào khoảng trống không phải menu
-        viewTransparentClose.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-                overridePendingTransition(R.anim.stay_still, R.anim.slide_out_left);
-            }
-        });
     }
 
     private void fetchOnlineDataCategory() {

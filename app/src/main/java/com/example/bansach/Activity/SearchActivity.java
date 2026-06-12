@@ -61,12 +61,18 @@ public class SearchActivity extends BaseActivity {
         rvSuggestions.setAdapter(suggestAdapter);
 
         fetchOnlineDataProduct();
-
-        edtSearch.requestFocus();
-        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-        if (imm != null) {
-            imm.showSoftInput(edtSearch, InputMethodManager.SHOW_IMPLICIT);
-        }
+        layoutHistory = findViewById(R.id.layoutHistory);
+        loadLichSuTimKiem();
+        edtSearch.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                edtSearch.requestFocus();
+                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                if (imm != null) {
+                    imm.showSoftInput(edtSearch, InputMethodManager.SHOW_IMPLICIT);
+                }
+            }
+        }, 200);
         edtSearch.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
@@ -106,9 +112,8 @@ public class SearchActivity extends BaseActivity {
                 if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                     String finalKeyword = edtSearch.getText().toString().trim();
                     if (!finalKeyword.isEmpty()) {
-
                         luuLichSuTimKiem(finalKeyword);
-
+                        loadLichSuTimKiem();
                         Intent intent = new Intent(SearchActivity.this, SearchProductActivity.class);
                         intent.putExtra("KEYWORD", finalKeyword);
                         startActivity(intent);
@@ -118,8 +123,9 @@ public class SearchActivity extends BaseActivity {
                 return false;
             }
         });
-
         setupHeader();
+        View btnBack = findViewById(R.id.btnBack);
+        btnBack.setOnClickListener(v -> finish());
     }
 
     private void fetchOnlineDataProduct() {
@@ -155,12 +161,44 @@ public class SearchActivity extends BaseActivity {
     private void luuLichSuTimKiem(String tuKhoa) {
         SharedPreferences sharedPref = getSharedPreferences("SearchHistoryPrefs", MODE_PRIVATE);
         String lichSuCu = sharedPref.getString("HISTORY_STRING", "");
+        List<String> list = new ArrayList<>();
+        String[] items = lichSuCu.split(",");
+        for (String s : items) {
+            if (!s.trim().isEmpty() && !s.equalsIgnoreCase(tuKhoa)) {
+                list.add(s);
+            }
+        }
+        list.add(0, tuKhoa);
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < Math.min(list.size(), 10); i++) {
+            sb.append(list.get(i)).append(",");
+        }
+        sharedPref.edit().putString("HISTORY_STRING", sb.toString()).apply();
+    }
+    private void loadLichSuTimKiem() {
+        layoutHistory.removeAllViews();
+        SharedPreferences sharedPref = getSharedPreferences("SearchHistoryPrefs", MODE_PRIVATE);
+        String lichSuStr = sharedPref.getString("HISTORY_STRING", "");
+        if (lichSuStr.isEmpty()) return;
+        String[] items = lichSuStr.split(",");
+        int maxDisplay = Math.min(items.length, 8);
 
-        if (!lichSuCu.startsWith(tuKhoa + ",")) {
-            String lichSuMoi = tuKhoa + "," + lichSuCu;
-            SharedPreferences.Editor editor = sharedPref.edit();
-            editor.putString("HISTORY_STRING", lichSuMoi);
-            editor.apply();
+        for (int i = 0; i < maxDisplay; i++) {
+            String keyword = items[i].trim();
+            if (keyword.isEmpty()) continue;
+            TextView tv = new TextView(this);
+            tv.setText(keyword);
+            tv.setPadding(20, 20, 20, 20);
+            tv.setTextSize(16);
+            tv.setOnClickListener(v -> {
+                edtSearch.setText(keyword);
+                edtSearch.setSelection(keyword.length());
+                Intent intent = new Intent(SearchActivity.this, SearchProductActivity.class);
+                intent.putExtra("KEYWORD", keyword);
+                startActivity(intent);
+            });
+
+            layoutHistory.addView(tv);
         }
     }
     private class SuggestionAdapter extends RecyclerView.Adapter<SuggestionAdapter.ViewHolder> {

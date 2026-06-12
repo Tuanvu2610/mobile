@@ -75,7 +75,8 @@ public class SearchProductActivity extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable s) {}
         });
-
+        View btnBack = findViewById(R.id.btnBack);
+        btnBack.setOnClickListener(v -> finish());
     }
     public void filterProduct(String keyword) {
         filterList.clear();

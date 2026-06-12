@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF"
+    android:orientation="vertical"
+    android:clickable="true"
+    android:focusable="true">
+
+    <ImageView
+        android:layout_width="14dp"
+        android:layout_height="7dp"
+        android:layout_marginStart="22dp"
+        android:src="@drawable/ic_triangle_up" />
+
+    <ListView
+        android:id="@+id/lvCategory"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:divider="#EEEEEE"
+        android:dividerHeight="1dp"
+        android:scrollbars="none" />
+
+</LinearLayout>
