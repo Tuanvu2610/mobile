@@ -2,6 +2,7 @@ package com.example.bansach.adapter;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Paint;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +15,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.bansach.Activity.ProductDetailActivity;
 import com.example.bansach.R;
 import com.example.bansach.model.Book;
 
@@ -50,19 +52,21 @@ public class BookGridAdapter extends RecyclerView.Adapter<BookGridAdapter.BookVi
         holder.txtAuthor.setText(book.getTG());
         int soDanhGia = book.getReviewCount();
 
-//        if(soDanhGia > 0) {
         holder.txtRating.setText("(" + soDanhGia + " đánh giá)");
         holder.txtRating.setVisibility(View.VISIBLE);
-//        } else {
-//            // Nếu = 0 (tức là sách cũ chưa ai đánh giá, hoặc dữ liệu JSON đang thiếu)
-//            // Bạn có thể ẩn cái dòng chữ đó đi cho gọn
-//            holder.txtRating.setVisibility(View.GONE);
-//        }
         float soSao = (float) book.getAverageRating();
         holder.ratingBar.setRating(soSao);
         Glide.with(context)
                 .load(book.getImg())
                 .into(holder.imgBookCover);
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, ProductDetailActivity.class);
+                intent.putExtra("masp", book.getMaSP());
+                context.startActivity(intent);
+            }
+        });
     }
 
     @Override

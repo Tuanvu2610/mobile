@@ -14,7 +14,14 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.bumptech.glide.Glide;
 import com.example.bansach.R;
+import com.example.bansach.model.Book;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class ProductDetailActivity extends AppCompatActivity {
 
@@ -126,6 +133,14 @@ public class ProductDetailActivity extends AppCompatActivity {
 
             isExpanded = !isExpanded;
         });
+//  gửi id
+        int maSachHienTai = getIntent().getIntExtra("masp", -1);
+
+        if (maSachHienTai != -1) {
+            fetchBookDetailFromFirebase(maSachHienTai);
+        } else {
+            Toast.makeText(this, "Không tìm thấy thông tin sách!", Toast.LENGTH_SHORT).show();
+        }
 
         // =========================
         // TĂNG SỐ LƯỢNG
@@ -357,5 +372,45 @@ public class ProductDetailActivity extends AppCompatActivity {
         scaleGestureDetector.onTouchEvent(event);
 
         return true;
+    }
+    // =========================
+    // LẤY DỮ LIỆU TỪ FIREBASE
+    // =========================
+    private void fetchBookDetailFromFirebase(double idSach) {
+        DatabaseReference bookRef = FirebaseDatabase.getInstance().getReference("book");
+        int maSanPhamCachTim = (int) idSach;
+        bookRef.orderByChild("MaSP").equalTo(maSanPhamCachTim).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    for (DataSnapshot bookSnap : snapshot.getChildren()) {
+                        Book currentBook = bookSnap.getValue(Book.class);
+                        if (currentBook != null) {
+                            TextView txtBookName = findViewById(R.id.txtBookName);
+                            TextView txtAuthor = findViewById(R.id.txtAuthor);
+                            TextView txtPrice = findViewById(R.id.txtPrice);
+                            ImageView imgBook = findViewById(R.id.imgBook);
+                            String tenSach = currentBook.getTenSP();
+                            txtBookName.setText(tenSach);
+                            txtAuthor.setText(currentBook.getTG());
+                            txtPrice.setText(String.valueOf(currentBook.getGia_Ban()) + " đ");
+                            String linkAnh = currentBook.getImg();
+                            if (linkAnh != null && !linkAnh.isEmpty()) {
+                                Glide.with(ProductDetailActivity.this)
+                                        .load(linkAnh)
+                                        .into(imgBook);
+                            }
+                        }
+                    }
+                } else {
+                    Toast.makeText(ProductDetailActivity.this, "Thất bại: Firebase không có mã số " + maSanPhamCachTim, Toast.LENGTH_LONG).show();
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+                Toast.makeText(ProductDetailActivity.this, "Lỗi mạng: " + error.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }
