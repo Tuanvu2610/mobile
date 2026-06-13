@@ -85,6 +85,13 @@ public class BaseActivity extends AppCompatActivity {
                 overridePendingTransition(0, 0);
             });
         }
+        ImageView imageCart = findViewById(R.id.imgCart);
+        if (imageCart != null) {
+            imageCart.setOnClickListener(v -> {
+                Intent intent = new Intent(BaseActivity.this, ShoppingCartActivity.class);
+                startActivity(intent);
+            });
+        }
     }
     public void filterProduct(String keyword){
         filterList.clear();

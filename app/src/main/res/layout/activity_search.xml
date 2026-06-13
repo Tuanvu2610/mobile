@@ -18,7 +18,7 @@
         <ImageView
             android:id="@+id/btnBack"
             android:layout_width="28dp"
-            android:layout_height="28dp"
+            android:layout_height="wrap_content"
             android:src="@android:drawable/ic_menu_revert"
             app:tint="#60a5fa" />
 
