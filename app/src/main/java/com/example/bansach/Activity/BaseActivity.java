@@ -103,6 +103,13 @@ public class BaseActivity extends AppCompatActivity {
                 startActivity(intent);
             });
         }
+        ImageView imgLike = findViewById(R.id.imgLike);
+        if (imgLike != null) {
+            imgLike.setOnClickListener(v -> {
+                Intent intent = new Intent(BaseActivity.this, FavoriteActivity.class);
+                startActivity(intent);
+            });
+        }
     }
     public void filterProduct(String keyword){
         filterList.clear();

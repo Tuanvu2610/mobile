@@ -81,12 +81,12 @@
     </LinearLayout>
 
     <ImageView
-        android:id="@+id/imgTruck"
+        android:id="@+id/imgLike"
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:layout_marginEnd="8dp"
         android:padding="6dp"
-        android:src="@drawable/ic_truck"
+        android:src="@drawable/ic_heart_border"
         app:layout_constraintBottom_toBottomOf="@id/topBarAnchor"
         app:layout_constraintEnd_toStartOf="@id/layoutLanguage"
         app:layout_constraintTop_toTopOf="@id/topBarAnchor"
@@ -98,7 +98,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         app:layout_constraintBottom_toBottomOf="@id/topBarAnchor"
-        app:layout_constraintEnd_toStartOf="@id/imgTruck"
+        app:layout_constraintEnd_toStartOf="@id/imgLike"
         app:layout_constraintTop_toTopOf="@id/topBarAnchor">
 
         <ImageView
