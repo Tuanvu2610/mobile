@@ -47,6 +47,17 @@ public class BaseActivity extends AppCompatActivity {
             View btnMenuHeader = findViewById(R.id.layoutMenu);
             ImageView imgIconMenu = findViewById(R.id.imgMenuIcon);
             View layoutSearchBar = findViewById(R.id.layoutSearchBar);
+            ImageView imgUser = findViewById(R.id.imgUser);
+            if (imgUser != null) {
+                imgUser.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(BaseActivity.this, LoginActivity.class);
+                        startActivity(intent);
+                        overridePendingTransition(0, 0);
+                    }
+                });
+            }
 
             // Tìm 2 khối giao diện chính để bật/tắt
             View layoutDropdownMenu = findViewById(R.id.layoutDropdownMenu);
