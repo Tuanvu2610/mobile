@@ -4,49 +4,197 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#F5F5F5"> <include
+    android:id="@+id/layoutHeaderTop"
+    layout="@layout/layout_header"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:layout_constraintTop_toTopOf="parent" />
 
-    <include
-        android:id="@+id/layoutHeaderTop"
-        layout="@layout/layout_header"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <ScrollView
+    <androidx.core.widget.NestedScrollView
         android:id="@+id/layoutMainContent"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:fillViewport="true"
         app:layout_constraintTop_toBottomOf="@id/layoutHeaderTop"
-        app:layout_constraintVertical_bias="1.0"
-        tools:layout_editor_absoluteX="88dp">
+        app:layout_constraintBottom_toBottomOf="parent">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:paddingBottom="24dp">
 
-            <TextView
+            <ImageView
+                android:id="@+id/imgMainBanner"
+                android:layout_width="match_parent"
+                android:layout_height="180dp"
+                android:scaleType="centerCrop"
+                android:background="#DDEEF9"
+                />
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="12dp"
-                android:paddingHorizontal="16dp"
-                android:text="BEST SELLER"
-                android:textColor="#333333"
-                android:textSize="20sp"
-                android:textStyle="bold" />
+                android:orientation="horizontal"
+                android:padding="8dp">
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="80dp"
+                    android:layout_weight="1"
+                    android:layout_marginEnd="4dp"
+                    android:background="#002D58" />
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="80dp"
+                    android:layout_weight="1"
+                    android:layout_marginStart="4dp"
+                    android:background="#004BA0" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="#FFFFFF"
+                android:paddingTop="16dp"
+                android:layout_marginTop="8dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="GIẢM GIÁ"
+                    android:textStyle="bold"
+                    android:textSize="22sp"
+                    android:textColor="#002D58"
+                    android:paddingHorizontal="16dp"
+                    android:layout_marginBottom="8dp"/>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rcvExploreInterest"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingHorizontal="8dp"
+                    android:nestedScrollingEnabled="false"
+                    app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                    app:spanCount="2"
+                    tools:listitem="@layout/item_book"
+                    tools:itemCount="4"/>
+
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="16dp"
+                    android:layout_marginTop="12dp"
+                    android:layout_marginBottom="16dp"
+                    android:text="XEM TẤT CẢ"
+                    android:backgroundTint="#F0F5FA"
+                    android:textColor="#004BA0"/> </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="#FFFFFF"
+                android:paddingTop="16dp"
+                android:layout_marginTop="8dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="BESTSELLERS"
+                    android:textStyle="bold"
+                    android:textSize="22sp"
+                    android:textColor="#002D58"
+                    android:paddingHorizontal="16dp" />
+
+
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/bestSellers"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingHorizontal="8dp"
+                    android:nestedScrollingEnabled="false"
+                    app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                    app:spanCount="2"
+                    tools:listitem="@layout/item_book"
+                    tools:itemCount="4"/>
+
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="16dp"
+                    android:layout_marginTop="12dp"
+                    android:layout_marginBottom="16dp"
+                    android:text="XEM TẤT CẢ "
+                    android:backgroundTint="#F0F5FA"
+                    android:textColor="#004BA0"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="#FFFFFF"
+                android:paddingTop="16dp"
+                android:layout_marginTop="8dp">
+
+
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="NEW ARRIVALS"
+                    android:textStyle="bold"
+                    android:textSize="22sp"
+                    android:textColor="#002D58"
+                    android:paddingHorizontal="16dp"/>
+
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rcvNewArrivals"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingHorizontal="8dp"
+                    android:nestedScrollingEnabled="false"
+                    app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                    app:spanCount="2"
+                    tools:listitem="@layout/item_book"
+                    tools:itemCount="4" />
+
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="16dp"
+                    android:layout_marginTop="12dp"
+                    android:layout_marginBottom="16dp"
+                    android:text="XEM TẤT CẢ"
+                    android:backgroundTint="#F0F5FA"
+                    android:textColor="#004BA0"/>
+            </LinearLayout>
+
+
+
+            <include
+                android:id="@+id/layoutFooter"
+                layout="@layout/layout_footer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp" />
+
         </LinearLayout>
-
-
-    </ScrollView>
+    </androidx.core.widget.NestedScrollView>
 
     <include
         android:id="@+id/layoutDropdownMenu"
         layout="@layout/layout_menu"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:visibility="gone" app:layout_constraintTop_toBottomOf="@id/layoutHeaderTop"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@id/layoutHeaderTop"
         app:layout_constraintBottom_toBottomOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
