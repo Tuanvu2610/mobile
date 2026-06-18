@@ -48,10 +48,19 @@ public class BaseActivity extends AppCompatActivity {
             ImageView imgIconMenu = findViewById(R.id.imgMenuIcon);
             View layoutSearchBar = findViewById(R.id.layoutSearchBar);
             ImageView imgUser = findViewById(R.id.imgUser);
+
             if (imgUser != null) {
-                imgUser.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
+                imgUser.setOnClickListener(v -> {
+                    SessionManager sessionManager = new SessionManager(BaseActivity.this);
+                    if (sessionManager.isLoggedIn()) {
+                        Toast.makeText(BaseActivity.this, "đã đăng nhập", Toast.LENGTH_SHORT).show();
+                        // Đã đăng nhập → mở ProfileActivity
+                        Intent intent = new Intent(BaseActivity.this, ProfileActivity.class);
+                        startActivity(intent);
+                        overridePendingTransition(0, 0);
+                    } else {
+                        Toast.makeText(BaseActivity.this, "chưa đăng nhập", Toast.LENGTH_SHORT).show();
+                        // Chưa đăng nhập → mở LoginActivity
                         Intent intent = new Intent(BaseActivity.this, LoginActivity.class);
                         startActivity(intent);
                         overridePendingTransition(0, 0);
@@ -59,7 +68,6 @@ public class BaseActivity extends AppCompatActivity {
                 });
             }
 
-            // Tìm 2 khối giao diện chính để bật/tắt
             View layoutDropdownMenu = findViewById(R.id.layoutDropdownMenu);
             View layoutMainContent = findViewById(R.id.layoutMainContent);
 
@@ -67,19 +75,15 @@ public class BaseActivity extends AppCompatActivity {
             if (btnMenuHeader != null) {
                 btnMenuHeader.setOnClickListener(v -> {
                     if (!isMenuOpen[0]) {
-                        // --- KHI MỞ MENU ---
                         if (layoutSearchBar != null) layoutSearchBar.setVisibility(View.GONE);
-                        if (layoutMainContent != null) layoutMainContent.setVisibility(View.GONE); // Ẩn nội dung
-                        if (layoutDropdownMenu != null) layoutDropdownMenu.setVisibility(View.VISIBLE); // Hiện menu
-
+                        if (layoutMainContent != null) layoutMainContent.setVisibility(View.GONE);
+                        if (layoutDropdownMenu != null) layoutDropdownMenu.setVisibility(View.VISIBLE);
                         if (imgIconMenu != null) imgIconMenu.setImageResource(R.drawable.ic_close);
                         isMenuOpen[0] = true;
                     } else {
-                        // --- KHI ĐÓNG MENU ---
                         if (layoutSearchBar != null) layoutSearchBar.setVisibility(View.VISIBLE);
-                        if (layoutDropdownMenu != null) layoutDropdownMenu.setVisibility(View.GONE); // Ẩn menu
-                        if (layoutMainContent != null) layoutMainContent.setVisibility(View.VISIBLE); // Hiện nội dung
-
+                        if (layoutDropdownMenu != null) layoutDropdownMenu.setVisibility(View.GONE);
+                        if (layoutMainContent != null) layoutMainContent.setVisibility(View.VISIBLE);
                         if (imgIconMenu != null) imgIconMenu.setImageResource(R.drawable.ic_menu);
                         isMenuOpen[0] = false;
                     }
@@ -87,7 +91,6 @@ public class BaseActivity extends AppCompatActivity {
             }
         }
 
-        // Code xử lý thanh tìm kiếm giữ nguyên
         TextView txtSeach = findViewById(R.id.txtSeach);
         if (txtSeach != null) {
             txtSeach.setOnClickListener(v -> {
@@ -96,6 +99,7 @@ public class BaseActivity extends AppCompatActivity {
                 overridePendingTransition(0, 0);
             });
         }
+
         ImageView imageCart = findViewById(R.id.imgCart);
         if (imageCart != null) {
             imageCart.setOnClickListener(v -> {
@@ -111,20 +115,21 @@ public class BaseActivity extends AppCompatActivity {
             });
         }
     }
-    public void filterProduct(String keyword){
+
+    public void filterProduct(String keyword) {
         filterList.clear();
-        if(keyword.isEmpty()) {
+        if (keyword.isEmpty()) {
             filterList.addAll(fullBookList);
-        }
-        else {
-            for(Book p : fullBookList){
-                if(p.getTenSP().toLowerCase().contains(keyword.toLowerCase())){
+        } else {
+            for (Book p : fullBookList) {
+                if (p.getTenSP().toLowerCase().contains(keyword.toLowerCase())) {
                     filterList.add(p);
                 }
             }
         }
         adapter.notifyDataSetChanged();
     }
+
     private void fetchOnlineDataCategory() {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference categoryRef = database.getReference("category/category");
@@ -152,7 +157,8 @@ public class BaseActivity extends AppCompatActivity {
 
             @Override
             public void onCancelled(DatabaseError error) {
-                Toast.makeText(BaseActivity.this, "Lỗi Firebase: " + error.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(BaseActivity.this,
+                        "Lỗi Firebase: " + error.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }

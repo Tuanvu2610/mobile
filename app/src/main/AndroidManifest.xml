@@ -28,12 +28,10 @@
             android:name=".Activity.ListProductActivity"
             android:exported="true">
         </activity>
-
         <activity
             android:name=".Activity.AccountInfoActivity"
             android:exported="true">
         </activity>
-
         <activity
             android:name=".Activity.CategoryActivity"
             android:theme="@style/Theme.TransparentMenu"
@@ -58,6 +56,8 @@
         <activity
             android:name=".Activity.UserActivity"
             android:exported="false"/>
+        <activity android:name=".Activity.ProfileActivity"
+            android:exported="false" />
         <activity
             android:name=".Activity.SearchActivity"
             android:exported="true">

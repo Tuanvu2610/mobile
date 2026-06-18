@@ -29,7 +29,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.concurrent.Executors;
 
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends BaseActivity {
 
     private TextInputEditText edtEmail, edtPassword;
     private MaterialButton btnLogin, btnGoogleSignIn;
@@ -38,9 +38,8 @@ public class LoginActivity extends AppCompatActivity {
 
     private DatabaseReference databaseReference;
     private CredentialManager credentialManager;
+    private SessionManager sessionManager;
 
-    // Thay YOUR_WEB_CLIENT_ID bằng Web Client ID trong Firebase Console
-    // Vào Firebase Console → Authentication → Sign-in method → Google → Web SDK configuration
     private static final String WEB_CLIENT_ID = "YOUR_WEB_CLIENT_ID";
 
     @Override
@@ -52,6 +51,7 @@ public class LoginActivity extends AppCompatActivity {
                 .getReference("accounts").child("accounts");
 
         credentialManager = CredentialManager.create(this);
+        sessionManager = new SessionManager(this);
 
         edtEmail = findViewById(R.id.edtEmail);
         edtPassword = findViewById(R.id.edtPassword);
@@ -62,14 +62,13 @@ public class LoginActivity extends AppCompatActivity {
         progressBar = findViewById(R.id.progressBar);
 
         btnLogin.setOnClickListener(v -> handleLogin());
-
         btnGoogleSignIn.setOnClickListener(v -> handleGoogleSignIn());
-
         tvForgotPassword.setOnClickListener(v ->
                 startActivity(new Intent(LoginActivity.this, ForgotPasswordActivity.class)));
-
         tvGoToRegister.setOnClickListener(v ->
                 startActivity(new Intent(LoginActivity.this, RegisterActivity.class)));
+
+        setupHeader();
     }
 
     private void handleLogin() {
@@ -108,11 +107,20 @@ public class LoginActivity extends AppCompatActivity {
                             return;
                         }
 
+                        // Lưu session
+                        sessionManager.saveLogin(
+                                account.getUser_id(),
+                                account.getUsername(),
+                                account.getRole(),
+                                account.getStatus()
+                        );
+
                         navigateByRole(account.getRole());
                         return;
                     }
                 }
                 showLoading(false);
+
                 if (!found) {
                     Toast.makeText(LoginActivity.this,
                             "Username hoặc mật khẩu không đúng!", Toast.LENGTH_SHORT).show();
@@ -126,6 +134,7 @@ public class LoginActivity extends AppCompatActivity {
                         "Lỗi kết nối: " + error.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
+        showLoading(false);
     }
 
     private void handleGoogleSignIn() {
@@ -151,7 +160,8 @@ public class LoginActivity extends AppCompatActivity {
                         runOnUiThread(() -> {
                             try {
                                 GoogleIdTokenCredential googleIdTokenCredential =
-                                        GoogleIdTokenCredential.createFrom(result.getCredential().getData());
+                                        GoogleIdTokenCredential.createFrom(
+                                                result.getCredential().getData());
                                 String email = googleIdTokenCredential.getId();
                                 String displayName = googleIdTokenCredential.getDisplayName();
                                 checkGoogleAccountInDatabase(email, displayName);
@@ -196,6 +206,14 @@ public class LoginActivity extends AppCompatActivity {
                             return;
                         }
 
+                        // Lưu session
+                        sessionManager.saveLogin(
+                                account.getUser_id(),
+                                account.getUsername(),
+                                account.getRole(),
+                                account.getStatus()
+                        );
+
                         navigateByRole(account.getRole());
                         return;
                     }
@@ -224,6 +242,10 @@ public class LoginActivity extends AppCompatActivity {
                     showLoading(false);
                     Toast.makeText(LoginActivity.this,
                             "Chào mừng " + displayName + "!", Toast.LENGTH_SHORT).show();
+
+                    // Lưu session
+                    sessionManager.saveLogin(newId, email, "user", "active");
+
                     navigateByRole("user");
                 })
                 .addOnFailureListener(e -> {
@@ -240,7 +262,7 @@ public class LoginActivity extends AppCompatActivity {
         if ("admin".equals(role)) {
             intent = new Intent(LoginActivity.this, AdminActivity.class);
         } else {
-            intent = new Intent(LoginActivity.this, UserActivity.class);
+            intent = new Intent(LoginActivity.this, MainActivity.class);
         }
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);

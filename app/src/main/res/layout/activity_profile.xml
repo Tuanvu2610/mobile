@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#F5F5F5">
@@ -13,15 +11,31 @@
         android:orientation="vertical">
 
         <!-- Header -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="InBook.vn - Nhà sách Quốc tế"
-            android:textStyle="bold"
-            android:textSize="22sp"
-            android:textColor="#000"
-            android:padding="20dp"
-            android:paddingBottom="10dp"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:background="#004BA0"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingHorizontal="16dp">
+
+            <ImageView
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:src="@android:drawable/ic_media_previous"
+                android:id="@+id/btnBack"
+                app:tint="@android:color/white" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="Bộ tứ siêu đẳng - Nhà sách Nông Lâm"
+                android:textColor="@android:color/white"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+        </LinearLayout>
 
         <!-- User Card -->
         <androidx.cardview.widget.CardView
@@ -34,16 +48,16 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="#E8F5E9"
                 android:orientation="vertical"
-                android:background="@drawable/bg_profile"
                 android:padding="20dp">
 
-                <!-- User info -->
+                <!-- User info row -->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:gravity="center_vertical">
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
 
                     <LinearLayout
                         android:layout_width="0dp"
@@ -52,67 +66,72 @@
                         android:orientation="vertical">
 
                         <TextView
+                            android:id="@+id/tvUsername"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Trần Công Vinh"
-                            android:textStyle="bold"
-                            android:textSize="24sp"
-                            android:textColor="#000"/>
+                            android:text="Đang tải..."
+                            android:textColor="#000"
+                            android:textSize="22sp"
+                            android:textStyle="bold" />
 
                         <TextView
+                            android:id="@+id/tvEmail"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="23130384@st.hcmuaf.edu.vn"
-                            android:textSize="16sp"
+                            android:layout_marginTop="4dp"
+                            android:text=""
                             android:textColor="#444"
-                            android:layout_marginTop="4dp"/>
+                            android:textSize="14sp" />
 
-                        <!-- Điểm -->
+                        <!-- Điểm tích lũy -->
                         <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:orientation="horizontal"
+                            android:layout_marginTop="10dp"
+                            android:background="@drawable/bg_points_badge"
                             android:gravity="center_vertical"
+                            android:orientation="horizontal"
                             android:paddingHorizontal="12dp"
-                            android:paddingVertical="4dp"
-                            android:background="@android:drawable/dialog_holo_light_frame"
-                            android:layout_marginTop="10dp">
+                            android:paddingVertical="4dp">
 
                             <ImageView
-                                android:layout_width="18dp"
-                                android:layout_height="18dp"
+                                android:layout_width="16dp"
+                                android:layout_height="16dp"
                                 android:src="@android:drawable/star_big_on"
-                                app:tint="#FFC107"/>
+                                app:tint="#FFC107" />
 
                             <TextView
+                                android:id="@+id/tvPoints"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:layout_marginStart="6dp"
                                 android:text="0 điểm"
-                                android:textSize="14sp"
-                                android:layout_marginStart="6dp"/>
+                                android:textColor="#555"
+                                android:textSize="13sp" />
                         </LinearLayout>
 
                     </LinearLayout>
 
                     <!-- Avatar -->
                     <TextView
-                        android:layout_width="70dp"
-                        android:layout_height="70dp"
+                        android:id="@+id/tvAvatarInitials"
+                        android:layout_width="64dp"
+                        android:layout_height="64dp"
+                        android:background="@drawable/bg_avatar_circle"
                         android:gravity="center"
-                        android:text="CV"
+                        android:text="U"
                         android:textColor="#FFF"
-                        android:textStyle="bold"
                         android:textSize="22sp"
-                        android:background="#000"
-                        android:backgroundTint="#000"/>
+                        android:textStyle="bold" />
+
                 </LinearLayout>
 
-                <!-- Đơn hàng -->
+                <!-- Đơn hàng card -->
                 <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
-                    app:cardCornerRadius="18dp"
+                    app:cardCornerRadius="16dp"
                     app:cardElevation="1dp">
 
                     <LinearLayout
@@ -121,7 +140,7 @@
                         android:orientation="vertical"
                         android:padding="16dp">
 
-                        <!-- Title -->
+                        <!-- Title row -->
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -132,212 +151,268 @@
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 android:text="Đơn hàng của tôi"
-                                android:textStyle="bold"
-                                android:textSize="20sp"/>
+                                android:textColor="#000"
+                                android:textSize="17sp"
+                                android:textStyle="bold" />
 
                             <TextView
+                                android:id="@+id/tvOrderHistory"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="Lịch sử đơn hàng"
-                                android:textColor="#333"/>
+                                android:textColor="#004BA0"
+                                android:textSize="13sp" />
                         </LinearLayout>
 
-                        <!-- Menu -->
+                        <!-- Order status row -->
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:orientation="horizontal"
                             android:gravity="center"
-                            android:layout_marginTop="20dp">
+                            android:layout_marginTop="16dp"
+                            android:orientation="horizontal">
 
-                            <!-- Item -->
+                            <!-- Chờ xác nhận -->
                             <LinearLayout
+                                android:id="@+id/layoutOrderPending"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
+                                android:gravity="center"
                                 android:orientation="vertical"
-                                android:gravity="center">
+                                android:padding="4dp">
 
                                 <ImageView
-                                    android:layout_width="42dp"
-                                    android:layout_height="42dp"
-                                    android:src="@android:drawable/ic_menu_agenda"/>
+                                    android:layout_width="40dp"
+                                    android:layout_height="40dp"
+                                    android:src="@android:drawable/ic_menu_agenda"
+                                    app:tint="#004BA0" />
 
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
+                                    android:layout_marginTop="6dp"
+                                    android:gravity="center"
                                     android:text="Chờ xác nhận"
-                                    android:textSize="13sp"
-                                    android:layout_marginTop="6dp"/>
+                                    android:textColor="#333"
+                                    android:textSize="12sp" />
                             </LinearLayout>
 
+                            <!-- Chờ lấy hàng -->
                             <LinearLayout
+                                android:id="@+id/layoutOrderPickup"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
+                                android:gravity="center"
                                 android:orientation="vertical"
-                                android:gravity="center">
+                                android:padding="4dp">
 
                                 <ImageView
-                                    android:layout_width="42dp"
-                                    android:layout_height="42dp"
-                                    android:src="@android:drawable/ic_menu_gallery"/>
+                                    android:layout_width="40dp"
+                                    android:layout_height="40dp"
+                                    android:src="@android:drawable/ic_menu_gallery"
+                                    app:tint="#004BA0" />
 
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
+                                    android:layout_marginTop="6dp"
+                                    android:gravity="center"
                                     android:text="Chờ lấy hàng"
-                                    android:textSize="13sp"
-                                    android:layout_marginTop="6dp"/>
+                                    android:textColor="#333"
+                                    android:textSize="12sp" />
                             </LinearLayout>
 
+                            <!-- Đang giao -->
                             <LinearLayout
+                                android:id="@+id/layoutOrderDelivering"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
+                                android:gravity="center"
                                 android:orientation="vertical"
-                                android:gravity="center">
+                                android:padding="4dp">
 
                                 <ImageView
-                                    android:layout_width="42dp"
-                                    android:layout_height="42dp"
-                                    android:src="@android:drawable/ic_menu_send"/>
+                                    android:layout_width="40dp"
+                                    android:layout_height="40dp"
+                                    android:src="@drawable/ic_truck"
+                                    app:tint="#004BA0" />
 
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
+                                    android:layout_marginTop="6dp"
+                                    android:gravity="center"
                                     android:text="Đang giao"
-                                    android:textSize="13sp"
-                                    android:layout_marginTop="6dp"/>
+                                    android:textColor="#333"
+                                    android:textSize="12sp" />
                             </LinearLayout>
 
+                            <!-- Đánh giá -->
                             <LinearLayout
-                                android:layout_width="0dp"
+                                android:id="@+id/layoutOrderReview"
+                                android:layout_width="79dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
+                                android:gravity="center"
                                 android:orientation="vertical"
-                                android:gravity="center">
+                                android:padding="4dp">
 
                                 <ImageView
-                                    android:layout_width="42dp"
-                                    android:layout_height="42dp"
-                                    android:src="@android:drawable/btn_star_big_off"/>
+                                    android:layout_width="40dp"
+                                    android:layout_height="40dp"
+                                    android:src="@android:drawable/star_big_off"
+                                    app:tint="#004BA0" />
 
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
+                                    android:layout_marginTop="6dp"
+                                    android:gravity="center"
                                     android:text="Đánh giá"
-                                    android:textSize="13sp"
-                                    android:layout_marginTop="6dp"/>
+                                    android:textColor="#333"
+                                    android:textSize="12sp" />
                             </LinearLayout>
 
                         </LinearLayout>
-
                     </LinearLayout>
-
                 </androidx.cardview.widget.CardView>
 
             </LinearLayout>
-
         </androidx.cardview.widget.CardView>
 
         <!-- Menu dưới -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
             android:background="#FFF"
-            android:paddingVertical="10dp">
+            android:orientation="vertical"
+            android:layout_marginBottom="8dp">
 
-            <!-- Item -->
+            <!-- Thông tin tài khoản -->
             <LinearLayout
+                android:id="@+id/layoutAccountInfo"
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
+                android:layout_height="56dp"
                 android:gravity="center_vertical"
                 android:paddingHorizontal="20dp">
 
                 <ImageView
                     android:layout_width="24dp"
                     android:layout_height="24dp"
-                    android:src="@android:drawable/ic_menu_myplaces"/>
+                    android:src="@drawable/ic_user"
+                    app:tint="#555" />
 
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
                     android:layout_weight="1"
                     android:text="Thông tin tài khoản"
-                    android:textSize="18sp"
-                    android:layout_marginStart="16dp"/>
+                    android:textColor="#222"
+                    android:textSize="16sp" />
 
                 <ImageView
                     android:layout_width="20dp"
                     android:layout_height="20dp"
-                    android:src="@android:drawable/ic_media_next"/>
+                    android:src="@drawable/ic_arrow_right"
+                    app:tint="#999" />
             </LinearLayout>
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="#EEE"/>
+                android:layout_height="0.5dp"
+                android:layout_marginHorizontal="20dp"
+                android:background="#E0E0E0" />
 
-            <!-- Item -->
+            <!-- Địa chỉ đã lưu -->
             <LinearLayout
+                android:id="@+id/layoutSavedAddress"
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
+                android:layout_height="56dp"
                 android:gravity="center_vertical"
                 android:paddingHorizontal="20dp">
 
                 <ImageView
                     android:layout_width="24dp"
                     android:layout_height="24dp"
-                    android:src="@android:drawable/ic_menu_mylocation"/>
+                    android:src="@drawable/bg_profile"
+                    app:tint="#555" />
 
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
                     android:layout_weight="1"
                     android:text="Địa chỉ đã lưu"
-                    android:textSize="18sp"
-                    android:layout_marginStart="16dp"/>
+                    android:textColor="#222"
+                    android:textSize="16sp" />
 
                 <ImageView
                     android:layout_width="20dp"
                     android:layout_height="20dp"
-                    android:src="@android:drawable/ic_media_next"/>
+                    android:src="@drawable/ic_arrow_right"
+                    app:tint="#999" />
             </LinearLayout>
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="#EEE"/>
+                android:layout_height="0.5dp"
+                android:layout_marginHorizontal="20dp"
+                android:background="#E0E0E0" />
 
+            <!-- Khách hàng thân thiết -->
             <LinearLayout
+                android:id="@+id/layoutLoyalCustomer"
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
+                android:layout_height="56dp"
                 android:gravity="center_vertical"
                 android:paddingHorizontal="20dp">
 
                 <ImageView
                     android:layout_width="24dp"
                     android:layout_height="24dp"
-                    android:src="@android:drawable/ic_menu_share"/>
+                    android:src="@android:drawable/star_big_on"
+                    app:tint="#555" />
 
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
                     android:layout_weight="1"
                     android:text="Khách hàng thân thiết"
-                    android:textSize="18sp"
-                    android:layout_marginStart="16dp"/>
+                    android:textColor="#222"
+                    android:textSize="16sp" />
 
                 <ImageView
                     android:layout_width="20dp"
                     android:layout_height="20dp"
-                    android:src="@android:drawable/ic_media_next"/>
+                    android:src="@drawable/ic_arrow_right"
+                    app:tint="#999" />
             </LinearLayout>
 
         </LinearLayout>
 
-    </LinearLayout>
+        <!-- Nút Đăng xuất -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#FFF"
+            android:orientation="vertical"
+            android:layout_marginBottom="24dp">
 
+            <TextView
+                android:id="@+id/tvLogout"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:gravity="center"
+                android:text="Đăng xuất"
+                android:textColor="#E53935"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+    </LinearLayout>
 </ScrollView>
