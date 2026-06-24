@@ -26,11 +26,15 @@ public class FavoriteActivity extends BaseActivity {
     private BookGridAdapter adapter;
     private List<Book> favoriteBookList;
     private List<Integer> favoriteIds;
+    SessionManager sessionManager;
+    String userId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_favorite);
+        sessionManager = new SessionManager(this);
+        userId = sessionManager.getUserId();
 
         // Ánh xạ View
         rvFavorites = findViewById(R.id.rvFavorites);
@@ -50,7 +54,6 @@ public class FavoriteActivity extends BaseActivity {
 
     // Hàm 1: Lấy các ID sách đã được thả tim
     private void loadFavoriteIds() {
-        String userId = "user_01"; // ID tạm thời để test
         DatabaseReference favRef = FirebaseDatabase.getInstance().getReference("YeuThich").child(userId);
 
         favRef.addValueEventListener(new ValueEventListener() {

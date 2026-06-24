@@ -7,6 +7,7 @@ import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
@@ -35,14 +36,14 @@ public class MainActivity extends BaseActivity {
         rcvExploreInterest = findViewById(R.id.rcvExploreInterest);
         rcvBestSellers = findViewById(R.id.bestSellers);
         rcvNewArrivals = findViewById(R.id.rcvNewArrivals);
-
+        setupRecyclerViews();
         fetchOnlineDataProduct();
     }
 
     private void setupRecyclerViews() {
-        rcvExploreInterest.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
-        rcvBestSellers.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
-        rcvNewArrivals.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+        rcvExploreInterest.setLayoutManager(new GridLayoutManager(this, 2));
+        rcvBestSellers.setLayoutManager(new GridLayoutManager(this, 2));
+        rcvNewArrivals.setLayoutManager(new GridLayoutManager(this, 2));
     }
 
     private void fetchOnlineDataProduct() {
@@ -51,9 +52,9 @@ public class MainActivity extends BaseActivity {
 
         dataList = new ArrayList<>();
 
-        adapterGiamGia = new MainAdapter(dataList);
-        adapterBestSeller = new MainAdapter(dataList);
-        adapterNewArrivals = new MainAdapter(dataList);
+        adapterGiamGia = new MainAdapter(MainActivity.this, dataList);
+        adapterBestSeller = new MainAdapter(MainActivity.this, dataList);
+        adapterNewArrivals = new MainAdapter(MainActivity.this, dataList);
 
         rcvExploreInterest.setAdapter(adapterGiamGia);
         rcvBestSellers.setAdapter(adapterBestSeller);

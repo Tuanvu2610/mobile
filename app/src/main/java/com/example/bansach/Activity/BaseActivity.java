@@ -35,6 +35,7 @@ public class BaseActivity extends AppCompatActivity {
     private CategoryAdapter adapterCategory;
 
     protected void setupHeader() {
+        // 1. KHU VỰC DANH MỤC (CATEGORY)
         ListView lvCategory = findViewById(R.id.lvCategory);
         if (lvCategory != null) {
             listParentCate = new ArrayList<>();
@@ -43,54 +44,54 @@ public class BaseActivity extends AppCompatActivity {
             adapterCategory = new CategoryAdapter(displayList, listSubCate, this);
             lvCategory.setAdapter(adapterCategory);
             fetchOnlineDataCategory();
-
-            View btnMenuHeader = findViewById(R.id.layoutMenu);
-            ImageView imgIconMenu = findViewById(R.id.imgMenuIcon);
-            View layoutSearchBar = findViewById(R.id.layoutSearchBar);
-            ImageView imgUser = findViewById(R.id.imgUser);
-
-            if (imgUser != null) {
-                imgUser.setOnClickListener(v -> {
-                    SessionManager sessionManager = new SessionManager(BaseActivity.this);
-                    if (sessionManager.isLoggedIn()) {
-                        Toast.makeText(BaseActivity.this, "đã đăng nhập", Toast.LENGTH_SHORT).show();
-                        // Đã đăng nhập → mở ProfileActivity
-                        Intent intent = new Intent(BaseActivity.this, ProfileActivity.class);
-                        startActivity(intent);
-                        overridePendingTransition(0, 0);
-                    } else {
-                        Toast.makeText(BaseActivity.this, "chưa đăng nhập", Toast.LENGTH_SHORT).show();
-                        // Chưa đăng nhập → mở LoginActivity
-                        Intent intent = new Intent(BaseActivity.this, LoginActivity.class);
-                        startActivity(intent);
-                        overridePendingTransition(0, 0);
-                    }
-                });
-            }
-
-            View layoutDropdownMenu = findViewById(R.id.layoutDropdownMenu);
-            View layoutMainContent = findViewById(R.id.layoutMainContent);
-
-            final boolean[] isMenuOpen = {false};
-            if (btnMenuHeader != null) {
-                btnMenuHeader.setOnClickListener(v -> {
-                    if (!isMenuOpen[0]) {
-                        if (layoutSearchBar != null) layoutSearchBar.setVisibility(View.GONE);
-                        if (layoutMainContent != null) layoutMainContent.setVisibility(View.GONE);
-                        if (layoutDropdownMenu != null) layoutDropdownMenu.setVisibility(View.VISIBLE);
-                        if (imgIconMenu != null) imgIconMenu.setImageResource(R.drawable.ic_close);
-                        isMenuOpen[0] = true;
-                    } else {
-                        if (layoutSearchBar != null) layoutSearchBar.setVisibility(View.VISIBLE);
-                        if (layoutDropdownMenu != null) layoutDropdownMenu.setVisibility(View.GONE);
-                        if (layoutMainContent != null) layoutMainContent.setVisibility(View.VISIBLE);
-                        if (imgIconMenu != null) imgIconMenu.setImageResource(R.drawable.ic_menu);
-                        isMenuOpen[0] = false;
-                    }
-                });
-            }
         }
 
+        // 2. KHU VỰC TÀI KHOẢN (USER) - Đã mang ra ngoài
+        ImageView imgUser = findViewById(R.id.imgUser);
+        if (imgUser != null) {
+            imgUser.setOnClickListener(v -> {
+                SessionManager sessionManager = new SessionManager(BaseActivity.this);
+                if (sessionManager.isLoggedIn()) {
+                    Toast.makeText(BaseActivity.this, "đã đăng nhập", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(BaseActivity.this, ProfileActivity.class);
+                    startActivity(intent);
+                    overridePendingTransition(0, 0);
+                } else {
+                    Toast.makeText(BaseActivity.this, "chưa đăng nhập", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(BaseActivity.this, LoginActivity.class);
+                    startActivity(intent);
+                    overridePendingTransition(0, 0);
+                }
+            });
+        }
+
+        // 3. KHU VỰC MENU DROP DOWN - Đã mang ra ngoài
+        View btnMenuHeader = findViewById(R.id.layoutMenu);
+        ImageView imgIconMenu = findViewById(R.id.imgMenuIcon);
+        View layoutSearchBar = findViewById(R.id.layoutSearchBar);
+        View layoutDropdownMenu = findViewById(R.id.layoutDropdownMenu);
+        View layoutMainContent = findViewById(R.id.layoutMainContent);
+
+        final boolean[] isMenuOpen = {false};
+        if (btnMenuHeader != null) {
+            btnMenuHeader.setOnClickListener(v -> {
+                if (!isMenuOpen[0]) {
+                    if (layoutSearchBar != null) layoutSearchBar.setVisibility(View.GONE);
+                    if (layoutMainContent != null) layoutMainContent.setVisibility(View.GONE);
+                    if (layoutDropdownMenu != null) layoutDropdownMenu.setVisibility(View.VISIBLE);
+                    if (imgIconMenu != null) imgIconMenu.setImageResource(R.drawable.ic_close);
+                    isMenuOpen[0] = true;
+                } else {
+                    if (layoutSearchBar != null) layoutSearchBar.setVisibility(View.VISIBLE);
+                    if (layoutDropdownMenu != null) layoutDropdownMenu.setVisibility(View.GONE);
+                    if (layoutMainContent != null) layoutMainContent.setVisibility(View.VISIBLE);
+                    if (imgIconMenu != null) imgIconMenu.setImageResource(R.drawable.ic_menu);
+                    isMenuOpen[0] = false;
+                }
+            });
+        }
+
+        // 4. KHU VỰC TÌM KIẾM, GIỎ HÀNG, YÊU THÍCH (Giữ nguyên)
         TextView txtSeach = findViewById(R.id.txtSeach);
         if (txtSeach != null) {
             txtSeach.setOnClickListener(v -> {
@@ -107,6 +108,7 @@ public class BaseActivity extends AppCompatActivity {
                 startActivity(intent);
             });
         }
+
         ImageView imgLike = findViewById(R.id.imgLike);
         if (imgLike != null) {
             imgLike.setOnClickListener(v -> {

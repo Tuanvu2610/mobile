@@ -1,26 +1,42 @@
 package com.example.bansach.adapter;
 
+import android.content.Context;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.bansach.Activity.SessionManager;
 import com.example.bansach.R;
 import com.example.bansach.model.Book;
+import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.List;
 
 public class MainAdapter extends RecyclerView.Adapter<MainAdapter.BookViewHolder> {
+    private Context context;
 
     private List<Book> bookList;
+    SessionManager sessionManager;
+    String userId;
 
-    public MainAdapter(List<Book> bookList) {
+    public MainAdapter(Context context,List<Book> bookList) {
+        this.context = context;
         this.bookList = bookList;
+        sessionManager = new SessionManager(context);
+        userId = sessionManager.getUserId();
     }
 
     @NonNull
@@ -48,6 +64,45 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.BookViewHolder
                 .placeholder(R.drawable.book)
                 .error(R.drawable.book)
                 .into(holder.imgBook);
+        //      thêm vào yêu thích
+        if (holder.btnFavorite != null) {
+            DatabaseReference favRef = FirebaseDatabase.getInstance().getReference("YeuThich")
+                    .child(userId)
+                    .child(String.valueOf(book.getMaSP()));
+
+            // Kiểm tra trạng thái tim lúc tải danh sách
+            favRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    holder.btnFavorite.setChecked(snapshot.exists());
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {}
+            });
+
+            holder.btnFavorite.setOnClickListener(view -> {
+                boolean isChecked = holder.btnFavorite.isChecked();
+
+                view.animate().scaleX(1.3f).scaleY(1.3f).setDuration(150).withEndAction(() -> {
+                    view.animate().scaleX(1f).scaleY(1f).setDuration(150).start();
+                }).start();
+
+                if (isChecked) {
+                    favRef.setValue(true);
+                    Snackbar.make(view, "Đã thêm vào danh sách yêu thích 💖", Snackbar.LENGTH_SHORT).show();
+                } else {
+                    favRef.removeValue();
+                    Snackbar.make(view, "Đã bỏ yêu thích", Snackbar.LENGTH_LONG)
+                            .setAction("HOÀN TÁC", v -> {
+                                holder.btnFavorite.setChecked(true);
+                                favRef.setValue(true);
+                            })
+                            .setActionTextColor(Color.parseColor("#FF5722"))
+                            .show();
+                }
+            });
+        }
     }
 
     @Override
@@ -61,6 +116,8 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.BookViewHolder
     public class BookViewHolder extends RecyclerView.ViewHolder {
         ImageView imgBook;
         TextView txtAuthor, txtTitle, txtPrice, txtPriceSale;
+        CheckBox btnFavorite;
+
 
         public BookViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -70,6 +127,7 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.BookViewHolder
             txtPrice = itemView.findViewById(R.id.txtPrice);
 
             txtPriceSale = itemView.findViewById(R.id.txtPriceSale);
+            btnFavorite = itemView.findViewById(R.id.btnHeart);
 
         }
     }

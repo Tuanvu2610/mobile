@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.bansach.Activity.ProductDetailActivity;
+import com.example.bansach.Activity.SessionManager;
 import com.example.bansach.R;
 import com.example.bansach.model.Book;
 import com.google.android.material.snackbar.Snackbar;
@@ -32,10 +33,14 @@ public class BookGridAdapter extends RecyclerView.Adapter<BookGridAdapter.BookVi
 
     private Context context;
     private List<Book> bookList;
+    SessionManager sessionManager;
+    String userId;
 
     public BookGridAdapter(Context context, List<Book> bookList) {
         this.context = context;
         this.bookList = bookList;
+        sessionManager = new SessionManager(context);
+        userId = sessionManager.getUserId();
     }
 
     @NonNull
@@ -80,7 +85,6 @@ public class BookGridAdapter extends RecyclerView.Adapter<BookGridAdapter.BookVi
 
 //      thêm vào yêu thích
         if (holder.btnFavorite != null) {
-            String userId = "user_01";
             DatabaseReference favRef = FirebaseDatabase.getInstance().getReference("YeuThich")
                     .child(userId)
                     .child(String.valueOf(book.getMaSP()));
