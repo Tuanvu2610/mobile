@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="16dp"
+    android:layout_marginVertical="8dp"
+    app:cardCornerRadius="12dp"
+    app:cardElevation="2dp"
+    app:cardBackgroundColor="@color/white">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="12dp">
+
+        <!-- Ảnh bìa sách -->
+        <ImageView
+            android:id="@+id/imgAdminBook"
+            android:layout_width="70dp"
+            android:layout_height="90dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/book"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <!-- Tên sách -->
+        <TextView
+            android:id="@+id/txtAdminBookTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_marginEnd="8dp"
+            android:text="Tư Duy Thiết Kế"
+            android:textColor="#333333"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:maxLines="2"
+            android:ellipsize="end"
+            app:layout_constraintEnd_toStartOf="@+id/btnEditBook"
+            app:layout_constraintStart_toEndOf="@+id/imgAdminBook"
+            app:layout_constraintTop_toTopOf="@+id/imgAdminBook" />
+
+        <!-- Tên tác giả -->
+        <TextView
+            android:id="@+id/txtAdminBookAuthor"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="Nguyễn Văn A"
+            android:textColor="#777777"
+            android:textSize="13sp"
+            app:layout_constraintEnd_toEndOf="@+id/txtAdminBookTitle"
+            app:layout_constraintStart_toStartOf="@+id/txtAdminBookTitle"
+            app:layout_constraintTop_toBottomOf="@+id/txtAdminBookTitle" />
+
+        <!-- Giá tiền -->
+        <TextView
+            android:id="@+id/txtAdminBookPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="150.000đ"
+            android:textColor="#2D68C4"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/imgAdminBook"
+            app:layout_constraintStart_toStartOf="@+id/txtAdminBookTitle" />
+
+        <!-- Nút Chỉnh sửa (Cây bút) -->
+        <ImageButton
+            android:id="@+id/btnEditBook"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:src="@drawable/ic_edit"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <!-- Nút Xóa (Thùng rác) -->
+        <ImageButton
+            android:id="@+id/btnDeleteBook"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:src="@drawable/ic_delete"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>

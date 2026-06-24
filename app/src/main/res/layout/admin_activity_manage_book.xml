@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F8F9FB"
+    android:orientation="vertical">
+
+    <!-- Header (Bạn có thể include file header của BaseActivity vào đây) -->
+    <!-- <include layout="@layout/layout_header_admin" /> -->
+    <include
+        android:id="@+id/layoutHeaderAdmin"
+        layout="@layout/admin_layout_header" />
+
+    <!-- Khu vực Tiêu đề & Nút Thêm Mới -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingHorizontal="16dp"
+        android:paddingBottom="12dp"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Sản phẩm"
+            android:textColor="#333333"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnAddBook"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:background="@drawable/bg_button_blue_rounded"
+            android:drawablePadding="8dp"
+            android:paddingHorizontal="16dp"
+            android:text="Thêm Sách Mới"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <!-- Khu vực Tìm kiếm & Bộ lọc -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingHorizontal="16dp"
+        android:paddingBottom="16dp">
+
+        <!-- Ô Tìm kiếm -->
+        <EditText
+            android:id="@+id/edtSearchBook"
+            android:layout_width="0dp"
+            android:layout_height="45dp"
+            android:layout_weight="1.5"
+            android:background="@drawable/bg_search_bar"
+            android:drawableStart="@drawable/ic_search"
+            android:drawablePadding="8dp"
+            android:hint="Tìm kiếm sách..."
+            android:paddingHorizontal="12dp"
+            android:textSize="14sp" />
+
+        <!-- Spinner Bộ lọc -->
+        <Spinner
+            android:id="@+id/spinnerFilterCategory"
+            android:layout_width="0dp"
+            android:layout_height="45dp"
+            android:layout_weight="1"
+            android:layout_marginStart="8dp"
+            android:background="@drawable/bg_search_bar"
+            android:spinnerMode="dropdown" />
+    </LinearLayout>
+
+    <!-- Danh sách sách -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvAdminBooks"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:clipToPadding="false"
+        android:paddingBottom="80dp" />
+
+    <!-- Tạm thời để trống phần Bottom Navigation. Bạn có thể chèn BottomNavigationView vào đây sau -->
+
+</LinearLayout>

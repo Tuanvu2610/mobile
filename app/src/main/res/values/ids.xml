@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="rvAdminBooks" type="id" />
+    <item name="btnAdminMenu" type="id" />
+    <item name="txtAdminTitle" type="id" />
+    <item name="btnAdminBell" type="id" />
+    <item name="imgAdminAvatar" type="id" />
+</resources>
