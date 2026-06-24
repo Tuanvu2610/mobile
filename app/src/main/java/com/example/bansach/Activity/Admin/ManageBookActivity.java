@@ -1,9 +1,11 @@
 package com.example.bansach.Activity.Admin;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.AppCompatButton;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -25,20 +27,25 @@ public class ManageBookActivity extends BaseActivity {
     private RecyclerView rvAdminBooks;
     private AdminBookAdapter adminBookAdapter;
     private List<Book> bookList;
+    AppCompatButton btnAddBook;
+    private DatabaseReference booksRef;
+    private int masp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.admin_activity_manage_book);
-
         rvAdminBooks = findViewById(R.id.rvAdminBooks);
-
+        btnAddBook = findViewById(R.id.btnAddBook);
         rvAdminBooks.setLayoutManager(new LinearLayoutManager(this));
         bookList = new ArrayList<>();
 
         adminBookAdapter = new AdminBookAdapter(this, bookList);
         rvAdminBooks.setAdapter(adminBookAdapter);
-
+        btnAddBook.setOnClickListener(v -> {
+            Intent intent = new Intent(ManageBookActivity.this, AdminProductDetailManager.class);
+            startActivity(intent);
+        });
         loadBooksFromFirebase();
     }
 

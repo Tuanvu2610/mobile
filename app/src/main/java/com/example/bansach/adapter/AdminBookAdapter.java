@@ -11,13 +11,20 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.AppCompatButton;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.bansach.Activity.Admin.AdminProductDetailManager;
+import com.example.bansach.Activity.Admin.ManageBookActivity;
 import com.example.bansach.Activity.ProductDetailActivity;
 import com.example.bansach.R;
 import com.example.bansach.model.Book;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.List;
 
@@ -57,13 +64,39 @@ public class AdminBookAdapter extends RecyclerView.Adapter<AdminBookAdapter.Admi
 
         holder.btnEdit.setOnClickListener(v -> {
             Intent intent = new Intent(context, AdminProductDetailManager.class);
-            intent.putExtra("maSP", book.getMaSP()); // Gửi mã sản phẩm đi
+            intent.putExtra("maSP", book.getMaSP());
             context.startActivity(intent);
         });
 
-        // TODO: Chút nữa chúng ta sẽ viết code cho nút Xóa ở đây
         holder.btnDelete.setOnClickListener(v -> {
-            Toast.makeText(context, "Bấm xóa: " + book.getTenSP(), Toast.LENGTH_SHORT).show();
+            new android.app.AlertDialog.Builder(context)
+                    .setTitle("Xác nhận xóa")
+                    .setMessage("Bạn có chắc chắn muốn xóa sách: " + book.getTenSP() + " không?")
+                    .setPositiveButton("Xóa", (dialog, which) -> {
+                        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("book");
+
+                        ref.orderByChild("MaSP").equalTo(book.getMaSP())
+                                .addListenerForSingleValueEvent(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                        if (snapshot.exists()) {
+                                            for (DataSnapshot childSnapshot : snapshot.getChildren()) {
+                                                childSnapshot.getRef().removeValue()
+                                                        .addOnSuccessListener(aVoid -> Toast.makeText(context, "Xóa thành công!", Toast.LENGTH_SHORT).show())
+                                                        .addOnFailureListener(e -> Toast.makeText(context, "Lỗi xóa: " + e.getMessage(), Toast.LENGTH_SHORT).show());
+                                            }
+                                        } else {
+                                            Toast.makeText(context, "Không tìm thấy dữ liệu để xóa!", Toast.LENGTH_SHORT).show();
+                                        }
+                                    }
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError error) {
+                                        Toast.makeText(context, "Lỗi kết nối Firebase!", Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                    })
+                    .setNegativeButton("Hủy", null)
+                    .show();
         });
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -73,6 +106,7 @@ public class AdminBookAdapter extends RecyclerView.Adapter<AdminBookAdapter.Admi
                 context.startActivity(intent);
             }
         });
+
     }
 
     @Override
@@ -85,6 +119,7 @@ public class AdminBookAdapter extends RecyclerView.Adapter<AdminBookAdapter.Admi
         TextView txtTitle, txtAuthor, txtPrice;
         ImageButton btnEdit, btnDelete;
 
+
         public AdminBookViewHolder(@NonNull View itemView) {
             super(itemView);
             imgBook = itemView.findViewById(R.id.imgAdminBook);
@@ -93,6 +128,25 @@ public class AdminBookAdapter extends RecyclerView.Adapter<AdminBookAdapter.Admi
             txtPrice = itemView.findViewById(R.id.txtAdminBookPrice);
             btnEdit = itemView.findViewById(R.id.btnEditBook);
             btnDelete = itemView.findViewById(R.id.btnDeleteBook);
+
         }
     }
+//    private void deleteBook() {
+//        // Kiểm tra xem đã load được dữ liệu chưa (nodeKey phải có giá trị)
+//        if (nodeKey != null && !nodeKey.isEmpty()) {
+//
+//            // DÙNG CHÍNH CÁI NODE KEY ĐỂ XÓA - ĐÂY LÀ ĐỊA CHỈ NHÀ CHÍNH XÁC
+//            booksRef.child(nodeKey).removeValue()
+//                    .addOnSuccessListener(aVoid -> {
+//                        Toast.makeText(AdminProductDetailManager.this, "Đã xóa thành công!", Toast.LENGTH_SHORT).show();
+//                        finish(); // Đóng trang sau khi xóa
+//                    })
+//                    .addOnFailureListener(e -> {
+//                        Toast.makeText(AdminProductDetailManager.this, "Lỗi xóa: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+//                    });
+//        } else {
+//            // Nếu nodeKey trống, nghĩa là trang chưa kịp load dữ liệu mà đã bấm xóa
+//            Toast.makeText(this, "Đang tải dữ liệu, vui lòng đợi chút...", Toast.LENGTH_SHORT).show();
+//        }
+//    }
 }
