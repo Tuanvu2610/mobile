@@ -16,8 +16,7 @@
         android:layout_alignParentStart="true"
         android:elevation="20dp"
         android:background="@android:color/transparent"
-        android:src="@android:drawable/ic_media_previous"
-        android:tint="#004BA0"/>
+        android:src="@drawable/ic_back"/>
 
     <ScrollView
         android:layout_width="match_parent"
@@ -174,24 +173,26 @@
                     android:orientation="vertical"
                     android:padding="12dp">
                     <TextView
+                        android:id="@+id/detailTG"
                         android:layout_width="wrap_content"
-
                         android:layout_height="wrap_content"
                         android:text="Tác giả: ..."
                         android:textSize="15sp" />
 
                     <TextView
+                        android:id="@+id/nhaXB"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
-                        android:text="Nhà xuất bản: ..."
+                        android:text="Nhà xuất bản: Kim Đồng"
                         android:textSize="15sp" />
 
                     <TextView
+                        android:id="@+id/namSX"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
-                        android:text="Số trang: ..."
+                        android:text="Năm sản xuất: ..."
                         android:textSize="15sp" />
 
                 </LinearLayout>

@@ -403,10 +403,35 @@ public class ProductDetailActivity extends AppCompatActivity {
                             TextView txtAuthor = findViewById(R.id.txtAuthor);
                             TextView txtPrice = findViewById(R.id.txtPrice);
                             ImageView imgBook = findViewById(R.id.imgBook);
+                            TextView txtDescription = findViewById(R.id.txtDescription);
+                            TextView detailTG = findViewById(R.id.detailTG);
+                            TextView namSX = findViewById(R.id.namSX);
+                            TextView nhaXB = findViewById(R.id.nhaXB);
                             String tenSach = currentBook.getTenSP();
                             txtBookName.setText(tenSach);
                             txtAuthor.setText(currentBook.getTG());
-                            txtPrice.setText(String.valueOf(currentBook.getGia_Ban()) + " đ");
+                            if (currentBook.getNam_XB() != null) {
+                                namSX.setText("Năm sản xuất: " + currentBook.getNam_XB());
+                            }else {
+                                namSX.setText("");
+                            }
+                            if (currentBook.getNXB() != null) {
+                                nhaXB.setText("Nhà sản xuất: "+ currentBook.getNXB());
+                            }else if(currentBook.getTheLoai() != null) {
+                                nhaXB.setText("The loai: " + currentBook.getTheLoai());
+                            }else {
+                                nhaXB.setText("");
+
+                            }
+                            txtDescription.setText("Một cuốn sách với nội dung hấp dẫn, được trình bày khoa học và dễ hiểu," +
+                                    " phù hợp với nhiều đối tượng độc giả. Sách không chỉ mang đến kiến thức hữu ích mà còn giúp " +
+                                    "người đọc giải trí, phát triển tư duy và nuôi dưỡng niềm đam mê đọc sách.");
+                            if (currentBook.getTG() != null) {
+                                detailTG.setText("Tác Giả: " + currentBook.getTG());
+                            }else {
+                                detailTG.setText("");
+                            }
+                            txtPrice.setText(String.format("%,.0fđ", currentBook.getGia_Ban()));
                             String linkAnh = currentBook.getImg();
                             if (linkAnh != null && !linkAnh.isEmpty()) {
                                 Glide.with(ProductDetailActivity.this)

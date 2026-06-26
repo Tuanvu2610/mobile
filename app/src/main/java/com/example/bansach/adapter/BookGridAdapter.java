@@ -109,7 +109,7 @@ public class BookGridAdapter extends RecyclerView.Adapter<BookGridAdapter.BookVi
 
                 if (isChecked) {
                     favRef.setValue(true);
-                    Snackbar.make(view, "Đã thêm vào danh sách yêu thích 💖", Snackbar.LENGTH_SHORT).show();
+                    Snackbar.make(view, "Đã thêm vào danh sách yêu thích", Snackbar.LENGTH_SHORT).show();
                 } else {
                     favRef.removeValue();
                     Snackbar.make(view, "Đã bỏ yêu thích", Snackbar.LENGTH_LONG)

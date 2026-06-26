@@ -9,13 +9,14 @@ public class Book {
     private String NXB;
     private String Nam_XB;
     private String TG;
+    private String TheLoai;
     private int category_id;
     private int reviewCount;
     private double averageRating;
     public Book() {
     }
 
-    public Book(String tenSP, double don_gia, String img, double gia_Ban, int maSP, String NXB, String nam_XB, String TG, int category_id) {
+    public Book(String tenSP, double don_gia, String img, double gia_Ban, int maSP, String NXB, String nam_XB, String TG, int category_id, String theLoai) {
         TenSP = tenSP;
         Don_gia = don_gia;
         this.img = img;
@@ -25,6 +26,7 @@ public class Book {
         Nam_XB = nam_XB;
         this.TG = TG;
         this.category_id = category_id;
+        this.TheLoai = theLoai;
     }
 
     public String getTenSP() {
@@ -119,4 +121,11 @@ public class Book {
 //        return parent_id;
 //    }
 
+    public String getTheLoai() {
+        return TheLoai;
+    }
+
+    public void setTheLoai(String theLoai) {
+        TheLoai = theLoai;
+    }
 }

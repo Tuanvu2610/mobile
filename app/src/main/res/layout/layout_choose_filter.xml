@@ -7,7 +7,6 @@
     android:background="#FFFFFF"
     android:fitsSystemWindows="true">
 
-    <!-- HEADER: Thanh màu vàng trên cùng -->
     <LinearLayout
         android:id="@+id/layoutHeader"
         android:layout_width="match_parent"
@@ -41,8 +40,6 @@
             android:src="@android:drawable/ic_menu_close_clear_cancel"
             app:tint="#FFFFFF" />
     </LinearLayout>
-
-    <!-- BOTTOM BAR: Khu vực 2 nút Hủy / Áp Dụng cố định dưới đáy -->
     <LinearLayout
         android:id="@+id/layoutBottom"
         android:layout_width="match_parent"
@@ -51,13 +48,12 @@
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent">
 
-        <!-- Đường kẻ ngang mờ -->
+
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:background="#E0E0E0" />
 
-        <!-- 2 Nút bấm -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -93,7 +89,6 @@
         </LinearLayout>
     </LinearLayout>
 
-    <!-- CONTENT: Phần cuộn ở giữa -->
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -107,50 +102,6 @@
             android:orientation="vertical"
             android:padding="16dp">
 
-            <!-- Section 1: MENU -->
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="MENU"
-                    android:textColor="#333333"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
-
-                <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:layout_alignParentEnd="true"
-                    android:src="@android:drawable/arrow_down_float"
-                    app:tint="#666666" />
-            </RelativeLayout>
-
-            <!-- Danh sách Menu -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:orientation="vertical">
-
-                <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:paddingVertical="10dp" android:text="Trang chủ" android:textColor="#555555" android:textSize="15sp" />
-                <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:paddingVertical="10dp" android:text="Sách Tiếng Anh -" android:textColor="#555555" android:textSize="15sp" />
-                <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:paddingVertical="10dp" android:text="Sách Tiếng Pháp -" android:textColor="#555555" android:textSize="15sp" />
-                <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:paddingVertical="10dp" android:text="Tác Giả Bán Chạy -" android:textColor="#555555" android:textSize="15sp" />
-                <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:paddingVertical="10dp" android:text="Chuyên đề &amp; Tin tức -" android:textColor="#555555" android:textSize="15sp" />
-                <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:paddingVertical="10dp" android:text="Về chúng tôi" android:textColor="#555555" android:textSize="15sp" />
-            </LinearLayout>
-
-            <!-- Đường phân cách -->
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginVertical="16dp"
-                android:background="#EEEEEE" />
-
-            <!-- Section 2: SẮP XẾP -->
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
@@ -171,8 +122,6 @@
                     app:tint="#666666" />
             </RelativeLayout>
 
-            <!-- Danh sách Radio (Chỉ chọn 1) -->
-            <!-- Chú ý: Dùng RadioGroup để đảm bảo người dùng chỉ được chọn 1 kiểu sắp xếp -->
             <RadioGroup
                 android:id="@+id/rgSort"
                 android:layout_width="match_parent"
@@ -189,7 +138,7 @@
                 <RadioButton android:id="@+id/rbStockDesc" android:layout_width="match_parent" android:layout_height="wrap_content" android:paddingVertical="8dp" android:text="Tồn kho giảm dần" android:buttonTint="#FFC107" android:textColor="#555555" />
 
             </RadioGroup>
-            <!-- Section 3: LỌC GIÁ -->
+
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
@@ -210,8 +159,6 @@
                     app:tint="#666666" />
             </RelativeLayout>
 
-            <!-- Danh sách Radio (Chỉ chọn 1) -->
-            <!-- Chú ý: Dùng RadioGroup để đảm bảo người dùng chỉ được chọn 1 kiểu sắp xếp -->
             <RadioGroup
                 android:id="@+id/rgSortPrice"
                 android:layout_width="match_parent"
