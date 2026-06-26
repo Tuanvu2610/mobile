@@ -1,5 +1,7 @@
 package com.example.bansach.Activity;
 
+import static androidx.core.app.ActivityCompat.startActivityForResult;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -10,7 +12,6 @@ import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.bansach.R;
 import com.example.bansach.adapter.CartAdapter;
@@ -28,6 +29,8 @@ public class ShoppingCartActivity extends BaseActivity {
 
     ListView lvCart;
     TextView tvTotal;
+    TextView tvOldTotal;
+    double tongTien = 0;
     CartAdapter adapter;
     List<CartItem> cartList;
 
@@ -44,6 +47,7 @@ public class ShoppingCartActivity extends BaseActivity {
         // Ánh xạ view cho danh sách và tổng tiền
         lvCart = findViewById(R.id.lvCart);
         tvTotal = findViewById(R.id.tvTotal);
+        tvOldTotal = findViewById(R.id.tvOldTotal);
 
         //Nút Back
         ImageButton btnBack = findViewById(R.id.btnBack);
@@ -60,7 +64,7 @@ public class ShoppingCartActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(ShoppingCartActivity.this, VoucherActivity.class);
-                startActivity(intent);
+                startActivityForResult(intent, 100);
             }
         });
 
@@ -77,6 +81,32 @@ public class ShoppingCartActivity extends BaseActivity {
         layDuLieuGioHang();
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == 100 && resultCode == RESULT_OK) {
+
+            int discount = data.getIntExtra("discount", 0);
+
+            double tongMoi = tongTien - discount;
+
+            if (tongMoi < 0) {
+                tongMoi = 0;
+            }
+
+            tvOldTotal.setVisibility(View.VISIBLE);
+
+            tvOldTotal.setText(String.format("%,.0f đ", tongTien));
+
+            tvOldTotal.setPaintFlags(
+                    tvOldTotal.getPaintFlags()
+                            | android.graphics.Paint.STRIKE_THRU_TEXT_FLAG);
+
+            tvTotal.setText(String.format("%,.0f đ", tongMoi));
+        }
+    }
+
     private void layDuLieuGioHang() {
         // Trỏ vào node Carts ma kh
         DatabaseReference cartRef = FirebaseDatabase.getInstance().getReference("Carts").child(userId);
@@ -85,7 +115,7 @@ public class ShoppingCartActivity extends BaseActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 cartList.clear();
-                double tongTien = 0;
+                tongTien = 0;
 
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     CartItem item = dataSnapshot.getValue(CartItem.class);
@@ -99,6 +129,7 @@ public class ShoppingCartActivity extends BaseActivity {
 
                 tvTotal.setText(String.format("%,.0f đ", tongTien));
             }
+
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {

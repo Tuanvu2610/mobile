@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.RadioButton;
 
 import com.bumptech.glide.Glide;
 import com.example.bansach.R;
@@ -18,6 +19,7 @@ public class VoucherAdapter extends BaseAdapter {
     private Context context;
     private int layout;
     private List<Voucher> voucherList;
+    private int selectedPosition = -1;
 
     public VoucherAdapter(List<Voucher> voucherList, int layout, Context context) {
         this.voucherList = voucherList;
@@ -51,6 +53,8 @@ public class VoucherAdapter extends BaseAdapter {
         TextView tvCondition = convertView.findViewById(R.id.tvCondition);
         TextView tvVoucherCode = convertView.findViewById(R.id.tvVoucherCode);
 
+        RadioButton rbVoucher = convertView.findViewById(R.id.rbVoucher);
+
         Voucher voucher = voucherList.get(position);
 
         tvVoucher.setText(voucher.getTieuDe());
@@ -58,6 +62,20 @@ public class VoucherAdapter extends BaseAdapter {
         tvVoucherCode.setText("Mã: " + voucher.getMaVoucher());
 
         Glide.with(context).load(voucher.getHinhAnh()).into(imgVoucher);
+
+        rbVoucher.setChecked(position == selectedPosition);
+
+        rbVoucher.setOnClickListener(v -> {
+            selectedPosition = position;
+            notifyDataSetChanged();
+        });
+
         return convertView;
+    }
+    public Voucher getSelectedVoucher() {
+        if (selectedPosition == -1)
+            return null;
+
+        return voucherList.get(selectedPosition);
     }
 }
