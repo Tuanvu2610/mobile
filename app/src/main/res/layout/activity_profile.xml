@@ -12,6 +12,7 @@
 
         <!-- Header -->
         <LinearLayout
+            android:id="@+id/header"
             android:layout_width="match_parent"
             android:layout_height="56dp"
             android:background="#004BA0"
@@ -22,7 +23,7 @@
             <ImageView
                 android:layout_width="32dp"
                 android:layout_height="32dp"
-                android:src="@android:drawable/ic_media_previous"
+                android:src="@drawable/ic_back"
                 android:id="@+id/btnBack"
                 app:tint="@android:color/white" />
 

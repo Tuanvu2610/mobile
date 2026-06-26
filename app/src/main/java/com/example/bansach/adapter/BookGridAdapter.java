@@ -7,6 +7,7 @@ import android.graphics.Paint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.RatingBar;
@@ -121,6 +122,40 @@ public class BookGridAdapter extends RecyclerView.Adapter<BookGridAdapter.BookVi
                             .show();
                 }
             });
+            if (holder.btnAddToCart != null) {
+                DatabaseReference cartRef = FirebaseDatabase.getInstance().getReference("Carts")
+                        .child(userId)
+                        .child(String.valueOf(book.getMaSP()));
+
+                holder.btnAddToCart.setOnClickListener(view -> {
+                    cartRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            if (snapshot.exists()) {
+                                Integer currentQty = snapshot.child("soLuong").getValue(Integer.class);
+                                if (currentQty == null) currentQty = 0;
+
+                                cartRef.child("soLuong").setValue(currentQty + 1);
+                            } else {
+                                java.util.HashMap<String, Object> cartItem = new java.util.HashMap<>();
+                                cartItem.put("maSP", book.getMaSP());
+                                cartItem.put("tenSP", book.getTenSP());
+                                cartItem.put("gia_Ban", book.getGia_Ban());
+                                cartItem.put("img", book.getImg());
+                                cartItem.put("soLuong", 1);
+
+                                cartRef.setValue(cartItem);
+                            }
+
+                            Snackbar.make(view, "Đã thêm vào giỏ hàng thành công 🛒", Snackbar.LENGTH_SHORT).show();
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+                        }
+                    });
+                });
+            }
         }
     }
 
@@ -134,6 +169,8 @@ public class BookGridAdapter extends RecyclerView.Adapter<BookGridAdapter.BookVi
         TextView tvBookTitle, tvBookPrice, txtPriceSale, txtAuthor, txtRating;
         RatingBar ratingBar;
         CheckBox btnFavorite;
+        Button btnAddToCart;
+
 
         public BookViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -144,8 +181,8 @@ public class BookGridAdapter extends RecyclerView.Adapter<BookGridAdapter.BookVi
             txtAuthor = itemView.findViewById(R.id.txtAuthor);
             txtRating = itemView.findViewById(R.id.txtRating);
             ratingBar = itemView.findViewById(R.id.ratingBar);
-
             btnFavorite = itemView.findViewById(R.id.btnHeart);
+            btnAddToCart = itemView.findViewById(R.id.btnAddToCart);
         }
     }
 

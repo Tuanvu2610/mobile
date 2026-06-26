@@ -3,6 +3,7 @@ package com.example.bansach.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -23,7 +24,7 @@ public class ProfileActivity extends AppCompatActivity {
     private LinearLayout layoutAccountInfo, layoutSavedAddress, layoutLoyalCustomer;
     private LinearLayout layoutOrderPending, layoutOrderPickup, layoutOrderDelivering, layoutOrderReview;
     private TextView tvOrderHistory, tvLogout;
-
+    private ImageView btnBack;
     private SessionManager sessionManager;
     private DatabaseReference databaseReference;
 
@@ -39,7 +40,12 @@ public class ProfileActivity extends AppCompatActivity {
             goToLogin();
             return;
         }
-
+//        btnBack.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                finish();
+//            }
+//        });
         initViews();
         loadUserData();
         setupClickListeners();
@@ -61,6 +67,7 @@ public class ProfileActivity extends AppCompatActivity {
         layoutOrderPickup = findViewById(R.id.layoutOrderPickup);
         layoutOrderDelivering = findViewById(R.id.layoutOrderDelivering);
         layoutOrderReview = findViewById(R.id.layoutOrderReview);
+        btnBack = btnBack.findViewById(R.id.btnBack);
     }
 
     private void loadUserData() {
