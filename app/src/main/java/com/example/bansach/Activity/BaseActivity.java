@@ -116,6 +116,7 @@ public class BaseActivity extends AppCompatActivity {
                 startActivity(intent);
             });
         }
+        capNhatBadgeGioHang();
     }
 
     public void filterProduct(String keyword) {
@@ -162,6 +163,29 @@ public class BaseActivity extends AppCompatActivity {
                 Toast.makeText(BaseActivity.this,
                         "Lỗi Firebase: " + error.getMessage(), Toast.LENGTH_SHORT).show();
             }
+        });
+    }
+    public void capNhatBadgeGioHang() {
+        TextView tvCartCount = findViewById(R.id.tvCartCount);
+        if (tvCartCount == null) return;
+
+        SessionManager sessionManager = new SessionManager(this);
+        String uId = sessionManager.getUserId();
+
+        DatabaseReference cartRef = FirebaseDatabase.getInstance().getReference("Carts").child(uId);
+        cartRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                int totalCount = 0;
+                for (DataSnapshot child : snapshot.getChildren()) {
+                    Integer qty = child.child("soLuong").getValue(Integer.class);
+                    if (qty != null) totalCount += qty;
+                }
+                tvCartCount.setVisibility(View.VISIBLE);
+                tvCartCount.setText(String.valueOf(totalCount));
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {}
         });
     }
 }
