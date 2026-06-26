@@ -6,6 +6,7 @@ import android.view.ScaleGestureDetector;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RatingBar;
@@ -35,9 +36,10 @@ public class ProductDetailActivity extends AppCompatActivity {
     TextView txtReadMore;
     TextView txtQuantity;
 
-    Button btnMinus;
-    Button btnPlus;
+    TextView btnMinus;
+    TextView btnPlus;
     Button btnAddToCart;
+    ImageButton btnBack;
 
     // review
 
@@ -97,6 +99,14 @@ public class ProductDetailActivity extends AppCompatActivity {
         btnAddToCart = findViewById(R.id.btnAddToCart);
 
         // =========================
+        // BACK
+        // =========================
+
+        btnBack = findViewById(R.id.btnBack);
+
+        btnBack.setOnClickListener(v -> finish());
+
+        // =========================
         // REVIEW
         // =========================
 
@@ -111,6 +121,9 @@ public class ProductDetailActivity extends AppCompatActivity {
 
         ratingInput = findViewById(R.id.ratingInput);
         ratingInput.setStepSize(0.5f);
+
+        SessionManager sessionManager = new SessionManager(this);
+        String currentUser = sessionManager.getUsername();
 
         // =========================
         // XEM THÊM / THU GỌN
@@ -247,7 +260,7 @@ public class ProductDetailActivity extends AppCompatActivity {
 
             TextView txtUser = new TextView(this);
 
-            txtUser.setText("Người dùng");
+            txtUser.setText(currentUser);
 
             txtUser.setTextSize(16);
 
