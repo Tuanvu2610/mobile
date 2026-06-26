@@ -1,20 +1,30 @@
 package com.example.bansach.adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import androidx.annotation.NonNull;
 
 import com.bumptech.glide.Glide;
 import com.example.bansach.Activity.SessionManager;
+import com.example.bansach.Activity.ShoppingCartActivity;
 import com.example.bansach.R;
+import com.example.bansach.model.Book;
 import com.example.bansach.model.CartItem;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.List;
 
@@ -35,13 +45,19 @@ public class CartAdapter extends BaseAdapter {
     }
 
     @Override
-    public int getCount() { return cartList.size(); }
+    public int getCount() {
+        return cartList.size();
+    }
 
     @Override
-    public Object getItem(int position) { return cartList.get(position); }
+    public Object getItem(int position) {
+        return cartList.get(position);
+    }
 
     @Override
-    public long getItemId(int position) { return position; }
+    public long getItemId(int position) {
+        return position;
+    }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
@@ -60,6 +76,7 @@ public class CartAdapter extends BaseAdapter {
         Button btnMinus = convertView.findViewById(R.id.btnMinus);
         Button btnPlus = convertView.findViewById(R.id.btnPlus);
         TextView tvnDelete = convertView.findViewById(R.id.tvnDelete); // Nút X mày đặt tên là tvnDelete nè
+        CheckBox cbSelect = convertView.findViewById(R.id.checkboxproduct);
 
         CartItem item = cartList.get(position);
 
@@ -82,6 +99,7 @@ public class CartAdapter extends BaseAdapter {
         btnPlus.setOnClickListener(v -> {
             int newQty = item.getSoLuong() + 1;
             itemRef.child("soLuong").setValue(newQty);
+
         });
 
         //(-)
@@ -93,12 +111,55 @@ public class CartAdapter extends BaseAdapter {
             } else {
                 // Nếu đang là 1 mà bấm Trừ tiếp thì xóa
                 itemRef.removeValue();
+                FirebaseDatabase.getInstance().getReference("OrderDetail")
+                        .child(userId).child(String.valueOf(item.getMaSP())).removeValue();
             }
         });
+        // Xử lý nút (-)
+//        btnMinus.setOnClickListener(v -> {
+//            if (item.getSoLuong() > 1) {
+//                // Trường hợp chỉ giảm số lượng
+//                int newQty = item.getSoLuong() - 1;
+//                item.setSoLuong(newQty); // Cập nhật local
+//                itemRef.child("soLuong").setValue(newQty); // Đẩy lên Firebase
+//
+//                ((ShoppingCartActivity) context).tinhTongTien(); // Tính lại tiền
+//                notifyDataSetChanged(); // Cập nhật giao diện
+//            } else {
+//                // BẮT BỆNH: Trường hợp xóa hẳn sản phẩm
+//                itemRef.removeValue(); // 1. Xóa khỏi Firebase giỏ hàng
+//
+//                // Tiện tay xóa luôn khỏi Firebase OrderDetail (nếu lỡ đang tick chọn)
+//                FirebaseDatabase.getInstance().getReference("OrderDetail")
+//                        .child(userId).child(String.valueOf(item.getMaSP())).removeValue();
+//
+//                cartList.remove(item); // 2. XÓA KHỎI DANH SÁCH LOCAL CỦA APP
+//
+//                ((ShoppingCartActivity) context).tinhTongTien(); // 3. TÍNH LẠI TIỀN (Lúc này list đã vắng bóng món đó, tiền sẽ trừ)
+//                notifyDataSetChanged(); // 4. Vẽ lại ListView (món hàng sẽ biến mất trên màn hình)
+//            }
+//        });
 
         // (X)
         tvnDelete.setOnClickListener(v -> {
             itemRef.removeValue();
+        });
+
+
+//      checkbox chọn sản phẩm
+        cbSelect.setOnCheckedChangeListener(null);
+        cbSelect.setChecked(item.isChecked());
+        cbSelect.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            item.setChecked(isChecked);
+            ((ShoppingCartActivity) context).tinhTongTien();
+            DatabaseReference cheRef = FirebaseDatabase.getInstance().getReference("OrderDetail")
+                    .child(userId)
+                    .child(String.valueOf(item.getMaSP()));
+            if (isChecked) {
+                cheRef.setValue(item);
+            } else {
+                cheRef.removeValue();
+            }
         });
 
         return convertView;

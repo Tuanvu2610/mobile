@@ -95,10 +95,8 @@ public class ListProductActivity extends BaseActivity {
     public void checked(View view){
         boolean isChecked = false;
         if (isChecked) {
-            // TODO: Chỗ này bạn viết lệnh lưu vào Firebase (đánh dấu sách yêu thích)
             Toast.makeText(ListProductActivity.this, "Đã thêm vào yêu thích!", Toast.LENGTH_SHORT).show();
         } else {
-            // TODO: Chỗ này viết lệnh xóa khỏi Firebase
         }
     }
     private final ActivityResultLauncher<Intent> filterLauncher = registerForActivityResult(

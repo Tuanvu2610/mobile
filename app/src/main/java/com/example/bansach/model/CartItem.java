@@ -6,15 +6,16 @@ public class CartItem {
     private double gia_Ban;
     private String img;
     private int soLuong;
-
+    private boolean checked;
     public CartItem() {}
 
-    public CartItem(int maSP, String tenSP, double gia_Ban, String img, int soLuong) {
+    public CartItem(int maSP, String tenSP, double gia_Ban, String img, int soLuong, boolean checked) {
         this.maSP = maSP;
         this.tenSP = tenSP;
         this.gia_Ban = gia_Ban;
         this.img = img;
         this.soLuong = soLuong;
+        this.checked = checked;
     }
 
     public int getMaSP() {
@@ -55,5 +56,13 @@ public class CartItem {
 
     public void setSoLuong(int soLuong) {
         this.soLuong = soLuong;
+    }
+
+    public boolean isChecked() {
+        return checked;
+    }
+
+    public void setChecked(boolean checked) {
+        this.checked = checked;
     }
 }

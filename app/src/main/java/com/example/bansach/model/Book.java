@@ -13,6 +13,7 @@ public class Book {
     private int category_id;
     private int reviewCount;
     private double averageRating;
+
     public Book() {
     }
 
@@ -128,4 +129,5 @@ public class Book {
     public void setTheLoai(String theLoai) {
         TheLoai = theLoai;
     }
+
 }

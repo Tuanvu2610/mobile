@@ -4,7 +4,15 @@
     android:layout_height="wrap_content"
     android:orientation="horizontal"
     android:background="@color/white"
-    android:padding="9dp">
+    android:padding="9dp"
+    android:gravity="center_vertical"
+    >
+
+    <CheckBox
+        android:id="@+id/checkboxproduct"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+      />
 
     <ImageView
         android:id="@+id/imgProduct"

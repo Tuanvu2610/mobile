@@ -80,6 +80,7 @@
             android:exported="true">
         </activity>
         <activity android:name=".Activity.FavoriteActivity" />
+        <activity android:name=".Activity.OrderDetailActivity" />
 
 
 <!--        admim-->
