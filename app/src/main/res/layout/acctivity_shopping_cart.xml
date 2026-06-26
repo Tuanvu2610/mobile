@@ -122,15 +122,21 @@
                 android:buttonTint="#0047ab"
                 />
             <TextView
-                android:id="@+id/tvTotal"
-                android:layout_width="0dp"
+                android:id="@+id/tvOldTotal"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="end"
-                android:layout_marginEnd="10dp"
+                android:text="0đ"
+                android:textColor="#999999"
+                android:textSize="14sp"
+                android:visibility="gone"/>
+
+            <TextView
+                android:id="@+id/tvTotal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:text="0đ"
                 android:textColor="#ff0000"
-                android:textSize="16sp"
+                android:textSize="18sp"
                 android:textStyle="bold"/>
             <Button
                 android:id="@+id/btnBuy"

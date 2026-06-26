@@ -6,15 +6,17 @@ public class Voucher {
     private String tieuDe;
     private  String dieuKien;
     private String maVoucher;
+    private int giaTriGiam;
 
     public Voucher() {}
 
-    public Voucher(int idVoucher, String hinhAnh, String tieuDe, String dieuKien, String maVoucher) {
+    public Voucher(int idVoucher, String hinhAnh, String tieuDe, String dieuKien, String maVoucherint, int giaTriGiam) {
         this.idVoucher = idVoucher;
         this.hinhAnh = hinhAnh;
         this.tieuDe = tieuDe;
         this.dieuKien = dieuKien;
         this.maVoucher = maVoucher;
+        this.giaTriGiam = giaTriGiam;
     }
     public int getidVoucher() {
         return idVoucher;
@@ -36,6 +38,7 @@ public class Voucher {
     public String getMaVoucher() {
         return maVoucher;
     }
+    public int getGiaTriGiam() { return giaTriGiam; }
     public void setidVoucher(int idVoucher) {
         this.idVoucher = idVoucher;
     }
@@ -55,4 +58,6 @@ public class Voucher {
     public void setMaVoucher(String maVoucher) {
         this.maVoucher = maVoucher;
     }
+
+    public void setGiaTriGiam(int giaTriGiam) { this.giaTriGiam = giaTriGiam; }
 }

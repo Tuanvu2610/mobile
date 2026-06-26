@@ -1,10 +1,13 @@
 package com.example.bansach.Activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.Button;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
@@ -26,6 +29,8 @@ public class VoucherActivity extends AppCompatActivity {
     ListView lvVoucher;
     VoucherAdapter adapter;
     List<Voucher> voucherList;
+    Button btnApply;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,10 +44,26 @@ public class VoucherActivity extends AppCompatActivity {
             }
         });
         lvVoucher =findViewById(R.id.lvVoucher);
+        btnApply = findViewById(R.id.btnApply);
 
         voucherList = new ArrayList<>();
         adapter = new VoucherAdapter(voucherList, R.layout.item_voucher, this);
         lvVoucher.setAdapter(adapter);
+
+        btnApply.setOnClickListener(v -> {
+
+            Voucher voucher = adapter.getSelectedVoucher();
+            if (voucher == null) {
+                Toast.makeText(this, "Vui lòng chọn voucher", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            Intent data = new Intent();
+            data.putExtra("discount", voucher.getGiaTriGiam());
+
+            setResult(RESULT_OK, data);
+            finish();
+        });
+
         layDuLieuTuFirebase();
     }
 
