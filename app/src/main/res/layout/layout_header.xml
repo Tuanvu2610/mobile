@@ -68,9 +68,16 @@
         app:layout_constraintTop_toTopOf="@id/topBarAnchor">
 
         <ImageView
-            android:layout_width="32dp"
-            android:layout_height="22dp"
-            android:scaleType="centerCrop" />
+            android:id="@+id/imgUser"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginEnd="8dp"
+            android:padding="6dp"
+            android:src="@drawable/ic_user"
+            app:layout_constraintBottom_toBottomOf="@id/topBarAnchor"
+            app:layout_constraintEnd_toStartOf="@id/layoutCart"
+            app:layout_constraintTop_toTopOf="@id/topBarAnchor"
+            app:tint="@android:color/white" />
 
         <ImageView
             android:layout_width="16dp"
@@ -129,17 +136,7 @@
             app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <ImageView
-        android:id="@+id/imgUser"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:layout_marginEnd="8dp"
-        android:padding="6dp"
-        android:src="@drawable/ic_user"
-        app:layout_constraintBottom_toBottomOf="@id/topBarAnchor"
-        app:layout_constraintEnd_toStartOf="@id/layoutCart"
-        app:layout_constraintTop_toTopOf="@id/topBarAnchor"
-        app:tint="@android:color/white" />
+
 
     <LinearLayout
         android:id="@+id/layoutSearchBar"

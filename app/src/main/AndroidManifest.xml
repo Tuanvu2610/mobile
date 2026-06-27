@@ -81,6 +81,10 @@
         </activity>
         <activity android:name=".Activity.FavoriteActivity" />
         <activity android:name=".Activity.OrderDetailActivity" />
+        <activity
+            android:name=".Activity.OrderSuccessActivity"
+            android:exported="true">
+        </activity>
 
 
 <!--        admim-->

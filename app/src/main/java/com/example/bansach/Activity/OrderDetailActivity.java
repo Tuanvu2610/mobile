@@ -3,6 +3,7 @@ package com.example.bansach.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -17,6 +18,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.bumptech.glide.Glide;
 import com.example.bansach.R;
 import com.example.bansach.model.CartItem;
+import com.example.bansach.model.Order;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -28,9 +30,11 @@ import java.util.ArrayList;
 public class OrderDetailActivity extends AppCompatActivity {
     private int userId;
     private ArrayList<CartItem> listThanhToan = new ArrayList<>();
+    private double tongTienDonHang = 0;
 
-    private TextView tvTotalBottom, tvTotalItemsCount;
+    private TextView tvTotalBottom, tvTotalItemsCount, tvCustomerNamePhone, tvCustomerAddress, tvSelectedPayment, tvSubTotal;
     private LinearLayout layoutProductContainer;
+    private Button btnPlaceOrder;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -40,6 +44,13 @@ public class OrderDetailActivity extends AppCompatActivity {
         tvTotalBottom = findViewById(R.id.tvTotalBottom);
         layoutProductContainer = findViewById(R.id.layoutProductContainer);
         tvTotalItemsCount = findViewById(R.id.tvTotalItemsCount);
+        tvCustomerNamePhone = findViewById(R.id.tvCustomerNamePhone);
+        tvCustomerAddress = findViewById(R.id.tvCustomerAddress);
+        tvSelectedPayment = findViewById(R.id.tvSelectedPayment);
+        tvSubTotal = findViewById(R.id.tvSubTotal);
+        btnPlaceOrder = findViewById(R.id.btnPlaceOrder);
+
+
         Intent intent = getIntent();
        userId =Integer.parseInt(intent.getStringExtra("user_id"));
        String name_voucher = intent.getStringExtra("name_voucher");
@@ -53,6 +64,17 @@ public class OrderDetailActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 finish();
+            }
+        });
+        // Bắt sự kiện đặt hàng
+        btnPlaceOrder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (listThanhToan.isEmpty()) {
+                    Toast.makeText(OrderDetailActivity.this, "Giỏ hàng trống!", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                xuLyDatHang();
             }
         });
         TextView txtVoucherDetail = findViewById(R.id.txtVoucherDetail);
@@ -129,12 +151,13 @@ public class OrderDetailActivity extends AppCompatActivity {
                 tinhTongTien();
             }
             private void tinhTongTien() {
-                double tongTien = 0;
+                tongTienDonHang = 0;
                 for (CartItem item : listThanhToan) {
-                    tongTien += (item.getGia_Ban() * item.getSoLuong());
+                    tongTienDonHang += (item.getGia_Ban() * item.getSoLuong());
                 }
-                tvTotalItemsCount.setText("Tổng số tiền ( "+ listThanhToan.size()+" sản phẩm)");
-                tvTotalBottom.setText(String.format("%,.0f đ", tongTien));
+                tvTotalItemsCount.setText("Tổng số tiền ( " + listThanhToan.size() + " sản phẩm)");
+                tvSubTotal.setText(String.format("%,.0f đ", tongTienDonHang));
+                tvTotalBottom.setText(String.format("%,.0f đ", tongTienDonHang));
             }
 
             @Override
@@ -144,5 +167,39 @@ public class OrderDetailActivity extends AppCompatActivity {
             }
         });
     }
+    private void xuLyDatHang() {
+        // 1. Tạo Orders trên Firebase
+        DatabaseReference orderRef = FirebaseDatabase.getInstance().getReference("Orders");
+        String orderId = orderRef.push().getKey();
 
+        String tenSdt = tvCustomerNamePhone.getText().toString();
+        String diaChi = tvCustomerAddress.getText().toString();
+        String phuongThuc = tvSelectedPayment.getText().toString();
+
+        // Đóng gói dữ liệu
+        Order newOrder = new Order(orderId, userId, tenSdt, diaChi, tongTienDonHang, phuongThuc, "Chờ duyệt", listThanhToan);
+
+        if (orderId != null) {
+            orderRef.child(orderId).setValue(newOrder).addOnCompleteListener(task -> {
+                if (task.isSuccessful()) {
+                    FirebaseDatabase.getInstance().getReference("OrderDetail")
+                            .child(String.valueOf(userId)).removeValue();
+
+                    DatabaseReference cartRef = FirebaseDatabase.getInstance().getReference("Carts").child(String.valueOf(userId));
+
+                    for (CartItem item : listThanhToan) {
+                        cartRef.child(String.valueOf(item.getMaSP())).removeValue();
+                    }
+
+                    Intent intent = new Intent(OrderDetailActivity.this, OrderSuccessActivity.class);
+                    intent.putExtra("order_id", orderId);
+                    startActivity(intent);
+                    finish();
+
+                } else {
+                    Toast.makeText(OrderDetailActivity.this, "Lỗi khi đặt hàng!", Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
+    }
 }
