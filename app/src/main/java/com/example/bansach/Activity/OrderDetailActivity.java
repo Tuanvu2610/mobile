@@ -8,6 +8,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -40,11 +42,55 @@ public class OrderDetailActivity extends AppCompatActivity {
         tvTotalItemsCount = findViewById(R.id.tvTotalItemsCount);
         Intent intent = getIntent();
        userId =Integer.parseInt(intent.getStringExtra("user_id"));
+       String name_voucher = intent.getStringExtra("name_voucher");
        if (userId != -1){
            fetchOnlineDataProduct();
        }else {
            Toast.makeText(this, "Lỗi userId", Toast.LENGTH_SHORT).show();
        }
+        ImageView btnBack = findViewById(R.id.btnBack);
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+        TextView txtVoucherDetail = findViewById(R.id.txtVoucherDetail);
+        if (name_voucher == null) {
+            txtVoucherDetail.setText("Chọn voucher");
+        }else {
+        txtVoucherDetail.setText(name_voucher);
+        }
+
+        ActivityResultLauncher<Intent> launcher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                    if (result.getResultCode() == RESULT_OK && result.getData() != null) {
+                        Intent data = result.getData();
+
+                        double discount = data.getDoubleExtra("discount", 0);
+                        String idVoucher = data.getStringExtra("id_voucher");
+                        String tenVoucher = data.getStringExtra("name_voucher");
+
+                        if (tenVoucher != null && txtVoucherDetail != null) {
+                            txtVoucherDetail.setText("Mã giảm giá: " + tenVoucher);
+
+                            // Cập nhật tiền (hàm này mình đã hướng dẫn ở trên)
+//                                tinhTongTienVoucher(discount);
+                        } else {
+                            Toast.makeText(OrderDetailActivity.this, "Không nhận được dữ liệu voucher", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                }
+        );
+
+        // 3. Set sự kiện click sau khi đã có launcher
+        if (txtVoucherDetail != null) {
+            txtVoucherDetail.setOnClickListener(v -> {
+                Intent intentDetail = new Intent(OrderDetailActivity.this, VoucherActivity.class);
+                launcher.launch(intentDetail);
+            });
+        }
     }
 
     private void fetchOnlineDataProduct() {
@@ -71,7 +117,11 @@ public class OrderDetailActivity extends AppCompatActivity {
                         tvName.setText(item.getTenSP());
                         tvPrice.setText(String.format("%,.0f đ", item.getGia_Ban()));
                         tvQty.setText("x" + item.getSoLuong());
-                        Glide.with(OrderDetailActivity.this).load(item.getImg()).into(imgBook);
+                        if (!isDestroyed() && !isFinishing()) {
+                            Glide.with(OrderDetailActivity.this)
+                                    .load(item.getImg())
+                                    .into(imgBook);
+                        }
 
                         layoutProductContainer.addView(itemView);
                     }

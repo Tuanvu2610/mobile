@@ -11,6 +11,8 @@
     import android.widget.Toast;
 
     import androidx.activity.EdgeToEdge;
+    import androidx.activity.result.ActivityResultLauncher;
+    import androidx.activity.result.contract.ActivityResultContracts;
     import androidx.annotation.NonNull;
     import androidx.appcompat.app.AppCompatActivity;
 
@@ -29,7 +31,7 @@
     public class ShoppingCartActivity extends BaseActivity {
         private String userId;
         private ArrayList<CartItem> listThanhToan = new ArrayList<>();
-        private TextView tvTotalBottom;
+        private TextView tvTotalBottom, tvVoucher;
         private ListView listView;
         ListView lvCart;
         TextView tvTotal;
@@ -38,7 +40,8 @@
 
         SessionManager sessionManager;
         Button btnBuy;
-
+        String idVoucher;
+        String tenVoucher;
         @Override
         protected void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
@@ -60,14 +63,41 @@
             });
 
             //Nút qua trang Voucher
-            TextView tvVoucher = findViewById(R.id.tvVoucher);
-            tvVoucher.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
+            // 1. Ánh xạ View trước
+            tvVoucher = findViewById(R.id.tvVoucher);
+
+            // 2. Khai báo Launcher (đảm bảo tvVoucher đã được ánh xạ)
+            ActivityResultLauncher<Intent> launcher = registerForActivityResult(
+                    new ActivityResultContracts.StartActivityForResult(),
+                    result -> {
+                        if (result.getResultCode() == RESULT_OK && result.getData() != null) {
+                            Intent data = result.getData();
+
+                            // Dùng phương thức getDoubleExtra/getStringExtra an toàn hơn
+                            double discount = data.getDoubleExtra("discount", 0);
+                            idVoucher = data.getStringExtra("id_voucher");
+                            tenVoucher = data.getStringExtra("name_voucher");
+
+                            // Kiểm tra null ở đây
+                            if (tenVoucher != null && tvVoucher != null) {
+                                tvVoucher.setText("Mã giảm giá: " + tenVoucher);
+
+                                // Cập nhật tiền (hàm này mình đã hướng dẫn ở trên)
+//                                tinhTongTienVoucher(discount);
+                            } else {
+                                Toast.makeText(ShoppingCartActivity.this, "Không nhận được dữ liệu voucher", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    }
+            );
+
+        // 3. Set sự kiện click sau khi đã có launcher
+            if (tvVoucher != null) {
+                tvVoucher.setOnClickListener(v -> {
                     Intent intent = new Intent(ShoppingCartActivity.this, VoucherActivity.class);
-                    startActivity(intent);
-                }
-            });
+                    launcher.launch(intent);
+                });
+            }
 
             // Khởi tạo List và Adapter để hiển thị giỏ hàng
             cartList = new ArrayList<>();
@@ -77,6 +107,8 @@
             // Lấy userId
             sessionManager = new SessionManager(this);
             userId = sessionManager.getUserId();
+
+
             btnBuy = findViewById(R.id.btnBuy);
             btnBuy.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -101,12 +133,10 @@
                         orderRef.child(String.valueOf(item.getMaSP())).setValue(item);
                     }
 
-                    // 3. Nếu đã có sản phẩm, mang danh sách này sang trang Chi Tiết Đơn Hàng / Thanh toán
                     Intent intent = new Intent(ShoppingCartActivity.this, OrderDetailActivity.class);
                     intent.putExtra("user_id", userId);
-
-                    // (Nâng cao): Bạn có thể truyền cái danhSachChotDon này qua Intent hoặc lưu tạm vào ViewModel/Singleton
-                    // để trang OrderDetailActivity biết chính xác khách đang muốn mua những cuốn nào.
+                    intent.putExtra("voucher_id", idVoucher);
+                    intent.putExtra("name_voucher", tenVoucher);
 
                     startActivity(intent);
                 }

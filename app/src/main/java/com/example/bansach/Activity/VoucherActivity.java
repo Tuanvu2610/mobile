@@ -1,5 +1,7 @@
 package com.example.bansach.Activity;
 
+import static com.example.bansach.R.layout.activity_vouher;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -59,7 +61,8 @@ public class VoucherActivity extends AppCompatActivity {
             }
             Intent data = new Intent();
             data.putExtra("discount", voucher.getGiaTriGiam());
-
+            data.putExtra("id_voucher", voucher.getidVoucher());
+            data.putExtra("name_voucher", voucher.getMaVoucher());
             setResult(RESULT_OK, data);
             finish();
         });
