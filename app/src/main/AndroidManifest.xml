@@ -85,8 +85,9 @@
             android:name=".Activity.OrderSuccessActivity"
             android:exported="true">
         </activity>
-        <activity android:name=".Activity.OrderDetailActivity" />
+
         <activity android:name=".Activity.OrderHistoryActivity" />
+        <activity android:name=".Activity.SavedAddressActivity" />
 
 
 <!--        admim-->
