@@ -13,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.bansach.R;
+import com.example.bansach.model.User;
 import com.example.bansach.model.Account;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
@@ -30,6 +31,7 @@ public class RegisterActivity extends AppCompatActivity {
     private ProgressBar progressBar;
 
     private DatabaseReference databaseReference;
+    private DatabaseReference userDatabaseReference;
 
     private ImageView btnBack;
 
@@ -37,6 +39,7 @@ public class RegisterActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        userDatabaseReference = FirebaseDatabase.getInstance().getReference("users");
         setContentView(R.layout.activity_register);
 
         databaseReference = FirebaseDatabase.getInstance().getReference("accounts").child("accounts");
@@ -112,6 +115,8 @@ public class RegisterActivity extends AppCompatActivity {
                 Account newAccount = new Account(newIdStr, username, password, "user", "active");
                 databaseReference.child(newIdStr).setValue(newAccount)
                         .addOnSuccessListener(aVoid -> {
+                            User newUser = new User(newIdStr,"" , fullName, "", "", "");
+                            userDatabaseReference.child(newIdStr).setValue(newUser);
                             showLoading(false);
                             Toast.makeText(RegisterActivity.this, "Đăng ký thành công!", Toast.LENGTH_SHORT).show();
                             startActivity(new Intent(RegisterActivity.this, LoginActivity.class));

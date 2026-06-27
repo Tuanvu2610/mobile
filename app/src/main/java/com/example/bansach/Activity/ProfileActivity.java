@@ -139,7 +139,7 @@ public class ProfileActivity extends AppCompatActivity {
         // Menu dưới
         if (layoutAccountInfo != null) {
             layoutAccountInfo.setOnClickListener(v ->
-                    Toast.makeText(this, "Thông tin tài khoản", Toast.LENGTH_SHORT).show());
+                    startActivity(new Intent(ProfileActivity.this, AccountInfoActivity.class)));
         }
         if (layoutSavedAddress != null) {
             layoutSavedAddress.setOnClickListener(v ->

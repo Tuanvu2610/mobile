@@ -6,16 +6,18 @@ public class User {
     private String fullName;
     private String birthDay;
     private String sdt;
+    private String gender;
 
     public User() {
     }
 
-    public User(String account_id, String email, String fullName, String birthDay, String sdt) {
+    public User(String account_id, String email, String fullName, String birthDay, String sdt, String gender) {
         this.account_id = account_id;
         this.email = email;
         this.fullName = fullName;
         this.birthDay = birthDay;
         this.sdt = sdt;
+        this.gender = gender;
     }
 
     public String getAccount_id() {
@@ -57,4 +59,6 @@ public class User {
     public void setSdt(String sdt) {
         this.sdt = sdt;
     }
+    public String getGender() { return gender; }
+    public void setGender(String gender) { this.gender = gender; }
 }
