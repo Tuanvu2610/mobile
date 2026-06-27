@@ -60,6 +60,8 @@ public class VoucherActivity extends AppCompatActivity {
                 return;
             }
             Intent data = new Intent();
+            Log.e("TEST",
+                    "Send discount = " + voucher.getGiaTriGiam());
             data.putExtra("discount", voucher.getGiaTriGiam());
             data.putExtra("id_voucher", voucher.getidVoucher());
             data.putExtra("name_voucher", voucher.getMaVoucher());
