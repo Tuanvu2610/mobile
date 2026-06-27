@@ -35,12 +35,15 @@
         private ListView listView;
         ListView lvCart;
         TextView tvTotal;
+        TextView tvOldTotal;
+        double tongTien = 0;
+        double discount = 0;
         CartAdapter adapter;
         List<CartItem> cartList;
 
         SessionManager sessionManager;
         Button btnBuy;
-        String idVoucher;
+        int idVoucher;
         String tenVoucher;
         @Override
         protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +55,7 @@
             // Ánh xạ view cho danh sách và tổng tiền
             lvCart = findViewById(R.id.lvCart);
             tvTotal = findViewById(R.id.tvTotal);
+            tvOldTotal = findViewById(R.id.tvOldTotal);
 
             //Nút Back
             ImageButton btnBack = findViewById(R.id.btnBack);
@@ -73,17 +77,19 @@
                         if (result.getResultCode() == RESULT_OK && result.getData() != null) {
                             Intent data = result.getData();
 
-                            // Dùng phương thức getDoubleExtra/getStringExtra an toàn hơn
-                            double discount = data.getDoubleExtra("discount", 0);
-                            idVoucher = data.getStringExtra("id_voucher");
+                            // Dùng phương thức getIntExtra/getStringExtra
+                            discount = data.getIntExtra("discount", 0);
+                            Log.e("TEST", "Receive discount = " + discount);
+                            Log.e("TEST", "TongTien = " + tongTien);
+                            idVoucher = data.getIntExtra("id_voucher",0);
                             tenVoucher = data.getStringExtra("name_voucher");
 
                             // Kiểm tra null ở đây
                             if (tenVoucher != null && tvVoucher != null) {
                                 tvVoucher.setText("Mã giảm giá: " + tenVoucher);
 
-                                // Cập nhật tiền (hàm này mình đã hướng dẫn ở trên)
-//                                tinhTongTienVoucher(discount);
+                                // Cập nhật tiền
+                                capNhatTongTien();
                             } else {
                                 Toast.makeText(ShoppingCartActivity.this, "Không nhận được dữ liệu voucher", Toast.LENGTH_SHORT).show();
                             }
@@ -159,7 +165,6 @@
                         }
                     }
                     cartList.clear();
-    //               double tongTien = 0;
 
                     for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
     //                    CartItem item = dataSnapshot.getValue(CartItem.class);
@@ -185,6 +190,7 @@
                     }
 
                     adapter.notifyDataSetChanged();
+                    tinhTongTien();
 
     //                tvTotal.setText(String.format("%,.0f đ", tongTien));
                 }
@@ -257,13 +263,39 @@
 //        });
 //    }
     public void tinhTongTien() {
-        double tongTien = 0;
+        tongTien = 0;
         for (CartItem item : cartList) {
             if (item.isChecked()) {
                 tongTien += (item.getGia_Ban() * item.getSoLuong());
             }
         }
 
-        tvTotal.setText(String.format("%,.0f đ", tongTien));
+        capNhatTongTien();
     }
+
+        private void capNhatTongTien() {
+            double tongMoi = tongTien - discount;
+
+            if (tongMoi < 0) {
+                tongMoi = 0;
+            }
+
+            if (discount > 0) {
+                tvOldTotal.setVisibility(View.VISIBLE);
+
+                tvOldTotal.setText(
+                        String.format("%,.0f đ", tongTien));
+
+                tvOldTotal.setPaintFlags(
+                        tvOldTotal.getPaintFlags()
+                                | android.graphics.Paint.STRIKE_THRU_TEXT_FLAG);
+
+                tvTotal.setText(
+                        String.format("%,.0f đ", tongMoi));
+            } else {
+                tvOldTotal.setVisibility(View.GONE);
+                tvTotal.setText(
+                        String.format("%,.0f đ", tongTien));
+            }
+        }
     }
