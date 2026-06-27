@@ -24,6 +24,10 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
 public class ProductDetailActivity extends AppCompatActivity {
 
     //view
@@ -52,6 +56,7 @@ public class ProductDetailActivity extends AppCompatActivity {
     //data
     boolean isExpanded = false;
     int quantity = 1;
+    private int maSachHienTai;
 
     //zoom img
     private ScaleGestureDetector scaleGestureDetector;
@@ -160,66 +165,38 @@ public class ProductDetailActivity extends AppCompatActivity {
             }
 
             //tao review
-            LinearLayout reviewItem = new LinearLayout(this);
-            reviewItem.setOrientation(LinearLayout.VERTICAL);
-            reviewItem.setPadding(20,20,20,20);
-            reviewItem.setBackgroundColor(0xFFF5F5F5);
-            LinearLayout.LayoutParams params =
-                    new LinearLayout.LayoutParams(
-                            LinearLayout.LayoutParams.MATCH_PARENT,
-                            LinearLayout.LayoutParams.WRAP_CONTENT
-                    );
-            params.setMargins(0,20,0,0);
-            reviewItem.setLayoutParams(params);
+            DatabaseReference reviewRef = FirebaseDatabase.getInstance().getReference("review");
+            String key = reviewRef.push().getKey();
+            Review reviewModel = new Review();
 
-            // tên user
-            TextView txtUser = new TextView(this);
-            txtUser.setText(currentUser);
-            txtUser.setTextSize(16);
-            txtUser.setTypeface(null, android.graphics.Typeface.BOLD);
+            reviewModel.setId(key);
+            reviewModel.setBook_id(maSachHienTai);
+            reviewModel.setUsername(currentUser);
+            reviewModel.setContent(review);
+            reviewModel.setRating(rating);
+            reviewModel.setVisible(true);
 
-            // rating
-            RatingBar newRating = new RatingBar(
-                    this,
-                    null,
-                    android.R.attr.ratingBarStyleSmall
-            );
-            newRating.setNumStars(5);
-            newRating.setStepSize(0.5f);
-            newRating.setRating(rating);
-            newRating.setScaleX(0.7f);
-            newRating.setScaleY(0.7f);
-            LinearLayout.LayoutParams ratingParams =
-                    new LinearLayout.LayoutParams(
-                            LinearLayout.LayoutParams.WRAP_CONTENT,
-                            LinearLayout.LayoutParams.WRAP_CONTENT
-                    );
-            newRating.setLayoutParams(ratingParams);
+            String time = new SimpleDateFormat(
+                    "dd/MM/yyyy HH:mm",
+                    Locale.getDefault()
+            ).format(new Date());
 
-            //nội dung review
-            TextView txtReview = new TextView(this);
-            txtReview.setText(review);
-            txtReview.setTextSize(15);
-            txtReview.setPadding(0,10,0,0);
+            reviewModel.setTime(time);
 
-            //add view
-            reviewItem.addView(txtUser);
-            reviewItem.addView(newRating);
-            reviewItem.addView(txtReview);
+            reviewRef.child(key)
+                    .setValue(reviewModel)
+                    .addOnSuccessListener(unused -> {
 
-            //add vào layout
-            layoutReviewList.addView(reviewItem);
-
-            //reset form
-            edtReview.setText("");
-            ratingInput.setRating(0);
-            layoutReviewForm.setVisibility(View.GONE);
-            btnWriteReview.setText("Viết đánh giá");
-            Toast.makeText(
-                    ProductDetailActivity.this,
-                    "Đã gửi đánh giá",
-                    Toast.LENGTH_SHORT
-            ).show();
+                        edtReview.setText("");
+                        ratingInput.setRating(0);
+                        layoutReviewForm.setVisibility(View.GONE);
+                        btnWriteReview.setText("Viết đánh giá");
+                        Toast.makeText(
+                                ProductDetailActivity.this,
+                                "Đã gửi đánh giá",
+                                Toast.LENGTH_SHORT
+                        ).show();
+                    });
         });
     }
     // =========================
@@ -286,5 +263,91 @@ public class ProductDetailActivity extends AppCompatActivity {
                 Toast.makeText(ProductDetailActivity.this, "Lỗi mạng: " + error.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    private void loadReview() {
+
+        DatabaseReference reviewRef =
+                FirebaseDatabase.getInstance().getReference("review");
+
+        reviewRef.orderByChild("book_id")
+                .equalTo(maSachHienTai)
+                .addValueEventListener(new ValueEventListener() {
+
+                    @Override
+                    public void onDataChange(DataSnapshot snapshot) {
+
+                        layoutReviewList.removeAllViews();
+
+                        for (DataSnapshot data : snapshot.getChildren()) {
+
+                            Review review = data.getValue(Review.class);
+
+                            if (review == null) continue;
+                            if (!review.isVisible()) continue;
+
+                            LinearLayout reviewItem =
+                                    new LinearLayout(ProductDetailActivity.this);
+
+                            reviewItem.setOrientation(LinearLayout.VERTICAL);
+                            reviewItem.setPadding(20,20,20,20);
+
+                            LinearLayout.LayoutParams params =
+                                    new LinearLayout.LayoutParams(
+                                            LinearLayout.LayoutParams.MATCH_PARENT,
+                                            LinearLayout.LayoutParams.WRAP_CONTENT);
+
+                            params.setMargins(0,20,0,0);
+
+                            reviewItem.setLayoutParams(params);
+
+                            TextView txtUser = new TextView(ProductDetailActivity.this);
+                            txtUser.setText(review.getUsername());
+                            txtUser.setTextSize(16);
+                            txtUser.setTypeface(null,
+                                    android.graphics.Typeface.BOLD);
+
+                            RatingBar rb = new RatingBar(ProductDetailActivity.this, null, android.R.attr.ratingBarStyleSmall);
+                            LinearLayout.LayoutParams lp =
+                                    new LinearLayout.LayoutParams(
+                                            LinearLayout.LayoutParams.WRAP_CONTENT,
+                                            LinearLayout.LayoutParams.WRAP_CONTENT
+                                    );
+
+                            rb.setLayoutParams(lp);
+                            rb.setNumStars(5);
+                            rb.setMax(5);
+                            rb.setStepSize(0.5f);
+                            rb.setIsIndicator(true);
+
+                            float r = review.getRating();
+                            if (r > 5f) r = 5f;
+                            if (r < 0f) r = 0f;
+
+                            rb.setRating(r);
+
+                            TextView txtContent = new TextView(ProductDetailActivity.this);
+
+                            txtContent.setText(review.getContent());
+
+                            TextView txtTime = new TextView(ProductDetailActivity.this);
+
+                            txtTime.setText(review.getTime());
+                            txtTime.setTextSize(12);
+
+                            reviewItem.addView(txtUser);
+                            reviewItem.addView(rb);
+                            reviewItem.addView(txtContent);
+                            reviewItem.addView(txtTime);
+
+                            layoutReviewList.addView(reviewItem);
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError error) {
+
+                    }
+                });
     }
 }
