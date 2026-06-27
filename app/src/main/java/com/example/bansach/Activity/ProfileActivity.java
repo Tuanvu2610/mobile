@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.bansach.R;
 import com.example.bansach.model.Account;
+import com.example.bansach.model.User;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -75,23 +76,18 @@ public class ProfileActivity extends AppCompatActivity {
         }
 
         // Load thêm thông tin từ Firebase nếu cần
-        databaseReference = FirebaseDatabase.getInstance()
-                .getReference("accounts").child("accounts");
+        DatabaseReference userRef = FirebaseDatabase.getInstance()
+                .getReference("users").child(userId);
 
-        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+
+        userRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
-                for (DataSnapshot child : snapshot.getChildren()) {
-                    Account account = child.getValue(Account.class);
-                    if (account != null && userId.equals(account.getUser_id())) {
-                        // Hiển thị tên đầy đủ
-                        tvUsername.setText(account.getUsername());
-                        // Hiển thị email (username trong trường hợp này)
-                        tvEmail.setText(account.getUsername());
-                        // Điểm tích lũy (hiện tại để 0, mở rộng sau)
-                        tvPoints.setText("0 điểm");
-                        break;
-                    }
+                User user = snapshot.getValue(User.class);
+                if (user != null) {
+                    tvUsername.setText(user.getFullName()); // họ tên thật
+                    tvEmail.setText(user.getEmail());
+                    tvPoints.setText("0 điểm"); // mở rộng sau nếu có field points
                 }
             }
 
