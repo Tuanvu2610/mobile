@@ -79,12 +79,7 @@
             app:layout_constraintTop_toTopOf="@id/topBarAnchor"
             app:tint="@android:color/white" />
 
-        <ImageView
-            android:layout_width="16dp"
-            android:layout_height="16dp"
-            android:layout_marginStart="4dp"
-            android:src="@drawable/ic_arrow_down"
-            app:tint="@android:color/white" />
+
     </LinearLayout>
 
     <ImageView

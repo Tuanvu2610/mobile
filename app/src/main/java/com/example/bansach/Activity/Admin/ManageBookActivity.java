@@ -25,7 +25,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ManageBookActivity extends AppCompatActivity {
+public class ManageBookActivity extends BaseActivityAdmin {
 
     private RecyclerView rvAdminBooks;
     private AdminBookAdapter adminBookAdapter;

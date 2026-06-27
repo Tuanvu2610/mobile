@@ -64,6 +64,7 @@ public class ProfileActivity extends AppCompatActivity {
         layoutOrderDelivering = findViewById(R.id.layoutOrderDelivering);
         layoutOrderReview = findViewById(R.id.layoutOrderReview);
         btnBack = findViewById(R.id.btnBack);
+
     }
 
     private void loadUserData() {
@@ -154,6 +155,37 @@ public class ProfileActivity extends AppCompatActivity {
         if (tvLogout != null) {
             tvLogout.setOnClickListener(v -> handleLogout());
         }
+
+
+
+        tvOrderHistory.setOnClickListener(v -> {
+            Intent intent = new Intent(this, OrderHistoryActivity.class);
+            startActivity(intent);
+        });
+
+        layoutOrderPending.setOnClickListener(v -> {
+            Intent intent = new Intent(this, OrderHistoryActivity.class);
+            intent.putExtra("TRANG_THAI", "Chờ duyệt");
+            startActivity(intent);
+        });
+
+        layoutOrderPickup.setOnClickListener(v -> {
+            Intent intent = new Intent(this, OrderHistoryActivity.class);
+            intent.putExtra("TRANG_THAI", "Chờ lấy hàng");
+            startActivity(intent);
+        });
+
+        layoutOrderDelivering.setOnClickListener(v -> {
+            Intent intent = new Intent(this, OrderHistoryActivity.class);
+            intent.putExtra("TRANG_THAI", "Đang giao");
+            startActivity(intent);
+        });
+
+        layoutOrderReview.setOnClickListener(v -> {
+            Intent intent = new Intent(this, OrderHistoryActivity.class);
+            intent.putExtra("TRANG_THAI", "Đánh giá");
+            startActivity(intent);
+        });
     }
 
     private void handleLogout() {
