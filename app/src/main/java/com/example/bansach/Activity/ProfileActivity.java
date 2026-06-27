@@ -144,7 +144,7 @@ public class ProfileActivity extends AppCompatActivity {
         }
         if (layoutSavedAddress != null) {
             layoutSavedAddress.setOnClickListener(v ->
-                    Toast.makeText(this, "Địa chỉ đã lưu", Toast.LENGTH_SHORT).show());
+                    startActivity(new Intent(ProfileActivity.this, SavedAddressActivity.class)));
         }
         if (layoutLoyalCustomer != null) {
             layoutLoyalCustomer.setOnClickListener(v ->
