@@ -1,8 +1,10 @@
 package com.example.bansach.Activity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -12,7 +14,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.bansach.R;
 import com.example.bansach.model.Account;
-import com.example.bansach.model.User;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.database.DataSnapshot;
@@ -29,16 +30,18 @@ public class RegisterActivity extends AppCompatActivity {
     private ProgressBar progressBar;
 
     private DatabaseReference databaseReference;
-    private DatabaseReference userDatabaseReference;
 
+    private ImageView btnBack;
+
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
         databaseReference = FirebaseDatabase.getInstance().getReference("accounts").child("accounts");
-        userDatabaseReference = FirebaseDatabase.getInstance().getReference("users");
 
+        btnBack = findViewById(R.id.btnBack);
         edtFullName = findViewById(R.id.edtFullName);
         edtRegEmail = findViewById(R.id.edtRegEmail);
         edtRegPassword = findViewById(R.id.edtRegPassword);
@@ -46,6 +49,10 @@ public class RegisterActivity extends AppCompatActivity {
         btnRegister = findViewById(R.id.btnRegister);
         tvGoToLogin = findViewById(R.id.tvGoToLogin);
         progressBar = findViewById(R.id.progressBar);
+
+        btnBack.setOnClickListener(v -> {
+            finish();
+        });
 
         btnRegister.setOnClickListener(v -> handleRegister());
 
@@ -105,9 +112,6 @@ public class RegisterActivity extends AppCompatActivity {
                 Account newAccount = new Account(newIdStr, username, password, "user", "active");
                 databaseReference.child(newIdStr).setValue(newAccount)
                         .addOnSuccessListener(aVoid -> {
-                            User newUser = new User(newIdStr, username, fullName, "", "");
-                            userDatabaseReference.child(newIdStr).setValue(newUser);
-                            
                             showLoading(false);
                             Toast.makeText(RegisterActivity.this, "Đăng ký thành công!", Toast.LENGTH_SHORT).show();
                             startActivity(new Intent(RegisterActivity.this, LoginActivity.class));

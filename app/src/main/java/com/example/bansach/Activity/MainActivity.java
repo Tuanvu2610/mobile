@@ -24,7 +24,9 @@ public class MainActivity extends BaseActivity {
 
     private RecyclerView rcvExploreInterest, rcvBestSellers, rcvNewArrivals;
     private MainAdapter adapterGiamGia, adapterBestSeller, adapterNewArrivals;
-    private ArrayList<Book> dataList;
+    private ArrayList<Book> saleList;
+    private ArrayList<Book> bestSellersList;
+    private ArrayList<Book> newArrivalsList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,25 +38,20 @@ public class MainActivity extends BaseActivity {
         rcvExploreInterest = findViewById(R.id.rcvExploreInterest);
         rcvBestSellers = findViewById(R.id.bestSellers);
         rcvNewArrivals = findViewById(R.id.rcvNewArrivals);
-        setupRecyclerViews();
-        fetchOnlineDataProduct();
-    }
 
-    private void setupRecyclerViews() {
-        rcvExploreInterest.setLayoutManager(new GridLayoutManager(this, 2));
-        rcvBestSellers.setLayoutManager(new GridLayoutManager(this, 2));
-        rcvNewArrivals.setLayoutManager(new GridLayoutManager(this, 2));
+        fetchOnlineDataProduct();
     }
 
     private void fetchOnlineDataProduct() {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference booksRef = database.getReference("book");
+        saleList = new ArrayList<>();
+        bestSellersList = new ArrayList<>();
+        newArrivalsList = new ArrayList<>();
 
-        dataList = new ArrayList<>();
-
-        adapterGiamGia = new MainAdapter(MainActivity.this, dataList);
-        adapterBestSeller = new MainAdapter(MainActivity.this, dataList);
-        adapterNewArrivals = new MainAdapter(MainActivity.this, dataList);
+        adapterGiamGia = new MainAdapter(MainActivity.this, saleList);
+        adapterBestSeller = new MainAdapter(MainActivity.this, bestSellersList);
+        adapterNewArrivals = new MainAdapter(MainActivity.this, newArrivalsList);
 
         rcvExploreInterest.setAdapter(adapterGiamGia);
         rcvBestSellers.setAdapter(adapterBestSeller);
@@ -63,12 +60,24 @@ public class MainActivity extends BaseActivity {
         booksRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                dataList.clear();
+                saleList.clear();
+                bestSellersList.clear();
+                newArrivalsList.clear();
 
                 for (DataSnapshot bookSnap : snapshot.getChildren()){
                     Book book = bookSnap.getValue(Book.class);
                     if (book != null) {
-                        dataList.add(book);
+
+                        if (book.getGia_Ban() < book.getDon_gia()) {
+                            saleList.add(book);
+                        }
+                        if (book.getReviewCount() >= 20) {
+                            bestSellersList.add(book);
+                        }
+                        if (book.getNam_XB() != null &&
+                                (book.getNam_XB().contains("2024") || book.getNam_XB().contains("2023"))) {
+                            newArrivalsList.add(book);
+                        }
                     }
                 }
 

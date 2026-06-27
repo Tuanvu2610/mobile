@@ -12,7 +12,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.bansach.R;
 import com.example.bansach.model.Account;
-import com.example.bansach.model.User;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -41,18 +40,14 @@ public class ProfileActivity extends AppCompatActivity {
             goToLogin();
             return;
         }
-//        btnBack.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                finish();
-//            }
-//        });
+
         initViews();
         loadUserData();
         setupClickListeners();
     }
 
     private void initViews() {
+
         tvUsername = findViewById(R.id.tvUsername);
         tvEmail = findViewById(R.id.tvEmail);
         tvPoints = findViewById(R.id.tvPoints);
@@ -68,7 +63,7 @@ public class ProfileActivity extends AppCompatActivity {
         layoutOrderPickup = findViewById(R.id.layoutOrderPickup);
         layoutOrderDelivering = findViewById(R.id.layoutOrderDelivering);
         layoutOrderReview = findViewById(R.id.layoutOrderReview);
-        btnBack = btnBack.findViewById(R.id.btnBack);
+        btnBack = findViewById(R.id.btnBack);
     }
 
     private void loadUserData() {
@@ -83,18 +78,23 @@ public class ProfileActivity extends AppCompatActivity {
         }
 
         // Load thêm thông tin từ Firebase nếu cần
-        DatabaseReference userRef = FirebaseDatabase.getInstance()
-                .getReference("users").child(userId);
+        databaseReference = FirebaseDatabase.getInstance()
+                .getReference("accounts").child("accounts");
 
-
-        userRef.addListenerForSingleValueEvent(new ValueEventListener() {
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
-                User user = snapshot.getValue(User.class);
-                if (user != null) {
-                    tvUsername.setText(user.getFullName()); // họ tên thật
-                    tvEmail.setText(user.getEmail());
-                    tvPoints.setText("0 điểm"); // mở rộng sau nếu có field points
+                for (DataSnapshot child : snapshot.getChildren()) {
+                    Account account = child.getValue(Account.class);
+                    if (account != null && userId.equals(account.getUser_id())) {
+                        // Hiển thị tên đầy đủ
+                        tvUsername.setText(account.getUsername());
+                        // Hiển thị email (username trong trường hợp này)
+                        tvEmail.setText(account.getUsername());
+                        // Điểm tích lũy (hiện tại để 0, mở rộng sau)
+                        tvPoints.setText("0 điểm");
+                        break;
+                    }
                 }
             }
 
@@ -108,6 +108,10 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     private void setupClickListeners() {
+
+        if (btnBack != null) {
+            btnBack.setOnClickListener(v -> finish());
+        }
         // Lịch sử đơn hàng
         if (tvOrderHistory != null) {
             tvOrderHistory.setOnClickListener(v ->

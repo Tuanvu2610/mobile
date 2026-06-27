@@ -35,24 +35,46 @@
                 android:background="#DDEEF9"
                 />
 
-            <LinearLayout
+            <HorizontalScrollView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
+                android:scrollbars="none"
                 android:padding="8dp">
-                <ImageView
-                    android:layout_width="0dp"
-                    android:layout_height="80dp"
-                    android:layout_weight="1"
-                    android:layout_marginEnd="4dp"
-                    android:background="#002D58" />
-                <ImageView
-                    android:layout_width="0dp"
-                    android:layout_height="80dp"
-                    android:layout_weight="1"
-                    android:layout_marginStart="4dp"
-                    android:background="#004BA0" />
-            </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="160dp"
+                        android:layout_height="80dp"
+                        android:layout_marginEnd="8dp"
+                        android:scaleType="centerCrop"
+                        android:background="#002D58" />
+
+                    <ImageView
+                        android:layout_width="160dp"
+                        android:layout_height="80dp"
+                        android:layout_marginEnd="8dp"
+                        android:scaleType="centerCrop"
+                        android:background="#004BA0" />
+
+                    <ImageView
+                        android:layout_width="160dp"
+                        android:layout_height="80dp"
+                        android:layout_marginEnd="8dp"
+                        android:background="#002D58"
+                        android:scaleType="centerCrop" />
+
+                    <ImageView
+                        android:layout_width="160dp"
+                        android:layout_height="80dp"
+                        android:scaleType="centerCrop"
+                        android:background="#004BA0" />
+
+                </LinearLayout>
+            </HorizontalScrollView>
 
             <LinearLayout
                 android:layout_width="match_parent"
