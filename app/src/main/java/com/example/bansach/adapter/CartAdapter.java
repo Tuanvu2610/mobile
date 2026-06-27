@@ -94,20 +94,36 @@ public class CartAdapter extends BaseAdapter {
         DatabaseReference itemRef = FirebaseDatabase.getInstance().getReference("Carts")
                 .child(userId)
                 .child(String.valueOf(item.getMaSP()));
+        DatabaseReference cartRef = FirebaseDatabase.getInstance().getReference("OrderDetail").child(userId);
 
-        //(+)
+        // Nút Cộng (+)
         btnPlus.setOnClickListener(v -> {
             int newQty = item.getSoLuong() + 1;
-            itemRef.child("soLuong").setValue(newQty);
 
+            // 1. Cập nhật số lượng ngay trên màn hình điện thoại
+            item.setSoLuong(newQty);
+
+            // 2. Báo cho Activity tính lại tiền lập tức!
+            ((ShoppingCartActivity) context).tinhTongTien();
+
+            // 3. Đẩy dữ liệu lên Firebase chạy ngầm phía sau
+            itemRef.child("soLuong").setValue(newQty);
         });
 
-        //(-)
+// Nút Trừ (-)
         btnMinus.setOnClickListener(v -> {
             int currentQty = item.getSoLuong();
             if (currentQty > 1) {
-                // Nếu lớn hơn 1 thì giảm bớt 1 số lượng
-                itemRef.child("soLuong").setValue(currentQty - 1);
+                int newQty = currentQty - 1;
+
+                // 1. Cập nhật số lượng ngay trên màn hình điện thoại
+                item.setSoLuong(newQty);
+
+                // 2. Báo cho Activity tính lại tiền lập tức!
+                ((ShoppingCartActivity) context).tinhTongTien();
+
+                // 3. Đẩy lên Firebase chạy ngầm phía sau
+                itemRef.child("soLuong").setValue(newQty);
             } else {
                 // Nếu đang là 1 mà bấm Trừ tiếp thì xóa
                 itemRef.removeValue();
@@ -115,30 +131,6 @@ public class CartAdapter extends BaseAdapter {
                         .child(userId).child(String.valueOf(item.getMaSP())).removeValue();
             }
         });
-        // Xử lý nút (-)
-//        btnMinus.setOnClickListener(v -> {
-//            if (item.getSoLuong() > 1) {
-//                // Trường hợp chỉ giảm số lượng
-//                int newQty = item.getSoLuong() - 1;
-//                item.setSoLuong(newQty); // Cập nhật local
-//                itemRef.child("soLuong").setValue(newQty); // Đẩy lên Firebase
-//
-//                ((ShoppingCartActivity) context).tinhTongTien(); // Tính lại tiền
-//                notifyDataSetChanged(); // Cập nhật giao diện
-//            } else {
-//                // BẮT BỆNH: Trường hợp xóa hẳn sản phẩm
-//                itemRef.removeValue(); // 1. Xóa khỏi Firebase giỏ hàng
-//
-//                // Tiện tay xóa luôn khỏi Firebase OrderDetail (nếu lỡ đang tick chọn)
-//                FirebaseDatabase.getInstance().getReference("OrderDetail")
-//                        .child(userId).child(String.valueOf(item.getMaSP())).removeValue();
-//
-//                cartList.remove(item); // 2. XÓA KHỎI DANH SÁCH LOCAL CỦA APP
-//
-//                ((ShoppingCartActivity) context).tinhTongTien(); // 3. TÍNH LẠI TIỀN (Lúc này list đã vắng bóng món đó, tiền sẽ trừ)
-//                notifyDataSetChanged(); // 4. Vẽ lại ListView (món hàng sẽ biến mất trên màn hình)
-//            }
-//        });
 
         // (X)
         tvnDelete.setOnClickListener(v -> {
@@ -152,14 +144,6 @@ public class CartAdapter extends BaseAdapter {
         cbSelect.setOnCheckedChangeListener((buttonView, isChecked) -> {
             item.setChecked(isChecked);
             ((ShoppingCartActivity) context).tinhTongTien();
-            DatabaseReference cheRef = FirebaseDatabase.getInstance().getReference("OrderDetail")
-                    .child(userId)
-                    .child(String.valueOf(item.getMaSP()));
-            if (isChecked) {
-                cheRef.setValue(item);
-            } else {
-                cheRef.removeValue();
-            }
         });
 
         return convertView;
