@@ -5,9 +5,11 @@ import com.google.firebase.database.PropertyName;
 import java.util.List;
 
 public class Order {
+    private String customerName;
+    private String customerPhone;
+    private String orderDate;
     private String orderId;
     private int userId;
-    private String customerNamePhone;
     private String address;
     @PropertyName("totalAmount")
     private double totalAmount;
@@ -18,15 +20,41 @@ public class Order {
     public Order() {;
     }
 
-    public Order(String orderId, int userId, String customerNamePhone, String address, double totalAmount, String paymentMethod, String status, List<CartItem> listItems) {
+    public Order(String customerName, String customerPhone, String orderDate, String orderId, int userId, String address, double totalAmount, String paymentMethod, String status, List<CartItem> listItems) {
+        this.customerName = customerName;
+        this.customerPhone = customerPhone;
+        this.orderDate = orderDate;
         this.orderId = orderId;
         this.userId = userId;
-        this.customerNamePhone = customerNamePhone;
         this.address = address;
         this.totalAmount = totalAmount;
         this.paymentMethod = paymentMethod;
         this.status = status;
         this.listItems = listItems;
+    }
+
+    public String getCustomerName() {
+        return customerName;
+    }
+
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
+    }
+
+    public String getCustomerPhone() {
+        return customerPhone;
+    }
+
+    public void setCustomerPhone(String customerPhone) {
+        this.customerPhone = customerPhone;
+    }
+
+    public String getOrderDate() {
+        return orderDate;
+    }
+
+    public void setOrderDate(String orderDate) {
+        this.orderDate = orderDate;
     }
 
     public String getOrderId() {
@@ -43,14 +71,6 @@ public class Order {
 
     public void setUserId(int userId) {
         this.userId = userId;
-    }
-
-    public String getCustomerNamePhone() {
-        return customerNamePhone;
-    }
-
-    public void setCustomerNamePhone(String customerNamePhone) {
-        this.customerNamePhone = customerNamePhone;
     }
 
     public String getAddress() {

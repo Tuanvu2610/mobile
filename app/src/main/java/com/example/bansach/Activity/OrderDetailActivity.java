@@ -172,25 +172,39 @@ public class OrderDetailActivity extends AppCompatActivity {
         DatabaseReference orderRef = FirebaseDatabase.getInstance().getReference("Orders");
         String orderId = orderRef.push().getKey();
 
-        String tenSdt = tvCustomerNamePhone.getText().toString();
+        String rawText = tvCustomerNamePhone.getText().toString();
         String diaChi = tvCustomerAddress.getText().toString();
         String phuongThuc = tvSelectedPayment.getText().toString();
 
+        // 3. Xử lý "chặt" chuỗi Tên và SĐT
+        String tenKhach = rawText;
+        String sdtKhach = "";
+        if (rawText.contains("(+84)")) {
+            String[] parts = rawText.split("\\(\\+84\\)");
+            tenKhach = parts[0].trim(); // Lấy khúc tên
+            sdtKhach = "0" + parts[1].trim(); // Lấy khúc SĐT, thêm số 0
+        }
+
+        // 4. Lấy ngày giờ hệ thống hiện tại
+        java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("dd/MM/yyyy HH:mm", java.util.Locale.getDefault());
+        String ngayDatHang = sdf.format(new java.util.Date());
         // Đóng gói dữ liệu
-        Order newOrder = new Order(orderId, userId, tenSdt, diaChi, tongTienDonHang, phuongThuc, "Chờ duyệt", listThanhToan);
+        Order newOrder = new Order(tenKhach, sdtKhach, ngayDatHang, orderId, userId, diaChi, tongTienDonHang, phuongThuc, "Chờ xử lý", listThanhToan);
 
         if (orderId != null) {
             orderRef.child(orderId).setValue(newOrder).addOnCompleteListener(task -> {
                 if (task.isSuccessful()) {
+                    // Xóa giỏ hàng nhánh OrderDetail
                     FirebaseDatabase.getInstance().getReference("OrderDetail")
                             .child(String.valueOf(userId)).removeValue();
 
+                    // Xóa luôn giỏ hàng nhánh Carts
                     DatabaseReference cartRef = FirebaseDatabase.getInstance().getReference("Carts").child(String.valueOf(userId));
-
                     for (CartItem item : listThanhToan) {
                         cartRef.child(String.valueOf(item.getMaSP())).removeValue();
                     }
 
+                    // Chuyển qua trang Success
                     Intent intent = new Intent(OrderDetailActivity.this, OrderSuccessActivity.class);
                     intent.putExtra("order_id", orderId);
                     startActivity(intent);

@@ -81,10 +81,7 @@
         </activity>
         <activity android:name=".Activity.FavoriteActivity" />
         <activity android:name=".Activity.OrderDetailActivity" />
-        <activity
-            android:name=".Activity.OrderSuccessActivity"
-            android:exported="true">
-        </activity>
+        <activity android:name=".Activity.OrderSuccessActivity" />
 
         <activity android:name=".Activity.OrderHistoryActivity" />
         <activity android:name=".Activity.SavedAddressActivity" />
@@ -99,6 +96,7 @@
             android:name=".Activity.Admin.AdminProductDetailManager"
             android:exported="true">
         </activity>
+        <activity android:name=".Activity.Admin.AdminOrderActivity" />
     </application>
 
 </manifest>
