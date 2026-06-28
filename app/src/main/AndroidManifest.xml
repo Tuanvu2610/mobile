@@ -109,6 +109,8 @@
             android:name=".Activity.Admin.AdminDashboardActivity"
             android:exported="true">
         </activity>
+        <activity android:name=".Activity.Admin.AdminUserManagementActivity" />
+
     </application>
 
 </manifest>
