@@ -35,6 +35,7 @@ public class OrderDetailActivity extends AppCompatActivity {
     private TextView tvTotalBottom, tvTotalItemsCount, tvCustomerNamePhone, tvCustomerAddress, tvSelectedPayment, tvSubTotal;
     private LinearLayout layoutProductContainer;
     private Button btnPlaceOrder;
+    private double discount = 0;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -54,6 +55,7 @@ public class OrderDetailActivity extends AppCompatActivity {
         Intent intent = getIntent();
        userId =Integer.parseInt(intent.getStringExtra("user_id"));
        String name_voucher = intent.getStringExtra("name_voucher");
+       discount = intent.getDoubleExtra("discount", 0);
        if (userId != -1){
            fetchOnlineDataProduct();
        }else {
@@ -152,12 +154,22 @@ public class OrderDetailActivity extends AppCompatActivity {
             }
             private void tinhTongTien() {
                 tongTienDonHang = 0;
+                double tongGoc = 0;
                 for (CartItem item : listThanhToan) {
-                    tongTienDonHang += (item.getGia_Ban() * item.getSoLuong());
+                    tongGoc += (item.getGia_Ban() * item.getSoLuong());
                 }
+
+                // Chặt tiền voucher ở đây
+                tongTienDonHang = tongGoc - discount;
+
+                // Lỡ voucher bự hơn tiền hàng thì cho giá về 0
+                if (tongTienDonHang < 0) {
+                    tongTienDonHang = 0;
+                }
+
                 tvTotalItemsCount.setText("Tổng số tiền ( " + listThanhToan.size() + " sản phẩm)");
-                tvSubTotal.setText(String.format("%,.0f đ", tongTienDonHang));
-                tvTotalBottom.setText(String.format("%,.0f đ", tongTienDonHang));
+                tvSubTotal.setText(String.format("%,.0f đ", tongGoc)); // Tiền chưa giảm
+                tvTotalBottom.setText(String.format("%,.0f đ", tongTienDonHang)); // Tiền đã trừ voucher
             }
 
             @Override
@@ -181,8 +193,15 @@ public class OrderDetailActivity extends AppCompatActivity {
         String sdtKhach = "";
         if (rawText.contains("(+84)")) {
             String[] parts = rawText.split("\\(\\+84\\)");
-            tenKhach = parts[0].trim(); // Lấy khúc tên
-            sdtKhach = "0" + parts[1].trim(); // Lấy khúc SĐT, thêm số 0
+            tenKhach = parts[0].trim();
+
+            String phonePart = parts[1].trim();
+
+            if (phonePart.startsWith("0")) {
+                sdtKhach = phonePart;
+            } else {
+                sdtKhach = "0" + phonePart;
+            }
         }
 
         // 4. Lấy ngày giờ hệ thống hiện tại

@@ -160,18 +160,19 @@ public class ProfileActivity extends AppCompatActivity {
 
         tvOrderHistory.setOnClickListener(v -> {
             Intent intent = new Intent(this, OrderHistoryActivity.class);
+            intent.putExtra("TRANG_THAI", "Tất cả");
             startActivity(intent);
         });
 
         layoutOrderPending.setOnClickListener(v -> {
             Intent intent = new Intent(this, OrderHistoryActivity.class);
-            intent.putExtra("TRANG_THAI", "Chờ duyệt");
+            intent.putExtra("TRANG_THAI", "Chờ xử lý");
             startActivity(intent);
         });
 
         layoutOrderPickup.setOnClickListener(v -> {
             Intent intent = new Intent(this, OrderHistoryActivity.class);
-            intent.putExtra("TRANG_THAI", "Chờ lấy hàng");
+            intent.putExtra("TRANG_THAI", "Hoàn thành");
             startActivity(intent);
         });
 
@@ -183,7 +184,7 @@ public class ProfileActivity extends AppCompatActivity {
 
         layoutOrderReview.setOnClickListener(v -> {
             Intent intent = new Intent(this, OrderHistoryActivity.class);
-            intent.putExtra("TRANG_THAI", "Đánh giá");
+            intent.putExtra("TRANG_THAI", "Đã hủy");
             startActivity(intent);
         });
     }

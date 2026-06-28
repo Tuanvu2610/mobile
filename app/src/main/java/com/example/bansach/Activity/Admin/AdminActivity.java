@@ -15,6 +15,7 @@ public class AdminActivity extends AppCompatActivity {
     private LinearLayout quanlydanhgia;
     private LinearLayout quanlydanhmuc;
     private LinearLayout thongke;
+    private LinearLayout quanlydonhang;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,6 +26,15 @@ public class AdminActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(AdminActivity.this, ManageBookActivity.class);
+                startActivity(intent);
+
+            }
+        });
+        quanlydonhang = findViewById(R.id.quanlydonhang);
+        quanlydonhang.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(AdminActivity.this, AdminOrderActivity.class);
                 startActivity(intent);
 
             }

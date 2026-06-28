@@ -1,10 +1,14 @@
 package com.example.bansach.Activity;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -25,7 +29,8 @@ public class OrderHistoryActivity extends AppCompatActivity {
     private List<Order> listOrder;
     private ListView listView;
     int userIdInt;
-    ImageButton btnBack;
+    private ImageButton btnBack;
+    private TextView tatca, choxuly, danggiao, dagiao, dahuy;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +51,12 @@ public class OrderHistoryActivity extends AppCompatActivity {
         btnBack.setOnClickListener(v -> {
             finish();
         });
+        tatca = findViewById(R.id.tatca);
+        choxuly = findViewById(R.id.choxuly);
+        danggiao = findViewById(R.id.danggiao);
+        dagiao = findViewById(R.id.dagiao);
+        dahuy = findViewById(R.id.dahuy);
+        setupTabClicks();
     }
 
     public void loadData(String trangThaiChon, int user_id){
@@ -61,8 +72,12 @@ public class OrderHistoryActivity extends AppCompatActivity {
                         listOrder.clear();
                         for (DataSnapshot data : snapshot.getChildren()) {
                             Order order = data.getValue(Order.class);
-                            if (order != null && order.getStatus().equals(trangThaiChon)) {
-                                listOrder.add(order);
+                            if (order != null) {
+                                if (trangThaiChon.equals("Tất cả")) {
+                                    listOrder.add(order);
+                                } else if (order.getStatus().equals(trangThaiChon)) {
+                                    listOrder.add(order);
+                                }
                             }
                         }
                         adapter.notifyDataSetChanged();
@@ -74,5 +89,35 @@ public class OrderHistoryActivity extends AppCompatActivity {
                     }
                 });
     }
-
+    private void setupTabClicks() {
+        tatca.setOnClickListener(v -> {
+            updateTabUI(tatca);
+            loadData("Tất cả", userIdInt);
+        });
+        choxuly.setOnClickListener(v -> {
+            updateTabUI(choxuly);
+            loadData("Chờ xử lý", userIdInt);
+        });
+        danggiao.setOnClickListener(v -> {
+            updateTabUI(danggiao);
+            loadData("Đang giao", userIdInt);
+        });
+        dagiao.setOnClickListener(v -> {
+            updateTabUI(dagiao);
+            loadData("Hoàn thành", userIdInt);
+        });
+        dahuy.setOnClickListener(v -> {
+            updateTabUI(dahuy);
+            loadData("Đã huỷ", userIdInt);
+        });
+    }
+    private void updateTabUI(TextView selectedTab) {
+        TextView[] tabs = {tatca, choxuly, danggiao, dagiao, dahuy};
+        for (TextView t : tabs) {
+            t.setBackgroundColor(Color.parseColor("#F0F0F0"));
+            t.setTextColor(Color.parseColor("#666666"));
+        }
+        selectedTab.setBackgroundColor(Color.parseColor("#2D68C4"));
+        selectedTab.setTextColor(Color.parseColor("#FFFFFF"));
+    }
 }

@@ -108,22 +108,17 @@ public class ManageBookActivity extends BaseActivityAdmin {
         });
     }
 
-    // Hàm lọc đã được sửa tên biến cho đồng bộ
     public void filterProduct(String keyword) {
         filterList.clear();
         if (keyword.isEmpty()) {
-            // Rỗng thì trả về danh sách gốc
             filterList.addAll(bookList);
         } else {
-            // Có chữ thì quét qua danh sách gốc
             for (Book p : bookList) {
-                // Thêm điều kiện != null để chống văng app nếu lỡ có sách bị thiếu tên
                 if (p.getTenSP() != null && p.getTenSP().toLowerCase().contains(keyword.toLowerCase())) {
                     filterList.add(p);
                 }
             }
         }
-        // Gọi đúng tên biến adapter
         adminBookAdapter.notifyDataSetChanged();
     }
 }

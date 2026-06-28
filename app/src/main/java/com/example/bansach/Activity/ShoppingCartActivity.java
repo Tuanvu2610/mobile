@@ -143,7 +143,7 @@
                     intent.putExtra("user_id", userId);
                     intent.putExtra("voucher_id", idVoucher);
                     intent.putExtra("name_voucher", tenVoucher);
-
+                    intent.putExtra("discount", discount);
                     startActivity(intent);
                 }
             });

@@ -2,8 +2,11 @@ package com.example.bansach.Activity.Admin;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -15,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.bansach.R;
 import com.example.bansach.adapter.AdminBottomSheetAdapter;
 import com.example.bansach.adapter.AdminOrderAdapter;
+import com.example.bansach.model.Book;
 import com.example.bansach.model.Order;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.firebase.database.DataSnapshot;
@@ -32,11 +36,11 @@ public class AdminOrderActivity extends AppCompatActivity {
 
     private TextView tabAll, tabPending, tabShipping, tabDone, tabCancelled, tvOrderCount;
     private RecyclerView rvOrders;
-
     private List<Order> allOrderList = new ArrayList<>();
     private List<Order> filteredList = new ArrayList<>();
     private AdminOrderAdapter adapter;
     private String currentStatus = "Tất cả";
+    private EditText et_search;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,7 +65,19 @@ public class AdminOrderActivity extends AppCompatActivity {
             }
         });
         rvOrders.setAdapter(adapter);
+        et_search = findViewById(R.id.et_search);
+        et_search.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void afterTextChanged(Editable s) {}
 
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                filterProduct(s.toString().trim());
+            }
+        });
         // 3. Tải data & Bắt sự kiện chuyển Tab
         fetchOrdersFromFirebase();
         setupTabClicks();
@@ -187,5 +203,18 @@ public class AdminOrderActivity extends AppCompatActivity {
         });
 
         bottomSheetDialog.show();
+    }
+    public void filterProduct(String keyword) {
+        filteredList.clear();
+        if (keyword.isEmpty()) {
+            filteredList.addAll(allOrderList);
+        } else {
+            for (Order p : allOrderList) {
+                if (p.getCustomerName() != null && p.getCustomerName().toLowerCase().contains(keyword.toLowerCase())) {
+                    filteredList.add(p);
+                }
+            }
+        }
+        adapter.notifyDataSetChanged();
     }
 }
