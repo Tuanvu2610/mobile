@@ -74,7 +74,7 @@ public class ManageBookActivity extends BaseActivityAdmin {
                 filterProduct(s.toString().trim());
             }
         });
-
+        setupHeader();
         loadBooksFromFirebase();
     }
 

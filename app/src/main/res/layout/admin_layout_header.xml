@@ -1,45 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/layoutHeaderAdmin"
     android:layout_width="match_parent"
-    android:layout_height="60dp"
-    android:background="@color/white"
-    android:elevation="4dp"
-    android:gravity="center_vertical"
-    android:orientation="horizontal"
-    android:paddingHorizontal="16dp">
+    android:layout_height="wrap_content">
 
-    <ImageView
-        android:id="@+id/btnAdminMenu"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
-        android:src="@drawable/ic_menu"
-        app:tint="#2D68C4" />
+    <!-- Header bar -->
+    <LinearLayout
+        android:id="@+id/layoutHeaderAdmin"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@color/white"
+        android:elevation="4dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingHorizontal="16dp">
 
-    <TextView
-        android:id="@+id/txtAdminTitle"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_weight="1"
-        android:text="Admin"
-        android:textColor="#2D68C4"
-        android:textSize="20sp"
-        android:textStyle="bold" />
+        <ImageView
+            android:id="@+id/btnAdminMenu"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/ic_menu"
+            app:tint="#2D68C4" />
 
-    <ImageView
-        android:id="@+id/btnAdminBell"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
-        android:layout_marginEnd="16dp"
-        android:src="@drawable/ic_bell"
-        app:tint="#777777" />
+        <TextView
+            android:id="@+id/txtAdminTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_weight="1"
+            android:text="Admin"
+            android:textColor="#2D68C4"
+            android:textSize="20sp"
+            android:textStyle="bold" />
 
-    <ImageView
-        android:id="@+id/imgAdminAvatar"
-        android:layout_width="32dp"
-        android:layout_height="32dp"
-        android:background="@drawable/bg_circle"
-        android:src="@drawable/admin_ic_user" />
-</LinearLayout>
+    </LinearLayout>
+
+<!--    &lt;!&ndash; Dropdown menu overlay, mép trái, bắt đầu từ dưới header &ndash;&gt;-->
+<!--    <include-->
+<!--        android:id="@+id/layoutDropdownMenuAdmin"-->
+<!--        layout="@layout/layout_menu"-->
+<!--        android:layout_width="220dp"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_gravity="start|bottom"-->
+<!--        android:layout_marginTop="60dp"-->
+<!--        android:elevation="8dp"-->
+<!--        android:visibility="gone" />-->
+
+</FrameLayout>

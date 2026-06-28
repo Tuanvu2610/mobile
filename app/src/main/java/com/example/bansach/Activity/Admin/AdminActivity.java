@@ -9,7 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.bansach.R;
 
-public class AdminActivity extends AppCompatActivity {
+public class AdminActivity extends BaseActivityAdmin {
 
     private LinearLayout quanlysanpham;
     private LinearLayout quanlydanhgia;
@@ -73,5 +73,6 @@ public class AdminActivity extends AppCompatActivity {
 
             }
         });
+        setupHeader();
     }
 }

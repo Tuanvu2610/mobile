@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputType;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -119,8 +120,18 @@ public class SavedAddressActivity extends AppCompatActivity {
         for (Address address : addressList) {
             boolean isSelected = address.getAddressId().equals(selected.getAddressId());
             updates.put("/" + address.getAddressId() + "/defaultAddress", isSelected);
+
         }
         addressRef.updateChildren(updates)
+                .addOnSuccessListener(aVoid -> {
+                    Intent data = new Intent();
+                    data.putExtra("name_user", selected.getName());
+                    data.putExtra("phone_user", selected.getPhone());
+                    data.putExtra("dc", selected.getDetail());
+
+                    setResult(RESULT_OK, data);
+                    finish();
+                })
                 .addOnFailureListener(e ->
                         Toast.makeText(this, "Lỗi: " + e.getMessage(), Toast.LENGTH_SHORT).show());
     }

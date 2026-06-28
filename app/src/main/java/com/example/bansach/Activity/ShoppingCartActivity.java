@@ -126,7 +126,6 @@
                         }
                     }
 
-                    // 2. Kiểm tra xem khách có chọn món nào không
                     if (danhSachChotDon.isEmpty()) {
                         Toast.makeText(ShoppingCartActivity.this, "Vui lòng chọn ít nhất 1 sản phẩm để mua!", Toast.LENGTH_SHORT).show();
                         return;

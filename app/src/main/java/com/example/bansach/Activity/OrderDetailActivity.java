@@ -2,6 +2,7 @@ package com.example.bansach.Activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -17,6 +18,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
 import com.example.bansach.R;
+import com.example.bansach.model.Address;
 import com.example.bansach.model.CartItem;
 import com.example.bansach.model.Order;
 import com.google.firebase.database.DataSnapshot;
@@ -36,6 +38,7 @@ public class OrderDetailActivity extends AppCompatActivity {
     private LinearLayout layoutProductContainer;
     private Button btnPlaceOrder;
     private double discount = 0;
+    private LinearLayout layoutAddress;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -99,8 +102,6 @@ public class OrderDetailActivity extends AppCompatActivity {
                         if (tenVoucher != null && txtVoucherDetail != null) {
                             txtVoucherDetail.setText("Mã giảm giá: " + tenVoucher);
 
-                            // Cập nhật tiền (hàm này mình đã hướng dẫn ở trên)
-//                                tinhTongTienVoucher(discount);
                         } else {
                             Toast.makeText(OrderDetailActivity.this, "Không nhận được dữ liệu voucher", Toast.LENGTH_SHORT).show();
                         }
@@ -115,6 +116,39 @@ public class OrderDetailActivity extends AppCompatActivity {
                 launcher.launch(intentDetail);
             });
         }
+
+        layoutAddress = findViewById(R.id.layoutAddress);
+        layoutAddress.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(OrderDetailActivity.this, SavedAddressActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        ActivityResultLauncher<Intent> launcherAddress = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                    if (result.getResultCode() == RESULT_OK && result.getData() != null) {
+                        Intent data = result.getData();
+
+                        String name_user = data.getStringExtra("name_user");
+                        String phone_user = data.getStringExtra("phone_user");
+                        String dc = data.getStringExtra("dc");
+
+
+                        if (name_user != null && tvCustomerNamePhone != null) {
+                            tvCustomerNamePhone.setText(name_user + " (+84) " + phone_user);
+                        }
+                        if (dc != null && tvCustomerAddress != null) {
+                            tvCustomerAddress.setText(dc);
+                        }
+                    }
+                }
+        );
+
+        loadDefaultAddress();
+
     }
 
     private void fetchOnlineDataProduct() {
@@ -234,5 +268,34 @@ public class OrderDetailActivity extends AppCompatActivity {
                 }
             });
         }
+    }
+    private void loadDefaultAddress() {
+        DatabaseReference addressRef = FirebaseDatabase.getInstance().getReference("addresses");
+
+        addressRef.orderByChild("accountId").equalTo(String.valueOf(userId))
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot snapshot) {
+                        for (DataSnapshot child : snapshot.getChildren()) {
+                            Address address = child.getValue(Address.class);
+
+                            if (address != null && address.isDefaultAddress()) {
+
+                                if (tvCustomerNamePhone != null) {
+                                    tvCustomerNamePhone.setText(address.getName() + " (+84) " + address.getPhone());
+                                }
+                                if (tvCustomerAddress != null) {
+                                    tvCustomerAddress.setText(address.getDetail());
+                                }
+                                break;
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError error) {
+                        Log.e("Firebase", "Lỗi tải địa chỉ mặc định: " + error.getMessage());
+                    }
+                });
     }
 }

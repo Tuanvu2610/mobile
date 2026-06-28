@@ -9,7 +9,6 @@
     <include
         android:id="@+id/layoutHeaderAdmin"
         layout="@layout/admin_layout_header" />
-
     <GridLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -266,5 +265,6 @@
         android:backgroundTint="#D32F2F"
         android:textColor="@android:color/white"
         android:textStyle="bold" />
+
 
 </LinearLayout>
