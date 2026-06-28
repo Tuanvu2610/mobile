@@ -29,6 +29,10 @@ public class AdminActivity extends AppCompatActivity {
 
             }
         });
+        findViewById(R.id.cardManageUsers).setOnClickListener(v -> {
+            Intent intent = new Intent(AdminActivity.this, AdminUserManagementActivity.class);
+            startActivity(intent);
+        });
 
         quanlydanhgia = findViewById(R.id.quanlydanhgia);
         quanlydanhgia.setOnClickListener(new View.OnClickListener() {
