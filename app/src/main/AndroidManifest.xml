@@ -97,6 +97,18 @@
             android:exported="true">
         </activity>
         <activity android:name=".Activity.Admin.AdminOrderActivity" />
+        <activity
+            android:name=".Activity.Admin.AdminCategoryActivity"
+            android:exported="true">
+        </activity>
+        <activity
+            android:name=".Activity.Admin.AdminReviewActivity"
+            android:exported="true">
+        </activity>
+        <activity
+            android:name=".Activity.Admin.AdminDashboardActivity"
+            android:exported="true">
+        </activity>
     </application>
 
 </manifest>

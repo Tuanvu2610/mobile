@@ -1,4 +1,4 @@
-package com.example.bansach.Activity;
+package com.example.bansach.Activity.Admin;
 
 import android.os.Bundle;
 import android.view.View;
