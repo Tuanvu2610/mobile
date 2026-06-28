@@ -12,6 +12,9 @@ import com.example.bansach.R;
 public class AdminActivity extends AppCompatActivity {
 
     private LinearLayout quanlysanpham;
+    private LinearLayout quanlydanhgia;
+    private LinearLayout quanlydanhmuc;
+    private LinearLayout thongke;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,5 +30,34 @@ public class AdminActivity extends AppCompatActivity {
             }
         });
 
+        quanlydanhgia = findViewById(R.id.quanlydanhgia);
+        quanlydanhgia.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(AdminActivity.this, AdminReviewActivity.class);
+                startActivity(intent);
+
+            }
+        });
+
+        quanlydanhmuc = findViewById(R.id.quanlydanhmuc);
+        quanlydanhmuc.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(AdminActivity.this, AdminCategoryActivity.class);
+                startActivity(intent);
+
+            }
+        });
+
+        thongke = findViewById(R.id.thongke);
+        thongke.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(AdminActivity.this, AdminDashboardActivity.class);
+                startActivity(intent);
+
+            }
+        });
     }
 }
