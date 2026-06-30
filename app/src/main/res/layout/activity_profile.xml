@@ -18,6 +18,7 @@
             android:background="#004BA0"
             android:gravity="center_vertical"
             android:orientation="horizontal"
+            android:paddingTop="22dp"
             android:paddingHorizontal="16dp">
 
             <ImageView
@@ -32,7 +33,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="Bộ tứ siêu đẳng - Nhà sách Nông Lâm"
+                android:text="Nhà sách Nông Lâm"
                 android:textColor="@android:color/white"
                 android:textSize="18sp"
                 android:textStyle="bold" />
