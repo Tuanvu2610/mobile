@@ -15,11 +15,14 @@
 
     import androidx.annotation.NonNull;
     import androidx.appcompat.app.AppCompatActivity;
+    import androidx.recyclerview.widget.LinearLayoutManager;
+    import androidx.recyclerview.widget.RecyclerView;
 
     import com.bumptech.glide.Glide;
     import com.example.bansach.R;
     import com.example.bansach.model.Book;
     import com.example.bansach.model.Review;
+    import com.example.bansach.adapter.RelatedBookAdapter;
     import com.google.android.material.snackbar.Snackbar;
     import com.google.firebase.database.DataSnapshot;
     import com.google.firebase.database.DatabaseError;
@@ -28,6 +31,7 @@
     import com.google.firebase.database.ValueEventListener;
 
     import java.text.SimpleDateFormat;
+    import java.util.ArrayList;
     import java.util.Date;
     import java.util.Locale;
 
@@ -68,6 +72,9 @@
 
 
         private TextView txtBookName, txtAuthor, txtPrice;
+        private RecyclerView rvRelatedBooks;
+        private ArrayList<Book> relatedList;
+        private RelatedBookAdapter relatedAdapter;
 
         @Override
         protected void onCreate(Bundle savedInstanceState) {
@@ -258,7 +265,20 @@
                             ).show();
                         });
             });
+
+            rvRelatedBooks = findViewById(R.id.rvRelatedBooks);
+            relatedList = new ArrayList<>();
+            relatedAdapter = new RelatedBookAdapter(this, relatedList);
+            rvRelatedBooks.setLayoutManager(
+                    new LinearLayoutManager(
+                            this,
+                            LinearLayoutManager.HORIZONTAL,
+                            false
+                    )
+            );
+            rvRelatedBooks.setAdapter(relatedAdapter);
         }
+
         // =========================
         // LẤY DỮ LIỆU TỪ FIREBASE
         // =========================
@@ -311,6 +331,8 @@
                                             .load(linkAnh)
                                             .into(imgBook);
                                 }
+                                loadReview();
+                                loadRelatedBooks(currentBook.getCategory_id());
                             }
                         }
                     } else {
@@ -407,6 +429,38 @@
                         @Override
                         public void onCancelled(DatabaseError error) {
 
+                        }
+                    });
+        }
+
+        private void loadRelatedBooks(int categoryId) {
+            DatabaseReference bookRef =
+                    FirebaseDatabase.getInstance().getReference("book");
+
+            bookRef.addListenerForSingleValueEvent(
+                    new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                            relatedList.clear();
+
+                            for (DataSnapshot data : snapshot.getChildren()) {
+                                Book book = data.getValue(Book.class);
+
+                                if (book == null) continue;
+
+                                if (book.getCategory_id() == categoryId
+                                        && book.getMaSP() != maSachHienTai) {
+
+                                    relatedList.add(book);
+                                }
+                            }
+
+                            relatedAdapter.notifyDataSetChanged();
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
                         }
                     });
         }
