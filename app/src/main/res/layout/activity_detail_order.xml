@@ -122,7 +122,7 @@
                         android:id="@+id/tvCustomerNamePhone"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Tuấn Vũ (+84) 0342104524"
+                        android:text="Vui lòng thêm địa chỉ"
                         android:textSize="15sp"
                         android:textColor="#333333"
                         android:textStyle="bold"/>
@@ -131,7 +131,7 @@
                         android:id="@+id/tvCustomerAddress"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="KTX Đại học Nông Lâm, Phường Linh Trung, Thủ Đức, TP.HCM"
+                        android:text=""
                         android:textSize="13sp"
                         android:textColor="#757575"
                         android:layout_marginTop="4dp"/>

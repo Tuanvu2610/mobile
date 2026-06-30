@@ -146,6 +146,26 @@
                     startActivity(intent);
                 }
             });
+            //nut chon tat ca
+            android.widget.CheckBox cbSelectAll = findViewById(R.id.cbSelectAll);
+
+            if (cbSelectAll != null) {
+                cbSelectAll.setOnClickListener(v -> {
+                    boolean isChecked = cbSelectAll.isChecked();
+
+                    if (cartList == null || cartList.isEmpty()) {
+                        return;
+                    }
+
+                    for (CartItem item : cartList) {
+                        item.setChecked(isChecked);
+                    }
+
+                    adapter.notifyDataSetChanged();
+
+                    tinhTongTien();
+                });
+            }
             // Bắt đầu kéo dữ liệu
             layDuLieuGioHang();
         }

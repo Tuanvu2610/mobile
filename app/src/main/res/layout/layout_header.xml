@@ -5,7 +5,7 @@
     android:layout_height="wrap_content"
     android:background="#004BA0"
     android:paddingStart="8dp"
-    android:paddingTop="8dp"
+    android:paddingTop="22dp"
     android:paddingEnd="8dp"
     android:paddingBottom="12dp"
     app:layout_constraintTop_toTopOf="parent"
@@ -46,16 +46,29 @@
             android:textStyle="bold" />
     </LinearLayout>
 
-    <ImageView
+<!--    <ImageView-->
+<!--        android:id="@+id/imgLogo"-->
+<!--        android:layout_width="120dp"-->
+<!--        android:layout_height="36dp"-->
+<!--        android:layout_marginStart="8dp"-->
+<!--        android:textSize="28dp"-->
+<!--        android:textColor="@android:color/white"-->
+<!--        android:scaleType="fitCenter"-->
+<!--        android:text="NhaSach"-->
+<!--        app:layout_constraintBottom_toBottomOf="@id/topBarAnchor"-->
+<!--        app:layout_constraintStart_toEndOf="@id/layoutMenu"-->
+<!--        app:layout_constraintTop_toTopOf="@id/topBarAnchor" />-->
+    <TextView
         android:id="@+id/imgLogo"
         android:layout_width="120dp"
         android:layout_height="36dp"
-        android:layout_marginStart="8dp"
-        android:scaleType="fitCenter"
+        android:text="NhaSach"
+        android:textColor="@android:color/white"
+        android:textSize="28sp"
         app:layout_constraintBottom_toBottomOf="@id/topBarAnchor"
         app:layout_constraintStart_toEndOf="@id/layoutMenu"
         app:layout_constraintTop_toTopOf="@id/topBarAnchor" />
-
+        />
     <LinearLayout
         android:id="@+id/layoutLanguage"
         android:layout_width="wrap_content"

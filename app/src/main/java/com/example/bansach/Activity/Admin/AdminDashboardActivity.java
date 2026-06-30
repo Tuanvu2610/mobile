@@ -13,7 +13,7 @@ import com.google.firebase.database.*;
 
 import java.util.*;
 
-public class AdminDashboardActivity extends AppCompatActivity {
+public class AdminDashboardActivity extends BaseActivityAdmin {
 
     TextView txtRevenue, txtOrders, txtUsers, txtBooks;
     BarChart barChart;
@@ -48,6 +48,7 @@ public class AdminDashboardActivity extends AppCompatActivity {
             loadUsers();
             loadBooks();
         });
+        setupHeader();
     }
 
     // =====================

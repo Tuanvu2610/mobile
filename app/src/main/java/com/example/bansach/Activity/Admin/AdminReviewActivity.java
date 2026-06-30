@@ -11,7 +11,7 @@ import com.google.firebase.database.*;
 
 import java.util.ArrayList;
 
-public class AdminReviewActivity extends AppCompatActivity {
+public class AdminReviewActivity extends BaseActivityAdmin {
 
     ListView listReview;
     ArrayList<Review> reviewList = new ArrayList<>();
@@ -24,7 +24,7 @@ public class AdminReviewActivity extends AppCompatActivity {
 
         listReview = findViewById(R.id.rvReview);
         reviewRef = FirebaseDatabase.getInstance().getReference("review");
-
+        setupHeader();
         loadReview();
     }
 

@@ -43,7 +43,6 @@ public class AdminProductDetailManager extends AppCompatActivity {
     private MaterialButton btnChonAnh, btnLuu, btnXoaSach;
     private ImageButton btnBack;
     private EditText edtSearchBook;
-    private List<Book> filterList = new ArrayList<>();
 
     // Firebase
     private DatabaseReference booksRef;

@@ -32,7 +32,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
-public class AdminOrderActivity extends AppCompatActivity {
+public class AdminOrderActivity extends BaseActivityAdmin {
 
     private TextView tabAll, tabPending, tabShipping, tabDone, tabCancelled, tvOrderCount;
     private RecyclerView rvOrders;
@@ -80,6 +80,7 @@ public class AdminOrderActivity extends AppCompatActivity {
         });
         // 3. Tải data & Bắt sự kiện chuyển Tab
         fetchOrdersFromFirebase();
+        setupHeader();
         setupTabClicks();
     }
 

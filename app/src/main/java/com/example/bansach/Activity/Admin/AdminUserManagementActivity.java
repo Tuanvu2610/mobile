@@ -33,7 +33,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class AdminUserManagementActivity extends AppCompatActivity {
+public class AdminUserManagementActivity extends BaseActivityAdmin {
 
     private LinearLayout lvUsers;
     private EditText edtSearchUser;
@@ -74,6 +74,8 @@ public class AdminUserManagementActivity extends AppCompatActivity {
         // TODO: gắn chức năng thêm user thật cho fabAddUser nếu cần
         fabAddUser.setOnClickListener(v ->
                 Toast.makeText(this, "Chức năng thêm người dùng đang phát triển", Toast.LENGTH_SHORT).show());
+        setupHeader();
+
     }
 
     private void loadUsersFromFirebase() {

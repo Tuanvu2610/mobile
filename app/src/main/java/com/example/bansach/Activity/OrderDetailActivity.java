@@ -118,13 +118,13 @@ public class OrderDetailActivity extends AppCompatActivity {
         }
 
         layoutAddress = findViewById(R.id.layoutAddress);
-        layoutAddress.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(OrderDetailActivity.this, SavedAddressActivity.class);
-                startActivity(intent);
-            }
-        });
+//        layoutAddress.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(OrderDetailActivity.this, SavedAddressActivity.class);
+//                startActivity(intent);
+//            }
+//        });
 
         ActivityResultLauncher<Intent> launcherAddress = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
@@ -146,6 +146,13 @@ public class OrderDetailActivity extends AppCompatActivity {
                     }
                 }
         );
+        if (layoutAddress != null) {
+            layoutAddress.setOnClickListener(v -> {
+                Intent intentDetail = new Intent(OrderDetailActivity.this, SavedAddressActivity.class);
+                intentDetail.putExtra("is_detail_address", true);
+                launcherAddress.launch(intentDetail);
+            });
+        }
 
         loadDefaultAddress();
 

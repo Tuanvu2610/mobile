@@ -187,5 +187,6 @@ public class BookGridAdapter extends RecyclerView.Adapter<BookGridAdapter.BookVi
     }
 
     public void countReview(int position) {
+
     }
 }

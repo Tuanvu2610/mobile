@@ -49,7 +49,7 @@ public class SavedAddressActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_saved_address);
-
+        initViews();
         sessionManager = new SessionManager(this);
         if (!sessionManager.isLoggedIn()) {
             startActivity(new Intent(this, LoginActivity.class));
@@ -58,13 +58,36 @@ public class SavedAddressActivity extends AppCompatActivity {
         }
         userId = sessionManager.getUserId();
         addressRef = FirebaseDatabase.getInstance().getReference("addresses");
-
-        initViews();
+        boolean isDetail = getIntent().getBooleanExtra("is_detail_address", false);
+        if (isDetail) {
+            btnAddAddress.setText("Xác nhận");
+            btnAddAddress.setOnClickListener(v -> {
+                Address selectedAddress = null;
+                for (Address addr : addressList) {
+                    if (addr.isDefaultAddress()) {
+                        selectedAddress = addr;
+                        break;
+                    }
+                }
+                if (selectedAddress != null) {
+                    Intent data = new Intent();
+                    data.putExtra("name_user", selectedAddress.getName());
+                    data.putExtra("phone_user", selectedAddress.getPhone());
+                    data.putExtra("dc", selectedAddress.getDetail());
+                    setResult(RESULT_OK, data);
+                    finish();
+                } else {
+                    Toast.makeText(SavedAddressActivity.this, "Vui lòng chọn một địa chỉ!", Toast.LENGTH_SHORT).show();
+                }
+            });
+        } else {
+            btnAddAddress.setText("Thêm địa chỉ mới");
+            btnAddAddress.setOnClickListener(v -> showAddAddressDialog());
+        }
         setupRecyclerView();
         loadAddresses();
 
         ivBack.setOnClickListener(v -> finish());
-        btnAddAddress.setOnClickListener(v -> showAddAddressDialog());
     }
 
     private void initViews() {

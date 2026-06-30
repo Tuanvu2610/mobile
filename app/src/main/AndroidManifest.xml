@@ -110,6 +110,8 @@
             android:exported="true">
         </activity>
         <activity android:name=".Activity.Admin.AdminUserManagementActivity" />
+        <activity android:name=".Activity.Admin.AdminAddVoucherActivity" />
+        <activity android:name=".Activity.Admin.AdminVoucherManagement" />" />
 
     </application>
 

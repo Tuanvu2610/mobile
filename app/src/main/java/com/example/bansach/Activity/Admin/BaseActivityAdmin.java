@@ -25,6 +25,7 @@ import java.util.List;
 
 public class BaseActivityAdmin extends AppCompatActivity {
     private TextView txtAdminTitle;
+    private ImageView btnAdminMenu;
 
     protected void setupHeader() {
         txtAdminTitle = findViewById(R.id.txtAdminTitle);
@@ -34,5 +35,13 @@ public class BaseActivityAdmin extends AppCompatActivity {
             startActivity(intent);
             finish();
         });
+        btnAdminMenu = findViewById(R.id.btnAdminMenu);
+        boolean isadmin = getIntent().getBooleanExtra("is_admin", false);
+        if (isadmin){
+            btnAdminMenu.setImageResource(R.drawable.ic_back);
+            btnAdminMenu.setOnClickListener(v -> {
+                finish();
+            });
+        }
     }
 }

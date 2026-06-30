@@ -116,6 +116,15 @@ public class BaseActivity extends AppCompatActivity {
                 startActivity(intent);
             });
         }
+        TextView imgLogo = findViewById(R.id.imgLogo);
+
+        if (imgLogo != null) {
+            imgLogo.setOnClickListener(v -> {
+                Intent intent = new Intent(BaseActivity.this, MainActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
+            });
+        }
         capNhatBadgeGioHang();
     }
 

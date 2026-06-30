@@ -27,7 +27,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AdminCategoryActivity extends AppCompatActivity {
+public class AdminCategoryActivity extends BaseActivityAdmin {
 
     private Button btnAddCategory;
     private RecyclerView rvCategory;
@@ -71,7 +71,7 @@ public class AdminCategoryActivity extends AppCompatActivity {
         rvCategory.setAdapter(adapter);
 
         loadCategory();
-
+        setupHeader();
         btnAddCategory.setOnClickListener(v -> showAddDialog());
     }
 

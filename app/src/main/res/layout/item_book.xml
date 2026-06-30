@@ -110,16 +110,16 @@
                     android:textStyle="bold" />
             </LinearLayout>
 
-            <TextView
-                android:id="@+id/txtViews"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true"
-                android:padding="8dp"
-                android:text="Đã bán 5k+"
-                android:textSize="10sp"
-                android:textColor="@color/black" />
+<!--            <TextView-->
+<!--                android:id="@+id/txtViews"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_alignParentEnd="true"-->
+<!--                android:layout_centerVertical="true"-->
+<!--                android:padding="8dp"-->
+<!--                android:text="Đã bán 5k+"-->
+<!--                android:textSize="10sp"-->
+<!--                android:textColor="@color/black" />-->
 
         </RelativeLayout>
 

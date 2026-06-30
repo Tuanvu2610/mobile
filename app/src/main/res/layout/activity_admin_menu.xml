@@ -165,6 +165,7 @@
             android:focusable="true"
             android:foreground="?attr/selectableItemBackground">
             <LinearLayout
+                android:id="@+id/quanlyvoucher"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
