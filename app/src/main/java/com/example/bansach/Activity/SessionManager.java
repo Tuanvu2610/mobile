@@ -19,7 +19,6 @@ public class SessionManager {
         editor = prefs.edit();
     }
 
-    // Lưu thông tin đăng nhập
     public void saveLogin(String userId, String username, String role, String status) {
         editor.putBoolean(KEY_IS_LOGGED_IN, true);
         editor.putString(KEY_USER_ID, userId);
@@ -29,7 +28,6 @@ public class SessionManager {
         editor.apply();
     }
 
-    // Kiểm tra đã đăng nhập chưa
     public boolean isLoggedIn() {
         return prefs.getBoolean(KEY_IS_LOGGED_IN, false);
     }

@@ -13,7 +13,6 @@
         android:orientation="vertical"
         android:padding="16dp">
 
-    <!-- Header Section -->
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -41,7 +40,6 @@
             android:textStyle="bold" />
     </RelativeLayout>
 
-    <!-- Cover Image Section -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -75,7 +73,6 @@
             android:textAllCaps="false"/>
     </LinearLayout>
 
-    <!-- Basic Info Section -->
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/tilMaSanPham"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -121,7 +118,6 @@
             android:inputType="textPersonName" />
     </com.google.android.material.textfield.TextInputLayout>
 
-    <!-- Pricing Section -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -162,7 +158,6 @@
         </com.google.android.material.textfield.TextInputLayout>
     </LinearLayout>
 
-    <!-- Additional Details Section -->
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/tilSoLuongKho"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -195,7 +190,6 @@
             android:minLines="4" />
     </com.google.android.material.textfield.TextInputLayout>
 
-    <!-- Action Buttons Section -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

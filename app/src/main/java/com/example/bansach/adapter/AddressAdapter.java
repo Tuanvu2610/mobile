@@ -49,7 +49,6 @@ public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.ViewHold
         holder.rbDefault.setChecked(address.isDefaultAddress());
         holder.tvDefaultLabel.setVisibility(address.isDefaultAddress() ? View.VISIBLE : View.GONE);
 
-        // Bấm vào cả dòng (trừ icon xóa) -> đặt làm mặc định
         holder.itemView.setOnClickListener(v -> {
             if (!address.isDefaultAddress()) {
                 listener.onSetDefault(address);

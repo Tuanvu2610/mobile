@@ -17,7 +17,6 @@ public class AdminOrderAdapter extends RecyclerView.Adapter<AdminOrderAdapter.Vi
     private List<Order> orderList;
     private OnOrderClickListener listener;
 
-    // Interface để lát Activity bắt sự kiện bật Bottom Sheet
     public interface OnOrderClickListener {
         void onDetailClick(Order order);
     }
@@ -46,7 +45,6 @@ public class AdminOrderAdapter extends RecyclerView.Adapter<AdminOrderAdapter.Vi
         holder.tvDate.setText(order.getOrderDate());
         holder.tvTotal.setText(String.format(Locale.US, "%,.0f đ", order.getTotalAmount()));
 
-        // Bấm nút Chi Tiết
         holder.btnDetail.setOnClickListener(v -> {
             if (listener != null) listener.onDetailClick(order);
         });

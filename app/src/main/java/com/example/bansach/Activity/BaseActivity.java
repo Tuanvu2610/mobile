@@ -35,7 +35,6 @@ public class BaseActivity extends AppCompatActivity {
     private CategoryAdapter adapterCategory;
 
     protected void setupHeader() {
-        // 1. KHU VỰC DANH MỤC (CATEGORY)
         ListView lvCategory = findViewById(R.id.lvCategory);
         if (lvCategory != null) {
             listParentCate = new ArrayList<>();
@@ -46,7 +45,6 @@ public class BaseActivity extends AppCompatActivity {
             fetchOnlineDataCategory();
         }
 
-        // 2. KHU VỰC TÀI KHOẢN (USER) - Đã mang ra ngoài
         ImageView imgUser = findViewById(R.id.imgUser);
         if (imgUser != null) {
             imgUser.setOnClickListener(v -> {
@@ -65,7 +63,6 @@ public class BaseActivity extends AppCompatActivity {
             });
         }
 
-        // 3. KHU VỰC MENU DROP DOWN - Đã mang ra ngoài
         View btnMenuHeader = findViewById(R.id.layoutMenu);
         ImageView imgIconMenu = findViewById(R.id.imgMenuIcon);
         View layoutSearchBar = findViewById(R.id.layoutSearchBar);
@@ -91,7 +88,6 @@ public class BaseActivity extends AppCompatActivity {
             });
         }
 
-        // 4. KHU VỰC TÌM KIẾM, GIỎ HÀNG, YÊU THÍCH (Giữ nguyên)
         TextView txtSeach = findViewById(R.id.txtSeach);
         if (txtSeach != null) {
             txtSeach.setOnClickListener(v -> {

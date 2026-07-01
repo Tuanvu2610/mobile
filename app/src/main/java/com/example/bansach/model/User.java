@@ -1,7 +1,7 @@
 package com.example.bansach.model;
 
 public class User {
-    private String account_id;//đây là user_id của class User
+    private String account_id;
     private String email;
     private String fullName;
     private String birthDay;

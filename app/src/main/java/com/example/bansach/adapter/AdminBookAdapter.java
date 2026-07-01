@@ -53,13 +53,11 @@ public class AdminBookAdapter extends RecyclerView.Adapter<AdminBookAdapter.Admi
         holder.txtTitle.setText(book.getTenSP());
         holder.txtAuthor.setText(book.getTG());
 
-        // Format giá tiền
         holder.txtPrice.setText(String.format("%,.0f đ", book.getGia_Ban()));
 
-        // Load ảnh bằng Glide
         Glide.with(context)
                 .load(book.getImg())
-                .placeholder(R.drawable.book) // Ảnh chờ tạm thời
+                .placeholder(R.drawable.book)
                 .into(holder.imgBook);
 
         holder.btnEdit.setOnClickListener(v -> {
@@ -131,22 +129,4 @@ public class AdminBookAdapter extends RecyclerView.Adapter<AdminBookAdapter.Admi
 
         }
     }
-//    private void deleteBook() {
-//        // Kiểm tra xem đã load được dữ liệu chưa (nodeKey phải có giá trị)
-//        if (nodeKey != null && !nodeKey.isEmpty()) {
-//
-//            // DÙNG CHÍNH CÁI NODE KEY ĐỂ XÓA - ĐÂY LÀ ĐỊA CHỈ NHÀ CHÍNH XÁC
-//            booksRef.child(nodeKey).removeValue()
-//                    .addOnSuccessListener(aVoid -> {
-//                        Toast.makeText(AdminProductDetailManager.this, "Đã xóa thành công!", Toast.LENGTH_SHORT).show();
-//                        finish(); // Đóng trang sau khi xóa
-//                    })
-//                    .addOnFailureListener(e -> {
-//                        Toast.makeText(AdminProductDetailManager.this, "Lỗi xóa: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-//                    });
-//        } else {
-//            // Nếu nodeKey trống, nghĩa là trang chưa kịp load dữ liệu mà đã bấm xóa
-//            Toast.makeText(this, "Đang tải dữ liệu, vui lòng đợi chút...", Toast.LENGTH_SHORT).show();
-//        }
-//    }
 }

@@ -35,7 +35,6 @@ public class ProfileActivity extends AppCompatActivity {
 
         sessionManager = new SessionManager(this);
 
-        // Nếu chưa đăng nhập thì đá về Login
         if (!sessionManager.isLoggedIn()) {
             goToLogin();
             return;
@@ -71,14 +70,12 @@ public class ProfileActivity extends AppCompatActivity {
         String username = sessionManager.getUsername();
         String userId = sessionManager.getUserId();
 
-        // Hiển thị avatar initials (2 ký tự đầu username)
         if (username != null && username.length() >= 2) {
             tvAvatarInitials.setText(username.substring(0, 2).toUpperCase());
         } else if (username != null && !username.isEmpty()) {
             tvAvatarInitials.setText(username.substring(0, 1).toUpperCase());
         }
 
-        // Load thêm thông tin từ Firebase nếu cần
         databaseReference = FirebaseDatabase.getInstance()
                 .getReference("accounts").child("accounts");
 
@@ -88,11 +85,8 @@ public class ProfileActivity extends AppCompatActivity {
                 for (DataSnapshot child : snapshot.getChildren()) {
                     Account account = child.getValue(Account.class);
                     if (account != null && userId.equals(account.getUser_id())) {
-                        // Hiển thị tên đầy đủ
                         tvUsername.setText(account.getUsername());
-                        // Hiển thị email (username trong trường hợp này)
                         tvEmail.setText(account.getUsername());
-                        // Điểm tích lũy (hiện tại để 0, mở rộng sau)
                         tvPoints.setText("0 điểm");
                         break;
                     }
@@ -113,13 +107,11 @@ public class ProfileActivity extends AppCompatActivity {
         if (btnBack != null) {
             btnBack.setOnClickListener(v -> finish());
         }
-        // Lịch sử đơn hàng
         if (tvOrderHistory != null) {
             tvOrderHistory.setOnClickListener(v ->
                     Toast.makeText(this, "Lịch sử đơn hàng", Toast.LENGTH_SHORT).show());
         }
 
-        // Các trạng thái đơn hàng
         if (layoutOrderPending != null) {
             layoutOrderPending.setOnClickListener(v ->
                     Toast.makeText(this, "Chờ xác nhận", Toast.LENGTH_SHORT).show());
@@ -198,7 +190,6 @@ public class ProfileActivity extends AppCompatActivity {
 
     private void goToLogin() {
         Intent intent = new Intent(ProfileActivity.this, LoginActivity.class);
-        // Xóa toàn bộ Activity stack
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
         finish();

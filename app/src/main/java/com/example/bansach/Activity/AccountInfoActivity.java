@@ -148,7 +148,6 @@ public class AccountInfoActivity extends AppCompatActivity {
         });
     }
 
-    // Dialog nhập text dùng chung cho Họ tên / SĐT
     private void showEditTextDialog(String title, String currentValue, int inputType, OnValueSaved callback) {
         EditText input = new EditText(this);
         input.setInputType(inputType);
@@ -198,7 +197,6 @@ public class AccountInfoActivity extends AppCompatActivity {
                         Toast.makeText(this, "Lỗi lưu: " + e.getMessage(), Toast.LENGTH_SHORT).show());
     }
 
-    // Interface nhỏ để callback khi dialog lưu xong
     private interface OnValueSaved {
         void onSaved(String value);
     }

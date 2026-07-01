@@ -6,7 +6,6 @@
     android:orientation="vertical"
     android:background="#F5F5F5">
 
-    <!-- Top bar -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="56dp"
@@ -25,20 +24,17 @@
             android:textStyle="bold" />
     </LinearLayout>
 
-    <!-- Divider -->
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="#DDDDDD" />
 
-    <!-- Header -->
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="72dp"
         android:background="#FFFFFF"
         android:paddingHorizontal="12dp">
 
-        <!-- Back Button -->
         <ImageButton
             android:id="@+id/btnBack"
             android:layout_width="48dp"
@@ -50,7 +46,6 @@
             android:src="@drawable/ic_back"
             app:tint="#000000" />
 
-        <!-- Title -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -60,7 +55,6 @@
             android:textSize="24sp"
             android:textStyle="bold" />
 
-        <!-- Search Button -->
         <ImageButton
             android:id="@+id/btnSearch"
             android:layout_width="48dp"
@@ -74,7 +68,6 @@
             app:tint="#000000" />
     </RelativeLayout>
 
-    <!-- Filter Tabs -->
     <HorizontalScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -92,7 +85,6 @@
             android:orientation="horizontal"
             android:gravity="center_vertical">
 
-            <!-- Tab: Tất cả (active) -->
             <TextView
                 android:id="@+id/tatca"
                 android:layout_width="wrap_content"
@@ -106,7 +98,6 @@
                 android:layout_marginEnd="8dp"
                 android:background="#2D68C4" />
 
-            <!-- Tab: Chờ xử lý -->
             <TextView
                 android:id="@+id/choxuly"
                 android:layout_width="wrap_content"
@@ -120,7 +111,6 @@
                 android:layout_marginEnd="8dp"
                 android:background="#F0F0F0" />
 
-            <!-- Tab: Đang giao -->
             <TextView
                 android:id="@+id/danggiao"
                 android:layout_width="wrap_content"
@@ -134,7 +124,6 @@
                 android:layout_marginEnd="8dp"
                 android:background="#F0F0F0" />
 
-            <!-- Tab: Hoàn thành -->
             <TextView
                 android:id="@+id/dagiao"
                 android:layout_width="wrap_content"
@@ -148,7 +137,6 @@
                 android:layout_marginEnd="8dp"
                 android:background="#F0F0F0" />
 
-            <!-- Tab: Đã huỷ -->
             <TextView
                 android:id="@+id/dahuy"
                 android:layout_width="wrap_content"

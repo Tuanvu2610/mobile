@@ -6,7 +6,6 @@
     android:background="#FFFFFF"
     android:paddingBottom="24dp">
 
-    <!-- Handle bar -->
     <View
         android:layout_width="40dp"
         android:layout_height="4dp"
@@ -15,7 +14,6 @@
         android:layout_marginTop="12dp"
         android:layout_marginBottom="16dp" />
 
-    <!-- Tiêu đề + Trạng thái -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -49,13 +47,11 @@
             android:paddingBottom="4dp" />
     </LinearLayout>
 
-    <!-- Divider -->
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="#F0F0F0" />
 
-    <!-- Thông tin khách hàng -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -75,7 +71,6 @@
             android:letterSpacing="0.08"
             android:layout_marginBottom="10dp" />
 
-        <!-- ID khách -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -98,7 +93,6 @@
                 android:textColor="#1A1A1A" />
         </LinearLayout>
 
-        <!-- Tên khách -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -121,7 +115,6 @@
                 android:textColor="#1A1A1A" />
         </LinearLayout>
 
-        <!-- Địa chỉ -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -145,13 +138,11 @@
         </LinearLayout>
     </LinearLayout>
 
-    <!-- Divider -->
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="#F0F0F0" />
 
-    <!-- Danh sách sản phẩm -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -179,14 +170,12 @@
 
     </LinearLayout>
 
-    <!-- Divider -->
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="#F0F0F0"
         android:layout_marginTop="8dp" />
 
-    <!-- Tổng tiền -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

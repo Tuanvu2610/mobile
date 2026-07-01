@@ -39,7 +39,6 @@ public class CartAdapter extends BaseAdapter {
         this.layout = layout;
         this.cartList = cartList;
 
-        // Khởi tạo luôn userId từ SessionManager có sẵn của mày
         SessionManager sessionManager = new SessionManager(context);
         this.userId = sessionManager.getUserId();
     }
@@ -75,7 +74,7 @@ public class CartAdapter extends BaseAdapter {
         // nút tăng, giảm, xóa
         Button btnMinus = convertView.findViewById(R.id.btnMinus);
         Button btnPlus = convertView.findViewById(R.id.btnPlus);
-        TextView tvnDelete = convertView.findViewById(R.id.tvnDelete); // Nút X mày đặt tên là tvnDelete nè
+        TextView tvnDelete = convertView.findViewById(R.id.tvnDelete);
         CheckBox cbSelect = convertView.findViewById(R.id.checkboxproduct);
 
         CartItem item = cartList.get(position);
@@ -90,7 +89,6 @@ public class CartAdapter extends BaseAdapter {
                 .placeholder(R.drawable.ic_launcher_background)
                 .into(imgProduct);
 
-        // Đường dẫn thẳng tới món hàng này trên Firebase để tí nữa cập nhật
         DatabaseReference itemRef = FirebaseDatabase.getInstance().getReference("Carts")
                 .child(userId)
                 .child(String.valueOf(item.getMaSP()));
@@ -99,39 +97,25 @@ public class CartAdapter extends BaseAdapter {
         // Nút Cộng (+)
         btnPlus.setOnClickListener(v -> {
             int newQty = item.getSoLuong() + 1;
-
-            // 1. Cập nhật số lượng ngay trên màn hình điện thoại
             item.setSoLuong(newQty);
-
-            // 2. Báo cho Activity tính lại tiền lập tức!
             ((ShoppingCartActivity) context).tinhTongTien();
-
-            // 3. Đẩy dữ liệu lên Firebase chạy ngầm phía sau
             itemRef.child("soLuong").setValue(newQty);
         });
 
-// Nút Trừ (-)
+        // Nút Trừ (-)
         btnMinus.setOnClickListener(v -> {
             int currentQty = item.getSoLuong();
             if (currentQty > 1) {
                 int newQty = currentQty - 1;
-
-                // 1. Cập nhật số lượng ngay trên màn hình điện thoại
                 item.setSoLuong(newQty);
-
-                // 2. Báo cho Activity tính lại tiền lập tức!
                 ((ShoppingCartActivity) context).tinhTongTien();
-
-                // 3. Đẩy lên Firebase chạy ngầm phía sau
                 itemRef.child("soLuong").setValue(newQty);
             } else {
-                // Nếu đang là 1 mà bấm Trừ tiếp thì xóa
                 itemRef.removeValue();
                 FirebaseDatabase.getInstance().getReference("OrderDetail")
                         .child(userId).child(String.valueOf(item.getMaSP())).removeValue();
             }
         });
-
         // (X)
         tvnDelete.setOnClickListener(v -> {
             itemRef.removeValue();

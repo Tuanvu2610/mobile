@@ -70,7 +70,6 @@ public class ForgotPasswordActivity extends AppCompatActivity {
                             && account.getUsername().equals(username)) {
                         found = true;
                         showLoading(false);
-                        // Hiển thị mật khẩu hiện tại (vì không có email để gửi link)
                         Toast.makeText(ForgotPasswordActivity.this,
                                 "Mật khẩu của bạn là: " + account.getPassword(),
                                 Toast.LENGTH_LONG).show();

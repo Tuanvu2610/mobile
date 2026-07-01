@@ -36,7 +36,6 @@ public class FavoriteActivity extends BaseActivity {
         sessionManager = new SessionManager(this);
         userId = sessionManager.getUserId();
 
-        // Ánh xạ View
         rvFavorites = findViewById(R.id.rvFavorites);
         layoutEmpty = findViewById(R.id.layoutEmpty);
 
@@ -44,7 +43,6 @@ public class FavoriteActivity extends BaseActivity {
         favoriteBookList = new ArrayList<>();
         favoriteIds = new ArrayList<>();
 
-        // Dùng lại cái Adapter Grid xịn của bạn luôn, đỡ phải viết cái mới
         adapter = new BookGridAdapter(this, favoriteBookList);
         rvFavorites.setAdapter(adapter);
 
@@ -52,7 +50,6 @@ public class FavoriteActivity extends BaseActivity {
         setupHeader();
     }
 
-    // Hàm 1: Lấy các ID sách đã được thả tim
     private void loadFavoriteIds() {
         DatabaseReference favRef = FirebaseDatabase.getInstance().getReference("YeuThich").child(userId);
 
@@ -62,7 +59,6 @@ public class FavoriteActivity extends BaseActivity {
                 favoriteIds.clear();
                 if (snapshot.exists()) {
                     for (DataSnapshot idSnap : snapshot.getChildren()) {
-                        // Lấy key (chính là MaSP ví dụ: "2", "200") chuyển thành số nguyên
                         try {
                             int maSP = Integer.parseInt(idSnap.getKey());
                             favoriteIds.add(maSP);
@@ -72,7 +68,6 @@ public class FavoriteActivity extends BaseActivity {
                     }
                 }
 
-                // Sau khi có danh sách ID rồi, tiến hành kéo sách về đối chiếu
                 loadFavoriteBooks();
             }
 
@@ -81,7 +76,6 @@ public class FavoriteActivity extends BaseActivity {
         });
     }
 
-    // Hàm 2: Tải toàn bộ sách và lọc lại theo ID đã thích
     private void loadFavoriteBooks() {
         DatabaseReference booksRef = FirebaseDatabase.getInstance().getReference("book");
 
@@ -93,20 +87,18 @@ public class FavoriteActivity extends BaseActivity {
                 if (snapshot.exists() && !favoriteIds.isEmpty()) {
                     for (DataSnapshot bookSnap : snapshot.getChildren()) {
                         Book book = bookSnap.getValue(Book.class);
-                        // Nếu sách tồn tại và mã sách nằm trong danh sách Id đã thích
                         if (book != null && favoriteIds.contains((int)book.getMaSP())) {
                             favoriteBookList.add(book);
                         }
                     }
                 }
 
-                // --- XỬ LÝ ĐỔI GIAO DIỆN (UX EMPTY STATE) ---
                 if (favoriteBookList.isEmpty()) {
                     rvFavorites.setVisibility(View.GONE);
-                    layoutEmpty.setVisibility(View.VISIBLE); // Hiện thông báo rỗng
+                    layoutEmpty.setVisibility(View.VISIBLE);
                 } else {
-                    layoutEmpty.setVisibility(View.GONE);    // Ẩn thông báo rỗng đi
-                    rvFavorites.setVisibility(View.VISIBLE); // Hiện danh sách sách lên
+                    layoutEmpty.setVisibility(View.GONE);
+                    rvFavorites.setVisibility(View.VISIBLE);
                     adapter.notifyDataSetChanged();
                 }
             }

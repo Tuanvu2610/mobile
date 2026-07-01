@@ -17,8 +17,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.bansach.R;
 import com.example.bansach.adapter.BookGridAdapter;
-import com.example.bansach.api.ApiClient;
-import com.example.bansach.api.ApiService;
 import com.example.bansach.model.Book;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;

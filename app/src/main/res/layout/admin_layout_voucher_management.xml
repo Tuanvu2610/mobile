@@ -6,8 +6,6 @@
     android:background="#F8F9FB"
     android:orientation="vertical">
 
-    <!-- Header (Bạn có thể include file header của BaseActivity vào đây) -->
-    <!-- <include layout="@layout/layout_header_admin" /> -->
     <include
         android:id="@+id/layoutHeaderAdmin"
         layout="@layout/admin_layout_header" />
@@ -42,7 +40,6 @@
             android:textStyle="bold" />
     </LinearLayout>
 
-    <!-- Khu vực Tìm kiếm & Bộ lọc -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -50,7 +47,6 @@
         android:paddingHorizontal="16dp"
         android:paddingBottom="16dp">
 
-        <!-- Ô Tìm kiếm -->
         <EditText
             android:id="@+id/edtSearchVoucher"
             android:layout_width="0dp"
@@ -65,7 +61,6 @@
 
     </LinearLayout>
 
-    <!-- Danh sách sách -->
     <ListView
         android:id="@+id/lvVoucher"
         android:layout_width="match_parent"
@@ -74,6 +69,5 @@
         android:clipToPadding="false"
         android:paddingBottom="80dp" />
 
-    <!-- Tạm thời để trống phần Bottom Navigation. Bạn có thể chèn BottomNavigationView vào đây sau -->
 
 </LinearLayout>

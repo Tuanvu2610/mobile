@@ -14,7 +14,6 @@
         android:layout_height="wrap_content"
         android:padding="12dp">
 
-        <!-- Ảnh bìa sách -->
         <ImageView
             android:id="@+id/imgAdminBook"
             android:layout_width="70dp"
@@ -25,7 +24,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <!-- Tên sách -->
         <TextView
             android:id="@+id/txtAdminBookTitle"
             android:layout_width="0dp"
@@ -42,7 +40,6 @@
             app:layout_constraintStart_toEndOf="@+id/imgAdminBook"
             app:layout_constraintTop_toTopOf="@+id/imgAdminBook" />
 
-        <!-- Tên tác giả -->
         <TextView
             android:id="@+id/txtAdminBookAuthor"
             android:layout_width="0dp"
@@ -55,7 +52,6 @@
             app:layout_constraintStart_toStartOf="@+id/txtAdminBookTitle"
             app:layout_constraintTop_toBottomOf="@+id/txtAdminBookTitle" />
 
-        <!-- Giá tiền -->
         <TextView
             android:id="@+id/txtAdminBookPrice"
             android:layout_width="wrap_content"
@@ -67,7 +63,6 @@
             app:layout_constraintBottom_toBottomOf="@+id/imgAdminBook"
             app:layout_constraintStart_toStartOf="@+id/txtAdminBookTitle" />
 
-        <!-- Nút Chỉnh sửa (Cây bút) -->
         <ImageButton
             android:id="@+id/btnEditBook"
             android:layout_width="36dp"
@@ -77,7 +72,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <!-- Nút Xóa (Thùng rác) -->
         <ImageButton
             android:id="@+id/btnDeleteBook"
             android:layout_width="36dp"

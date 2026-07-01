@@ -14,9 +14,8 @@
             android:id="@+id/layoutHeaderAdmin"
             layout="@layout/admin_layout_header" />
 
-        <!-- TITLE -->
         <TextView
-            android:text="Admin Dashboard"
+            android:text="THỐNG KÊ"
             android:textSize="26sp"
             android:textStyle="bold"
             android:textColor="#004BA0"
@@ -24,7 +23,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
 
-        <!-- CARDS -->
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
@@ -84,7 +82,6 @@
 
         </LinearLayout>
 
-        <!-- CHART -->
         <TextView
             android:text="Top sách bán chạy"
             android:textStyle="bold"

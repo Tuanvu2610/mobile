@@ -29,10 +29,6 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <!-- ẢNH -->
-
-            <!-- NỘI DUNG -->
-
             <ImageView
                 android:id="@+id/imgBook"
                 android:layout_width="match_parent"
@@ -50,7 +46,6 @@
                 android:orientation="vertical"
                 android:padding="16dp">
 
-                <!-- TÊN SÁCH -->
 
                 <TextView
                     android:id="@+id/txtBookName"
@@ -61,8 +56,6 @@
                     android:textSize="24sp"
                     android:textStyle="bold" />
 
-                <!-- TÁC GIẢ -->
-
                 <TextView
                     android:id="@+id/txtAuthor"
                     android:layout_width="wrap_content"
@@ -71,8 +64,6 @@
                     android:text="Tác giả"
                     android:textColor="#FF9800"
                     android:textSize="16sp" />
-
-                <!-- GIÁ -->
 
                 <TextView
                     android:id="@+id/txtPrice"
@@ -84,7 +75,6 @@
                     android:textSize="30sp"
                     android:textStyle="bold" />
 
-                <!-- TÌNH TRẠNG -->
 
                 <TextView
                     android:id="@+id/txtStock"
@@ -105,8 +95,6 @@
                     android:isIndicator="true"/>
 
             </LinearLayout>
-
-            <!-- MÔ TẢ -->
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -146,8 +134,6 @@
                     android:textStyle="bold" />
 
             </LinearLayout>
-
-            <!-- THÔNG TIN -->
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -200,8 +186,6 @@
                 </LinearLayout>
 
             </LinearLayout>
-
-            <!-- ĐÁNH GIÁ -->
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -274,8 +258,6 @@
 
             </LinearLayout>
 
-            <!-- SÁCH LIÊN QUAN -->
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -305,8 +287,6 @@
         </LinearLayout>
 
     </ScrollView>
-
-    <!-- THANH DƯỚI -->
 
     <LinearLayout
         android:id="@+id/bottomLayout"

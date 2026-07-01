@@ -160,24 +160,18 @@
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         if (snapshot.exists()) {
-                            // Nếu sản phẩm đã có trong giỏ, cộng thêm số lượng hiện tại
                             Integer currentQty = snapshot.child("soLuong").getValue(Integer.class);
                             if (currentQty == null) currentQty = 0;
 
-                            // Lấy số lượng muốn thêm từ giao diện
                             int qtyToAdd = Integer.parseInt(txtQuantity.getText().toString().trim());
 
                             cartRef.child("soLuong").setValue(currentQty + qtyToAdd);
                         } else {
-                            // Nếu chưa có, tạo mới
                             java.util.HashMap<String, Object> cartItem = new java.util.HashMap<>();
                             cartItem.put("maSP", maSachHienTai);
 
-                            // Sửa: Lấy chuỗi String từ TextView
                             cartItem.put("tenSP", txtBookName.getText().toString().trim());
 
-                            // Cực kỳ lưu ý: Giá bán thường lưu kiểu số (Double) trên Firebase để tính toán
-                            // Ở giao diện bạn đang hiện "100,000đ", cần cắt bỏ chữ "đ" và dấu phẩy đi trước khi lưu
                             String priceStr = txtPrice.getText().toString().replaceAll("[^\\d]", "");
                             if (!priceStr.isEmpty()) {
                                 cartItem.put("gia_Ban", Double.parseDouble(priceStr));
@@ -185,13 +179,8 @@
                                 cartItem.put("gia_Ban", 0.0);
                             }
 
-                            // SỬA QUAN TRỌNG NHẤT: Không truyền imgBook
-                            // Bạn phải lấy link ảnh từ biến nào đó (ví dụ mình đặt tạm là linkAnhHienTai)
-                            // Lưu ý: Bạn cần tạo 1 biến toàn cục String linkAnhHienTai ở trên cùng
-                            // và gán giá trị cho nó ở trong hàm fetchBookDetailFromFirebase
                             cartItem.put("img", currentBook.getImg() != null ? currentBook.getImg() : "");
 
-                            // Sửa: Lấy số lượng kiểu int từ TextView
                             cartItem.put("soLuong", Integer.parseInt(txtQuantity.getText().toString().trim()));
 
                             cartRef.setValue(cartItem);
@@ -279,9 +268,6 @@
             rvRelatedBooks.setAdapter(relatedAdapter);
         }
 
-        // =========================
-        // LẤY DỮ LIỆU TỪ FIREBASE
-        // =========================
         private void fetchBookDetailFromFirebase(double idSach) {
             DatabaseReference bookRef = FirebaseDatabase.getInstance().getReference("book");
             int maSanPhamCachTim = (int) idSach;

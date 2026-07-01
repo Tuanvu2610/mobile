@@ -32,7 +32,6 @@
             android:textColor="#888888"
             android:textSize="13sp" />
 
-        <!-- Ô tìm kiếm -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -64,7 +63,6 @@
         </LinearLayout>
     </LinearLayout>
 
-    <!-- Danh sách user -->
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -79,7 +77,6 @@
             android:paddingEnd="16dp" />
     </ScrollView>
 
-    <!-- Nút thêm user (FAB) -->
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">

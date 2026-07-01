@@ -71,7 +71,6 @@ public class OrderDetailActivity extends AppCompatActivity {
                 finish();
             }
         });
-        // Bắt sự kiện đặt hàng
         btnPlaceOrder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -109,7 +108,6 @@ public class OrderDetailActivity extends AppCompatActivity {
                 }
         );
 
-        // 3. Set sự kiện click sau khi đã có launcher
         if (txtVoucherDetail != null) {
             txtVoucherDetail.setOnClickListener(v -> {
                 Intent intentDetail = new Intent(OrderDetailActivity.this, VoucherActivity.class);
@@ -118,13 +116,6 @@ public class OrderDetailActivity extends AppCompatActivity {
         }
 
         layoutAddress = findViewById(R.id.layoutAddress);
-//        layoutAddress.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(OrderDetailActivity.this, SavedAddressActivity.class);
-//                startActivity(intent);
-//            }
-//        });
 
         ActivityResultLauncher<Intent> launcherAddress = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
@@ -200,10 +191,8 @@ public class OrderDetailActivity extends AppCompatActivity {
                     tongGoc += (item.getGia_Ban() * item.getSoLuong());
                 }
 
-                // Chặt tiền voucher ở đây
                 tongTienDonHang = tongGoc - discount;
 
-                // Lỡ voucher bự hơn tiền hàng thì cho giá về 0
                 if (tongTienDonHang < 0) {
                     tongTienDonHang = 0;
                 }
@@ -221,7 +210,6 @@ public class OrderDetailActivity extends AppCompatActivity {
         });
     }
     private void xuLyDatHang() {
-        // 1. Tạo Orders trên Firebase
         DatabaseReference orderRef = FirebaseDatabase.getInstance().getReference("Orders");
         String orderId = orderRef.push().getKey();
 
@@ -229,7 +217,6 @@ public class OrderDetailActivity extends AppCompatActivity {
         String diaChi = tvCustomerAddress.getText().toString();
         String phuongThuc = tvSelectedPayment.getText().toString();
 
-        // 3. Xử lý "chặt" chuỗi Tên và SĐT
         String tenKhach = rawText;
         String sdtKhach = "";
         if (rawText.contains("(+84)")) {
@@ -245,10 +232,8 @@ public class OrderDetailActivity extends AppCompatActivity {
             }
         }
 
-        // 4. Lấy ngày giờ hệ thống hiện tại
         java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("dd/MM/yyyy HH:mm", java.util.Locale.getDefault());
         String ngayDatHang = sdf.format(new java.util.Date());
-        // Đóng gói dữ liệu
         Order newOrder = new Order(tenKhach, sdtKhach, ngayDatHang, orderId, userId, diaChi, tongTienDonHang, phuongThuc, "Chờ xử lý", listThanhToan);
 
         if (orderId != null) {

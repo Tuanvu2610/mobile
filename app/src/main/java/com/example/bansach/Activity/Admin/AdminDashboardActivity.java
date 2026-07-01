@@ -39,7 +39,7 @@ public class AdminDashboardActivity extends BaseActivityAdmin {
 
         barChart = findViewById(R.id.barChart);
 
-        orderRef = FirebaseDatabase.getInstance().getReference("orders");
+        orderRef = FirebaseDatabase.getInstance().getReference("Orders");
         userRef = FirebaseDatabase.getInstance().getReference("users");
         bookRef = FirebaseDatabase.getInstance().getReference("book");
 
@@ -91,8 +91,8 @@ public class AdminDashboardActivity extends BaseActivityAdmin {
                         }
                     }
                 }
+                txtRevenue.setText(String.format("%,dđ", totalRevenue));
 
-                txtRevenue.setText(totalRevenue + " đ");
                 txtOrders.setText(totalOrders + " Orders");
 
                 loadChart();

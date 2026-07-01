@@ -137,7 +137,6 @@ public class SavedAddressActivity extends AppCompatActivity {
         });
     }
 
-    // Đặt 1 địa chỉ làm mặc định -> tự bỏ mặc định ở tất cả địa chỉ còn lại
     private void setDefaultAddress(Address selected) {
         Map<String, Object> updates = new HashMap<>();
         for (Address address : addressList) {
@@ -171,7 +170,6 @@ public class SavedAddressActivity extends AppCompatActivity {
     private void deleteAddress(Address address) {
         addressRef.child(address.getAddressId()).removeValue()
                 .addOnSuccessListener(v -> {
-                    // Nếu vừa xóa địa chỉ đang là mặc định, tự đặt 1 địa chỉ khác làm mặc định
                     if (address.isDefaultAddress()) {
                         for (Address a : addressList) {
                             if (!a.getAddressId().equals(address.getAddressId())) {
@@ -226,7 +224,6 @@ public class SavedAddressActivity extends AppCompatActivity {
         String newId = addressRef.push().getKey();
         if (newId == null) return;
 
-        // Nếu đây là địa chỉ đầu tiên của user -> tự động mặc định luôn
         boolean isFirst = addressList.isEmpty();
 
         Address newAddress = new Address(newId, userId, name, phone, detail, isFirst);

@@ -24,7 +24,6 @@ import com.google.firebase.database.ValueEventListener;
 public class OrderSuccessActivity extends AppCompatActivity {
     private String orderId;
 
-    // Đã thay đổi ánh xạ cho khớp với giao diện mới rút gọn
     private TextView tvAddressSuccess, tvTotal;
     private Button btnHome, btnContinueShopping;
     private ImageButton btnBack;
@@ -51,7 +50,6 @@ public class OrderSuccessActivity extends AppCompatActivity {
 
         btnHome.setOnClickListener(v -> {
             Intent intent = new Intent(OrderSuccessActivity.this, MainActivity.class);
-            // Xóa sạch lịch sử màn hình trước đó, người dùng ấn nút Back trên đt sẽ thoát app chứ ko quay lại giỏ hàng
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
             finish();
@@ -74,16 +72,13 @@ public class OrderSuccessActivity extends AppCompatActivity {
                 if (snapshot.exists()) {
                     Order order = snapshot.getValue(Order.class);
                     if (order != null) {
-                        // 1. Gắn địa chỉ và tổng tiền
                         tvAddressSuccess.setText(order.getAddress());
                         tvTotal.setText(String.format(java.util.Locale.US, "%,.0f đ", order.getTotalAmount()));
 
-                        // 2. KHÚC NÀY ĐỂ VẼ DANH SÁCH SẢN PHẨM NÈ MÀY
                         if (order.getListItems() != null) {
-                            lvOrderItems.removeAllViews(); // Xóa rác cũ nếu có
+                            lvOrderItems.removeAllViews();
 
                             for (int i = 0; i < order.getListItems().size(); i++) {
-                                // Dùng layoutOrderItems, false để không bị xẹp kích thước
                                 View itemView = getLayoutInflater().inflate(R.layout.layout_item_order_detail, lvOrderItems, false);
 
                                 ImageView imgBook = itemView.findViewById(R.id.imgBook);
@@ -91,17 +86,14 @@ public class OrderSuccessActivity extends AppCompatActivity {
                                 TextView tvPrice = itemView.findViewById(R.id.tvPrice);
                                 TextView tvQty = itemView.findViewById(R.id.tvQuantity);
 
-                                // Lôi data từng món ra gắn vào
                                 tvName.setText(order.getListItems().get(i).getTenSP());
                                 tvPrice.setText(String.format(java.util.Locale.US, "%,.0f đ", order.getListItems().get(i).getGia_Ban()));
                                 tvQty.setText("x" + order.getListItems().get(i).getSoLuong());
 
-                                // Load ảnh
                                 com.bumptech.glide.Glide.with(OrderSuccessActivity.this)
                                         .load(order.getListItems().get(i).getImg())
                                         .into(imgBook);
 
-                                // Dọng nó vào giao diện
                                 lvOrderItems.addView(itemView);
                             }
                         } else {

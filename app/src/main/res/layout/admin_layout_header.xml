@@ -5,7 +5,6 @@
     android:layout_height="wrap_content"
     android:paddingTop="22dp">
 
-    <!-- Header bar -->
     <LinearLayout
         android:id="@+id/layoutHeaderAdmin"
         android:layout_width="match_parent"
@@ -36,15 +35,6 @@
 
     </LinearLayout>
 
-<!--    &lt;!&ndash; Dropdown menu overlay, mép trái, bắt đầu từ dưới header &ndash;&gt;-->
-<!--    <include-->
-<!--        android:id="@+id/layoutDropdownMenuAdmin"-->
-<!--        layout="@layout/layout_menu"-->
-<!--        android:layout_width="220dp"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_gravity="start|bottom"-->
-<!--        android:layout_marginTop="60dp"-->
-<!--        android:elevation="8dp"-->
-<!--        android:visibility="gone" />-->
+
 
 </FrameLayout>

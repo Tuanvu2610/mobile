@@ -6,7 +6,6 @@
     android:padding="12dp"
     android:gravity="center_vertical">
 
-    <!-- Ảnh sách -->
     <ImageView
         android:id="@+id/imgBook"
         android:layout_width="70dp"
@@ -16,7 +15,6 @@
         android:scaleType="centerCrop"
          />
 
-    <!-- Thông tin sách -->
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -45,7 +43,6 @@
 
     </LinearLayout>
 
-    <!-- Số lượng -->
     <TextView
         android:id="@+id/tvQuantity"
         android:layout_width="wrap_content"
